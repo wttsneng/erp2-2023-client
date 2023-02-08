@@ -3,12 +3,12 @@ import * as yup from "yup";
 import { Formik } from "formik";
 import { Box, TextField, Button, Typography } from "@mui/material";
 import { useTheme } from "@mui/material/styles";
-const LoginSchema = yup.object().shape({
-  Login: yup.string().required(),
+const loginSchema = yup.object().shape({
+  login: yup.string().required(),
   password: yup.string().required(),
 });
 const initialValues = {
-  Login: "",
+  login: "",
   password: "",
 };
 function AuthForm({ onSubmit }) {
@@ -19,7 +19,7 @@ function AuthForm({ onSubmit }) {
   return (
     <Formik
       initialValues={initialValues}
-      validationSchema={LoginSchema}
+      validationSchema={loginSchema}
       onSubmit={handleSubmit}
     >
       {({
@@ -32,7 +32,7 @@ function AuthForm({ onSubmit }) {
       }) => (
         <form
           onSubmit={handleSubmit}
-          style={{ width: "100%", maxWidth: "800px" }}
+          style={{ width: "100%", maxWidth: "400px" }}
         >
           <Box
             display="grid"
@@ -51,18 +51,17 @@ function AuthForm({ onSubmit }) {
               gap="10px"
               sx={{ textAlign: "center" }}
             >
-              Добро пожаловать на сайт ***** <br />
-              Для продолжения войдите в систему
+              Authorization
             </Typography>
 
             <TextField
-              label="Login"
+              label="login"
               onBlur={handleBlur}
               onChange={handleChange}
-              value={values.Login}
-              name="Login"
-              error={Boolean(touched.Login) && Boolean(errors.Login)}
-              helperText={touched.Login && errors.Login}
+              value={values.login}
+              name="login"
+              error={Boolean(touched.login) && Boolean(errors.login)}
+              helperText={touched.login && errors.login}
               sx={{ gridColumn: "span 4" }}
             />
             <TextField
@@ -78,7 +77,7 @@ function AuthForm({ onSubmit }) {
             />
             <Box gridColumn={"span 4"}>
               <Button fullWidth type="submit" variant="contained">
-                Login
+                login
               </Button>
             </Box>
           </Box>

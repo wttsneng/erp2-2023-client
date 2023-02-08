@@ -1,11 +1,11 @@
 import React from "react";
 import { useNavigate, useLocation, Route, Routes } from "react-router-dom";
 import { Home, Login } from "./pages";
-import { socket } from "./core";
-import { convertSocketMessage } from "./utils";
 import { useDispatch, useSelector } from "react-redux";
 import { selectError, setErrorClose } from "./redux/slices/error";
-import { MySnackbar } from "./component";
+import { fetchAuthMe } from "./redux/slices/auth";
+import { socket } from "./core";
+import { MySnackbar } from "./components";
 // import
 function App() {
   const navigate = useNavigate();
@@ -16,21 +16,15 @@ function App() {
     if (localStorage.getItem("path")) {
       navigate(localStorage.getItem("path"));
     }
-    socket.onAny((event, ...args) => {
-      console.log({
-        type: String(convertSocketMessage(event)),
-        payload: { ...args },
-      });
-      dispatch({
-        type: String(convertSocketMessage(event)),
-        payload: { ...args },
-      });
-    });
   }, []);
   React.useEffect(() => {
     console.log(location.pathname);
     localStorage.setItem("path", location.pathname);
   }, [location.pathname]);
+  React.useEffect(() => {
+    dispatch(fetchAuthMe());
+    socket.connect();
+  }, [dispatch]);
   return (
     <div className="App">
       <MySnackbar

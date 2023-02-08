@@ -10,7 +10,7 @@ const errorSlice = createSlice({
   reducers: {
     setError: (state, action) => {
       state.opened = true;
-      state.errorMessage = action.payload[0];
+      state.errorMessage = action.payload;
     },
     setErrorClose: (state) => {
       state.opened = false;
