@@ -1,5 +1,0 @@
-{
-    "error":"error/setError", 
-    "authorisation":"auth/setAuthorisation", 
-    "get program":"auth/setPrograms"
-}

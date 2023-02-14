@@ -1,0 +1,11 @@
+{
+    "data":[
+        {
+            "name":"Accounts",
+            "link":"/accounts",
+            "icon":"fa-solid fa-user",
+            "accessTags":["admin1", "admin2"]
+        }
+        
+    ]
+}

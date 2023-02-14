@@ -1,41 +1,48 @@
+import { Routes, Route } from "react-router-dom";
 import React from "react";
-import { useNavigate, useLocation, Route, Routes } from "react-router-dom";
-import { Home, Login } from "./pages";
-import { useDispatch, useSelector } from "react-redux";
-import { selectError, setErrorClose } from "./redux/slices/error";
-import { fetchAuthMe } from "./redux/slices/auth";
-import { socket } from "./core";
-import { MySnackbar } from "./components";
-// import
+import { MainLayout } from "./layouts";
+import { Login, ProtectedPage, Secret } from "./pages";
+import { useSelector, useDispatch } from "react-redux";
+import { selectAuthStatus, fetchAuthMe } from "./redux/slices/authSlice";
 function App() {
-  const navigate = useNavigate();
-  const location = useLocation();
+  const modules = [
+    { name: "Accounts", path: "/accounts" },
+    { name: "Secret", path: "/secret" },
+  ];
   const dispatch = useDispatch();
-  const { errorMessage, opened: isErrorOpen } = useSelector(selectError);
+  const authStatus = useSelector(selectAuthStatus);
   React.useEffect(() => {
-    if (localStorage.getItem("path")) {
-      navigate(localStorage.getItem("path"));
+    if (authStatus === "idle") {
+      dispatch(fetchAuthMe());
     }
-  }, []);
-  React.useEffect(() => {
-    console.log(location.pathname);
-    localStorage.setItem("path", location.pathname);
-  }, [location.pathname]);
-  React.useEffect(() => {
-    dispatch(fetchAuthMe());
-    socket.connect();
-  }, [dispatch]);
+  }, [authStatus]);
+
   return (
-    <div className="App">
-      <MySnackbar
-        open={isErrorOpen}
-        onClose={() => dispatch(setErrorClose())}
-        severity="error"
-        message={errorMessage}
-      />
+    <div>
       <Routes>
-        <Route path="/" element={<Home />} />
+        <Route
+          path="/"
+          element={
+            <MainLayout>
+              <div>Home</div>
+            </MainLayout>
+          }
+        />
         <Route path="/login" element={<Login />} />
+        {modules.map((module) => {
+          return (
+            <Route
+              key={module.path}
+              path={module.path}
+              element={
+                <MainLayout>
+                  <ProtectedPage element={module.name} />
+                </MainLayout>
+              }
+            />
+          );
+        })}
+        <Route path="*" element={<div>404</div>} />
       </Routes>
     </div>
   );

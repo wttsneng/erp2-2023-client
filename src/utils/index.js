@@ -1,1 +1,1 @@
-export { default as convertSocketMessage } from "./convertSocketMessage";
+export { default as checkModuleAccess } from "./checkModuleAccess";

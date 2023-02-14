@@ -1,32 +1,27 @@
-import React from "react";
-import { useNavigate } from "react-router-dom";
-import { AuthForm } from "../components";
-import { Container, Box } from "@mui/material";
-import { axios, socket } from "../core";
-import { setError } from "../redux/slices/error";
 import { useDispatch, useSelector } from "react-redux";
+import React from "react";
+import { AuthForm } from "../components";
+import { useNavigate } from "react-router-dom";
 import {
-  fetchAuth,
   selectAuthStatus,
-  fetchAuthRefresh,
+  fetchAuth,
   fetchAuthMe,
-} from "../redux/slices/auth";
-function Login() {
-  const navigate = useNavigate();
+  fetchAuthRefresh,
+} from "../redux/slices/authSlice";
+import { Container, Box } from "@mui/material";
+import { socket } from "../core";
+export default function Login() {
   const dispatch = useDispatch();
   const authStatus = useSelector(selectAuthStatus);
+  const navigate = useNavigate();
 
   const handleSubmit = async ({ login, password }) => {
     const data = await dispatch(fetchAuth({ login, password }));
-    if (!data.payload) {
-      dispatch(setError("Wrong login or password"));
-      return;
-    }
-    if ("accessToken" in data.payload) {
+    if (typeof window !== "undefined") {
       window.localStorage.setItem("token", data.payload.accessToken);
     }
     const newData = await dispatch(fetchAuthRefresh());
-    if ("accessToken" in newData.payload) {
+    if (newData?.payload?.accessToken) {
       socket.disconnect();
       window.localStorage.setItem("token", newData.payload.accessToken);
       socket.auth.token = window.localStorage.getItem("token");
@@ -34,26 +29,36 @@ function Login() {
     }
     dispatch(fetchAuthMe());
   };
+
   React.useEffect(() => {
     if (authStatus === "success") {
       navigate("/");
     }
-  }, [authStatus, navigate]);
+  }, [authStatus]);
   return (
-    <Box sx={{ height: "100%" }}>
-      <Container
-        sx={{
-          height: "100%",
-          display: "flex",
-          justifyContent: "center",
-          alignItems: "center",
-          flexDirection: "column",
+    <div>
+      <h1>Login</h1>
+      <button
+        onClick={() => {
+          navigate("/");
         }}
       >
-        <AuthForm onSubmit={handleSubmit} />
-      </Container>
-    </Box>
+        Домой
+      </button>
+      <p>Boss of the something</p>
+      <Box sx={{ height: "100%" }}>
+        <Container
+          sx={{
+            height: "100%",
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+            flexDirection: "column",
+          }}
+        >
+          <AuthForm onSubmit={handleSubmit} />
+        </Container>
+      </Box>
+    </div>
   );
 }
-
-export default Login;
