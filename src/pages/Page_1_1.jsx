@@ -1,6 +1,5 @@
 import { Box, Grid, Autocomplete, TextField, Chip, Stack } from "@mui/material";
 import React from "react";
-import { MainLayout } from "../layouts";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchAuthMe } from "../redux/slices/authSlice";
 import { socket } from "../core";
@@ -15,7 +14,7 @@ const top100Films = [
   { label: "Pulp Fiction", id: 2 },
 ];
 
-export default function Accounts() {
+export default function Tags() {
   const dispatch = useDispatch();
   const accountData = useSelector(selectAccountData);
   const accountStatus = useSelector(selectAccountStatus);
@@ -109,7 +108,7 @@ export default function Accounts() {
   return (
     <div className="">
       <Grid container spacing={2}>
-        <Grid item md={8} sx={{}} order={{ xs: 2, md: 1 }}>
+        <Grid item md={8} xs={12} order={{ xs: 2, md: 1 }}>
           <Box
             sx={{
               backgroundColor: "white",

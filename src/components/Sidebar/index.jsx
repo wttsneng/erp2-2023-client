@@ -21,7 +21,6 @@ const miniWidth = 40;
 
 function Sidebar({ window, arr, children, status }) {
   const [data, setData] = React.useState([]);
-  console.log(status);
   const [mobileOpen, setMobileOpen] = React.useState(false);
   const [isMini, setIsMini] = React.useState(false);
   const navigate = useNavigate();
@@ -78,12 +77,12 @@ function Sidebar({ window, arr, children, status }) {
           paddingX: `${isMini ? "0px" : "10px"}`,
         }}
       >
-        {status === "success" && data.length > 0 ? (
-          <SidebarElement arr={data} isMini={isMini} onClick={handleClick} />
-        ) : status === "error" || !status ? (
-          <></>
-        ) : (
+        {status === "success" ? (
+          <SidebarElement arr={arr} isMini={isMini} onClick={handleClick} />
+        ) : status === "idle" || status === "loading" ? (
           <SidebarLoading />
+        ) : (
+          <></>
         )}
       </List>
     </div>
@@ -158,7 +157,7 @@ function Sidebar({ window, arr, children, status }) {
               width: `${isMini ? miniWidth : drawerWidth}px}`,
             },
           }}
-          open
+          open={true}
         >
           {drawer}
         </Drawer>

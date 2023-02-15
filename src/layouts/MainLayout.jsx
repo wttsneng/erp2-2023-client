@@ -1,55 +1,37 @@
 import { Sidebar } from "../components";
-import modulesAccess from "../data/modulesAccess";
 import React from "react";
-import { checkModuleAccess } from "../utils";
 import { useSelector, useDispatch } from "react-redux";
-import {
-  fetchAuthMe,
-  selectAuthData,
-  selectAuthStatus,
-} from "../redux/slices/authSlice";
+import { selectAuthData, selectAuthStatus } from "../redux/slices/authSlice";
 import { Header, MainLoading } from "../components";
+import generateSidebar from "../utils/generateSidebar";
 
 const MainLayout = ({ children }) => {
-  const example = React.useMemo(
-    () => [
-      {
-        name: "Accounts",
-        link: "/accounts",
-      },
-      {
-        name: "Secret",
-        link: "/secret",
-      },
-    ],
-    []
-  );
   const dispatch = useDispatch();
   const authData = useSelector(selectAuthData);
   const authStatus = useSelector(selectAuthStatus);
 
-  // const accessedModules = React.useMemo(() => {
-  //   if (authStatus === "success") {
-  //     const userAccessTagsArr = authData.access_group_access_tag.map(
-  //       (item) => item.name
-  //     );
-  //     const modules = modulesAccess.data.filter((obj) => {
-  //       return checkModuleAccess(obj.accessTags, userAccessTagsArr);
-  //     });
-  //     return modules.map((item) => {
-  //       return {
-  //         icon: item.icon,
-  //         link: item.link,
-  //         name: item.name,
-  //       };
-  //     });
-  //   }
-  //   return [];
-  // }, [authStatus]);
+  const accessedModules = React.useMemo(() => {
+    const resultArr = [];
+    if (authStatus === "success") {
+      authData.access_group_access_tag.forEach(async (item) => {
+        if (item.name.split(".")[0] === "#UIM") {
+          const moduleInfo = await import(
+            `../data/SidebarInfo${item.name.split(".")[1]}.json`
+          ).then((res) => res.default.data);
+          const ParentId = item.name.split(".")[1];
+          const ChildId = item.name.split(".")[2];
+          const child = item.name.split(".")[4];
+          generateSidebar(moduleInfo, ParentId, ChildId, child, resultArr);
+        }
+      });
+      return resultArr;
+    }
+    return [];
+  }, [authStatus, authData]);
 
   return (
     <div className="main-layout">
-      <Sidebar arr={example} status={authStatus}>
+      <Sidebar arr={accessedModules} status={authStatus}>
         <Header />
         {authStatus === "success" ? (
           children

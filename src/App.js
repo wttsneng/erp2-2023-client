@@ -1,13 +1,14 @@
 import { Routes, Route } from "react-router-dom";
 import React from "react";
 import { MainLayout } from "./layouts";
-import { Login, ProtectedPage, Secret } from "./pages";
 import { useSelector, useDispatch } from "react-redux";
 import { selectAuthStatus, fetchAuthMe } from "./redux/slices/authSlice";
+import { Login, ProtectedPage } from "./pages";
 function App() {
   const modules = [
-    { name: "Accounts", path: "/accounts" },
-    { name: "Secret", path: "/secret" },
+    { parentId: 1, childId: 1 },
+    { parentId: 1, childId: 2 },
+    { parentId: 2 },
   ];
   const dispatch = useDispatch();
   const authStatus = useSelector(selectAuthStatus);
@@ -30,13 +31,30 @@ function App() {
         />
         <Route path="/login" element={<Login />} />
         {modules.map((module) => {
+          if (!module.childId) {
+            return (
+              <Route
+                key={module.parentId}
+                path={`/page_${module.parentId}`}
+                element={
+                  <MainLayout>
+                    {<ProtectedPage element={`Page_${module.parentId}`} />}
+                  </MainLayout>
+                }
+              />
+            );
+          }
           return (
             <Route
-              key={module.path}
-              path={module.path}
+              key={`${module.parentId}_${module.childId}`}
+              path={`/page_${module.parentId}_${module.childId}`}
               element={
                 <MainLayout>
-                  <ProtectedPage element={module.name} />
+                  {
+                    <ProtectedPage
+                      element={`Page_${module.parentId}_${module.childId}`}
+                    />
+                  }
                 </MainLayout>
               }
             />
