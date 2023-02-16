@@ -8,7 +8,12 @@ import {
   selectAccountData,
   selectAccountStatus,
 } from "../redux/slices/accountSlice";
-import { SocketInput } from "../components";
+import {
+  SocketInput,
+  Header,
+  HistoryTable,
+  DraggableWindow,
+} from "../components";
 const top100Films = [
   { label: "The Godfather", id: 1 },
   { label: "Pulp Fiction", id: 2 },
@@ -21,10 +26,14 @@ export default function Tags() {
 
   const [nameInput, setNameInput] = React.useState("");
   const [descriptionInput, setDescriptionInput] = React.useState("");
+  const [nameInitialValue, setNameInitialValue] = React.useState("");
+  const [descriptionInitialValue, setDescriptionInitialValue] =
+    React.useState("");
   const [isCurrentNameChanged, setIsCurrentNameChanged] = React.useState(false);
   const [isCurrentDescriptionChanged, setIsCurrentDescriptionChanged] =
     React.useState(false);
   const [editingId, setEditingId] = React.useState(null);
+  const [nameHistory, setNameHistory] = React.useState([]);
 
   const handleNameChange = (value) => {
     setNameInput(value);
@@ -34,11 +43,6 @@ export default function Tags() {
   };
 
   const handleNameBlur = (value) => {
-    socket.emit("Accounts|changeTagValue", {
-      itemId: editingId,
-      attribute: "name",
-      value,
-    });
     socket.emit("Accounts|changeTagValueEnd", {
       itemId: editingId,
       attribute: "name",
@@ -46,11 +50,6 @@ export default function Tags() {
   };
 
   const handleDescriptionBlur = (value) => {
-    socket.emit("Accounts|changeTagValue", {
-      itemId: editingId,
-      attribute: "description",
-      value,
-    });
     socket.emit("Accounts|changeTagValueEnd", {
       itemId: editingId,
       attribute: "description",
@@ -75,24 +74,54 @@ export default function Tags() {
     setNameInput(tag.name);
     setDescriptionInput(tag.description);
     setEditingId(tag.id);
+    setNameInitialValue(tag.name);
+    setDescriptionInitialValue(tag.description);
+  };
+
+  const handleNameSave = (value) => {
+    if (value === nameInitialValue) return;
+    socket.emit("Accounts|changeTagValue", {
+      itemId: editingId,
+      attribute: "name",
+      value,
+    });
+    console.log("emitted");
+    setNameInitialValue(value);
+  };
+  const handleDescriptionSave = (value) => {
+    if (value === descriptionInitialValue) return;
+    socket.emit("Accounts|changeTagValue", {
+      itemId: editingId,
+      attribute: "description",
+      value,
+    });
+  };
+  const handleNameHistoryClick = () => {
+    socket.emit("Accounts|getTagHistory", {
+      itemId: editingId,
+      attribute: "name",
+    });
+    setNameHistory(accountData.tagHistory);
+    setIsDialogOpen(true);
   };
 
   React.useEffect(() => {
-    const currentEditItems = accountData?.tags?.find((item) => {
-      return item.id === editingId;
-    })?.editItems;
-    if (currentEditItems && currentEditItems.length > 0) {
-      if (currentEditItems.includes("name")) {
+    const currentEditingTag = accountData.tags.find(
+      (item) => item.id === editingId
+    )?.editingItems;
+    if (currentEditingTag) {
+      if (currentEditingTag.name) {
         setIsCurrentNameChanged(true);
+      } else {
+        setIsCurrentNameChanged(false);
       }
-      if (currentEditItems.includes("description")) {
+      if (currentEditingTag.description) {
         setIsCurrentDescriptionChanged(true);
+      } else {
+        setIsCurrentDescriptionChanged(false);
       }
-    } else {
-      setIsCurrentNameChanged(false);
-      setIsCurrentDescriptionChanged(false);
     }
-  }, [accountData]);
+  }, [accountData, editingId]);
 
   React.useEffect(() => {
     socket.onAny((event, args) => {
@@ -105,8 +134,10 @@ export default function Tags() {
       }
     });
   }, []);
+  const [isDialogOpen, setIsDialogOpen] = React.useState(false);
   return (
     <div className="">
+      <Header pageName={"Tags"} />
       <Grid container spacing={2}>
         <Grid item md={8} xs={12} order={{ xs: 2, md: 1 }}>
           <Box
@@ -125,20 +156,19 @@ export default function Tags() {
               )}
             />
             <Box sx={{ marginTop: 2 }}>
-              {accountStatus === "success" &&
-                accountData?.tags?.map((item) => {
-                  return (
-                    <Chip
-                      key={item.id}
-                      label={item.name}
-                      onClick={() => {
-                        onTagClick(item);
-                      }}
-                      onDelete={() => {}}
-                      sx={{ marginRight: 1, marginBottom: 1 }}
-                    />
-                  );
-                })}
+              {accountData.tags.map((item) => {
+                return (
+                  <Chip
+                    key={item.id}
+                    label={item.name}
+                    onClick={() => {
+                      onTagClick(item);
+                    }}
+                    onDelete={() => {}}
+                    sx={{ marginRight: 1, marginBottom: 1 }}
+                  />
+                );
+              })}
             </Box>
           </Box>
         </Grid>
@@ -159,7 +189,18 @@ export default function Tags() {
                   onChange={handleNameChange}
                   onBlur={handleNameBlur}
                   onFocus={handleNameFocus}
+                  onSave={handleNameSave}
+                  onHistoryClick={handleNameHistoryClick}
                 />
+                {nameHistory.length > 0 && (
+                  <DraggableWindow
+                    open={isDialogOpen}
+                    onClose={() => {
+                      setIsDialogOpen((prev) => !prev);
+                    }}
+                    data={<HistoryTable data={nameHistory} />}
+                  />
+                )}
                 <SocketInput
                   disabled={isCurrentDescriptionChanged}
                   label="description"
@@ -167,6 +208,7 @@ export default function Tags() {
                   onChange={handleDescriptionChange}
                   onBlur={handleDescriptionBlur}
                   onFocus={handleDescriptionFocus}
+                  onSave={handleDescriptionSave}
                 />
               </Stack>
             </form>

@@ -2,10 +2,12 @@ import { Sidebar } from "../components";
 import React from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { selectAuthData, selectAuthStatus } from "../redux/slices/authSlice";
-import { Header, MainLoading } from "../components";
+import { MainLoading } from "../components";
+import { Outlet, Navigate } from "react-router-dom";
 import generateSidebar from "../utils/generateSidebar";
+import { GeneratedProtectedPage } from "../pages";
 
-const MainLayout = ({ children }) => {
+const MainLayout = () => {
   const dispatch = useDispatch();
   const authData = useSelector(selectAuthData);
   const authStatus = useSelector(selectAuthStatus);
@@ -31,16 +33,13 @@ const MainLayout = ({ children }) => {
 
   return (
     <div className="main-layout">
-      <Sidebar arr={accessedModules} status={authStatus}>
-        <Header />
-        {authStatus === "success" ? (
-          children
-        ) : authStatus === "error" ? (
-          <div>Sorry, an error has occurred</div>
-        ) : (
-          <MainLoading />
-        )}
-      </Sidebar>
+      {!window.localStorage.getItem("token") || authStatus === "error" ? (
+        <Navigate to="/login" />
+      ) : (
+        <Sidebar arr={accessedModules} status={authStatus}>
+          {authStatus === "success" ? <Outlet /> : <MainLoading />}
+        </Sidebar>
+      )}
     </div>
   );
 };

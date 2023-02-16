@@ -17,7 +17,7 @@ export const SidebarElement = ({ arr, isMini, onClick }) => {
   const [active, setActive] = React.useState([0, 0]);
   const theme = useTheme();
   return (
-    <React.Fragment>
+    <div>
       {arr.map((obj, index) => (
         <div
           key={obj.name}
@@ -100,6 +100,6 @@ export const SidebarElement = ({ arr, isMini, onClick }) => {
           )}
         </div>
       ))}
-    </React.Fragment>
+    </div>
   );
 };

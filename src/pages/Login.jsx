@@ -1,33 +1,25 @@
-import { useDispatch, useSelector } from "react-redux";
 import React from "react";
 import { AuthForm } from "../components";
+import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import {
-  selectAuthStatus,
-  fetchAuth,
-  fetchAuthMe,
-  fetchAuthRefresh,
-} from "../redux/slices/authSlice";
+import { selectAuthStatus, fetchAuthMe } from "../redux/slices/authSlice";
 import { Container, Box } from "@mui/material";
-import { socket } from "../core";
+import { socket, axios } from "../core";
 export default function Login() {
   const dispatch = useDispatch();
   const authStatus = useSelector(selectAuthStatus);
   const navigate = useNavigate();
 
   const handleSubmit = async ({ login, password }) => {
-    const data = await dispatch(fetchAuth({ login, password }));
-    if (typeof window !== "undefined") {
-      window.localStorage.setItem("token", data.payload.accessToken);
-    }
-    const newData = await dispatch(fetchAuthRefresh());
-    if (newData?.payload?.accessToken) {
-      socket.disconnect();
-      window.localStorage.setItem("token", newData.payload.accessToken);
+    try {
+      const { data } = await axios.post("/api/auth/login", { login, password });
+      window.localStorage.setItem("token", data.accessToken);
       socket.auth.token = window.localStorage.getItem("token");
       socket.connect();
+      dispatch(fetchAuthMe());
+    } catch (error) {
+      console.log(error);
     }
-    dispatch(fetchAuthMe());
   };
 
   React.useEffect(() => {
@@ -36,29 +28,18 @@ export default function Login() {
     }
   }, [authStatus]);
   return (
-    <div>
-      <h1>Login</h1>
-      <button
-        onClick={() => {
-          navigate("/");
+    <Box sx={{ height: "100%" }}>
+      <Container
+        sx={{
+          height: "100%",
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          flexDirection: "column",
         }}
       >
-        Домой
-      </button>
-      <p>Boss of the something</p>
-      <Box sx={{ height: "100%" }}>
-        <Container
-          sx={{
-            height: "100%",
-            display: "flex",
-            justifyContent: "center",
-            alignItems: "center",
-            flexDirection: "column",
-          }}
-        >
-          <AuthForm onSubmit={handleSubmit} />
-        </Container>
-      </Box>
-    </div>
+        <AuthForm onSubmit={handleSubmit} />
+      </Container>
+    </Box>
   );
 }

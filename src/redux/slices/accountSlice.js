@@ -3,6 +3,7 @@ import { createSlice } from "@reduxjs/toolkit";
 const initialState = {
   data: {
     tags: [],
+    tagHistory: [],
   },
   status: "idle", // idle, loading, success, error
 };
@@ -13,6 +14,9 @@ const accountSlice = createSlice({
     setTags: (state, action) => {
       state.data.tags = action.payload;
       state.status = "success";
+    },
+    setTagHistory: (state, action) => {
+      state.data.tagHistory = action.payload;
     },
   },
   extraReducers: (builder) => {},

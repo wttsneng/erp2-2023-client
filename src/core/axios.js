@@ -1,7 +1,7 @@
 import axios from "axios";
 const instance = axios.create({
   withCredentials: true,
-  baseURL: "http://localhost:5000/",
+  baseURL: process.env.REACT_APP_API_URL,
 });
 instance.interceptors.request.use((config) => {
   config.headers.Authorization = `Bearer ${window.localStorage.getItem(
@@ -23,7 +23,7 @@ instance.interceptors.response.use(
       originalRequest._isRetry = true;
       try {
         const response = await axios.get(
-          `${"http://localhost:5000"}/api/auth/refresh`,
+          `${process.env.REACT_APP_API_URL}/api/auth/refresh`,
           {
             withCredentials: true,
           }

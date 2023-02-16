@@ -2,16 +2,39 @@ import { Routes, Route } from "react-router-dom";
 import React from "react";
 import { MainLayout } from "./layouts";
 import { useSelector, useDispatch } from "react-redux";
-import { selectAuthStatus, fetchAuthMe } from "./redux/slices/authSlice";
-import { Login, ProtectedPage } from "./pages";
+import {
+  selectAuthStatus,
+  selectAuthData,
+  fetchAuthMe,
+} from "./redux/slices/authSlice";
+import { Login, ProtectedPage, NotFound } from "./pages";
+import Tags from "./pages/Page_1_1";
 function App() {
-  const modules = [
-    { parentId: 1, childId: 1 },
-    { parentId: 1, childId: 2 },
-    { parentId: 2 },
-  ];
   const dispatch = useDispatch();
   const authStatus = useSelector(selectAuthStatus);
+  const authData = useSelector(selectAuthData);
+
+  const pages = React.useMemo(() => {
+    const resultArr = [];
+    if (authStatus === "success") {
+      authData.access_group_access_tag.forEach(async (item) => {
+        if (item.name.split(".")[0] === "#UIM") {
+          if (Number(item.name.split(".")[2])) {
+            resultArr.push({
+              parentId: item.name.split(".")[1],
+              childId: item.name.split(".")[2],
+            });
+          } else {
+            resultArr.push({
+              parentId: item.name.split(".")[1],
+            });
+          }
+        }
+      });
+    }
+    return resultArr;
+  }, [authData]);
+
   React.useEffect(() => {
     if (authStatus === "idle") {
       dispatch(fetchAuthMe());
@@ -19,50 +42,38 @@ function App() {
   }, [authStatus]);
 
   return (
-    <div>
+    <React.Fragment>
       <Routes>
-        <Route
-          path="/"
-          element={
-            <MainLayout>
-              <div>Home</div>
-            </MainLayout>
-          }
-        />
         <Route path="/login" element={<Login />} />
-        {modules.map((module) => {
-          if (!module.childId) {
-            return (
-              <Route
-                key={module.parentId}
-                path={`/page_${module.parentId}`}
-                element={
-                  <MainLayout>
-                    {<ProtectedPage element={`Page_${module.parentId}`} />}
-                  </MainLayout>
-                }
-              />
-            );
-          }
-          return (
-            <Route
-              key={`${module.parentId}_${module.childId}`}
-              path={`/page_${module.parentId}_${module.childId}`}
-              element={
-                <MainLayout>
-                  {
-                    <ProtectedPage
-                      element={`Page_${module.parentId}_${module.childId}`}
-                    />
-                  }
-                </MainLayout>
+        <Route path="/*" element={<MainLayout />}>
+          {pages.length !== 0 &&
+            pages.map((page) => {
+              if (page.childId) {
+                return (
+                  <Route
+                    key={`page/${page.parentId}_${page.childId}`}
+                    path={`page/${page.parentId}_${page.childId}`}
+                    element={
+                      <ProtectedPage
+                        element={`Page_${page.parentId}_${page.childId}`}
+                      />
+                    }
+                  />
+                );
               }
-            />
-          );
-        })}
-        <Route path="*" element={<div>404</div>} />
+              return (
+                <Route
+                  key={`page/${page.parentId}`}
+                  path={`page/${page.parentId}`}
+                  element={<ProtectedPage element={`Page_${page.parentId}`} />}
+                />
+              );
+            })}
+          <Route path="*" element={<NotFound />} />
+        </Route>
+        <Route path="*" element={<NotFound />} />
       </Routes>
-    </div>
+    </React.Fragment>
   );
 }
 

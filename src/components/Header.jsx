@@ -53,7 +53,7 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
     },
   },
 }));
-function Header() {
+function Header({ pageName }) {
   return (
     <Box
       sx={{
@@ -64,7 +64,7 @@ function Header() {
       <AppBar position="static" elevation={0} color={"transparent"}>
         <Toolbar>
           <Typography variant="h5" component="div" sx={{ flexGrow: 1 }}>
-            Аккаунты
+            {pageName}
           </Typography>
           <Box
             display={"flex"}

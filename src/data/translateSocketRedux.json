@@ -1,3 +1,4 @@
 {
-    "Accounts|setTagList": "account/setTags"
+    "Accounts|setTagList": "account/setTags", 
+    "Accounts|setTagHistory": "account/setTagHistory"
 }
