@@ -1,5 +1,5 @@
 import React from "react";
-import { TextField, Button, Box } from "@mui/material";
+import { TextField, Typography, Box } from "@mui/material";
 import { useTheme } from "@mui/material/styles";
 function SocketInput({
   value,
@@ -8,73 +8,51 @@ function SocketInput({
   onBlur,
   onFocus,
   disabled,
-  onSave,
   onHistoryClick,
+  isHistoryShow,
 }) {
   const theme = useTheme();
-  const [isFocused, setIsFocused] = React.useState(false);
-  const [fieldValue, setFieldValue] = React.useState("");
-  const inputRef = React.useRef(null);
-  const historyButtonRef = React.useRef(null);
-  React.useEffect(() => {
-    setFieldValue(value);
-  }, [value]);
-  React.useEffect(() => {
-    const handleClickOutside = (e) => {
-      if (
-        !inputRef.current.contains(e.target) &&
-        !historyButtonRef.current.contains(e.target)
-      ) {
-        setIsFocused(false);
-      }
-    };
-
-    document.addEventListener("click", handleClickOutside);
-    return () => {
-      document.removeEventListener("click", handleClickOutside);
-    };
-  }, []);
   return (
-    <React.Fragment>
+    <Box sx={{ position: "relative", width: "100%" }}>
       <TextField
         label={label}
         value={value}
-        ref={inputRef}
         disabled={disabled}
         variant={`${disabled ? "filled" : "outlined"}`}
         sx={{
           backgroundColor: `${disabled ? theme.palette.error.light : "white"}`,
           borderRadius: 1,
+          width: "100%",
+          "& .MuiOutlinedInput-root": {
+            paddingRight: `${onHistoryClick ? 30 : 0}px`,
+          },
         }}
         onChange={(e) => {
           onChange(e.target.value);
-          setFieldValue(e.target.value);
         }}
         onBlur={(e) => {
           onBlur(e.target.value);
-          onSave(fieldValue);
         }}
         onFocus={() => {
           onFocus();
-          setIsFocused(true);
         }}
       />
-      <Button
-        variant="contained"
-        color="primary"
-        ref={historyButtonRef}
-        sx={{
-          width: "100%",
-          display: `${isFocused && onHistoryClick ? "block" : "none"}`,
-        }}
-        onClick={() => {
-          onHistoryClick();
-          setIsFocused(true);
-        }}
-      >
-        History
-      </Button>
-    </React.Fragment>
+      {isHistoryShow && (
+        <Typography
+          className="fa-solid fa-clock-rotate-left"
+          role="button"
+          aria-label="history"
+          onClick={onHistoryClick}
+          sx={{
+            position: "absolute",
+            cursor: "pointer",
+            top: "50%",
+            right: 20,
+            transform: "translateY(-50%)",
+          }}
+        ></Typography>
+      )}
+    </Box>
   );
 }
 export default SocketInput;

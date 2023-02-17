@@ -1,143 +1,31 @@
-import { Box, Grid, Autocomplete, TextField, Chip, Stack } from "@mui/material";
+import { Box, Grid } from "@mui/material";
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchAuthMe } from "../redux/slices/authSlice";
 import { socket } from "../core";
+import { getAccessTags } from "../redux/slices/AccessTagsSlice";
+import { selectAccessTagsFilters } from "../redux/slices/AccessTagsFilterSlice";
 import translateSocketRedux from "../data/translateSocketRedux.json";
-import {
-  selectAccountData,
-  selectAccountStatus,
-} from "../redux/slices/accountSlice";
-import {
-  SocketInput,
-  Header,
-  HistoryTable,
-  DraggableWindow,
-} from "../components";
-const top100Films = [
-  { label: "The Godfather", id: 1 },
-  { label: "Pulp Fiction", id: 2 },
-];
-
+import { Header } from "../components";
+import AccessTagInput from "../containers/AccessTagInput";
+import AccessTagSearch from "../containers/AccessTagSearch";
 export default function Tags() {
   const dispatch = useDispatch();
-  const accountData = useSelector(selectAccountData);
-  const accountStatus = useSelector(selectAccountStatus);
-
-  const [nameInput, setNameInput] = React.useState("");
-  const [descriptionInput, setDescriptionInput] = React.useState("");
-  const [nameInitialValue, setNameInitialValue] = React.useState("");
-  const [descriptionInitialValue, setDescriptionInitialValue] =
-    React.useState("");
-  const [isCurrentNameChanged, setIsCurrentNameChanged] = React.useState(false);
-  const [isCurrentDescriptionChanged, setIsCurrentDescriptionChanged] =
-    React.useState(false);
-  const [editingId, setEditingId] = React.useState(null);
-  const [nameHistory, setNameHistory] = React.useState([]);
-
-  const handleNameChange = (value) => {
-    setNameInput(value);
-  };
-  const handleDescriptionChange = (value) => {
-    setDescriptionInput(value);
-  };
-
-  const handleNameBlur = (value) => {
-    socket.emit("Accounts|changeTagValueEnd", {
-      itemId: editingId,
-      attribute: "name",
-    });
-  };
-
-  const handleDescriptionBlur = (value) => {
-    socket.emit("Accounts|changeTagValueEnd", {
-      itemId: editingId,
-      attribute: "description",
-    });
-  };
-
-  const handleNameFocus = () => {
-    socket.emit("Accounts|changeTagValueStart", {
-      itemId: editingId,
-      attribute: "name",
-    });
-  };
-
-  const handleDescriptionFocus = () => {
-    socket.emit("Accounts|changeTagValueStart", {
-      itemId: editingId,
-      attribute: "description",
-    });
-  };
-
-  const onTagClick = (tag) => {
-    setNameInput(tag.name);
-    setDescriptionInput(tag.description);
-    setEditingId(tag.id);
-    setNameInitialValue(tag.name);
-    setDescriptionInitialValue(tag.description);
-  };
-
-  const handleNameSave = (value) => {
-    if (value === nameInitialValue) return;
-    socket.emit("Accounts|changeTagValue", {
-      itemId: editingId,
-      attribute: "name",
-      value,
-    });
-    console.log("emitted");
-    setNameInitialValue(value);
-  };
-  const handleDescriptionSave = (value) => {
-    if (value === descriptionInitialValue) return;
-    socket.emit("Accounts|changeTagValue", {
-      itemId: editingId,
-      attribute: "description",
-      value,
-    });
-  };
-  const handleNameHistoryClick = () => {
-    socket.emit("Accounts|getTagHistory", {
-      itemId: editingId,
-      attribute: "name",
-    });
-    setNameHistory(accountData.tagHistory);
-    setIsDialogOpen(true);
-  };
-
-  React.useEffect(() => {
-    const currentEditingTag = accountData.tags.find(
-      (item) => item.id === editingId
-    )?.editingItems;
-    if (currentEditingTag) {
-      if (currentEditingTag.name) {
-        setIsCurrentNameChanged(true);
-      } else {
-        setIsCurrentNameChanged(false);
-      }
-      if (currentEditingTag.description) {
-        setIsCurrentDescriptionChanged(true);
-      } else {
-        setIsCurrentDescriptionChanged(false);
-      }
-    }
-  }, [accountData, editingId]);
+  const AccessTagsFilters = useSelector(selectAccessTagsFilters);
+  React.useEffect(() => {}, []);
 
   React.useEffect(() => {
     socket.onAny((event, args) => {
-      if (event.startsWith("Accounts|")) {
-        const type = translateSocketRedux[event];
-        console.log("type", type);
-        if (type) {
-          dispatch({ type, payload: args });
-        }
+      const type = translateSocketRedux[event];
+      console.log("type", type);
+      if (type) {
+        dispatch({ type, payload: args });
       }
     });
   }, []);
-  const [isDialogOpen, setIsDialogOpen] = React.useState(false);
+
   return (
     <div className="">
-      <Header pageName={"Tags"} />
+      <Header pageName={"Access tags"} />
       <Grid container spacing={2}>
         <Grid item md={8} xs={12} order={{ xs: 2, md: 1 }}>
           <Box
@@ -147,29 +35,7 @@ export default function Tags() {
               padding: 2,
             }}
           >
-            <Autocomplete
-              disablePortal
-              id="combo-box-demo"
-              options={top100Films}
-              renderInput={(params) => (
-                <TextField {...params} label="Tag search" />
-              )}
-            />
-            <Box sx={{ marginTop: 2 }}>
-              {accountData.tags.map((item) => {
-                return (
-                  <Chip
-                    key={item.id}
-                    label={item.name}
-                    onClick={() => {
-                      onTagClick(item);
-                    }}
-                    onDelete={() => {}}
-                    sx={{ marginRight: 1, marginBottom: 1 }}
-                  />
-                );
-              })}
-            </Box>
+            <AccessTagSearch />
           </Box>
         </Grid>
         <Grid item md={4} xs={12} order={{ xs: 1, md: 2 }}>
@@ -181,47 +47,11 @@ export default function Tags() {
             }}
           >
             <form>
-              <Stack spacing={2}>
-                <SocketInput
-                  label="name"
-                  disabled={isCurrentNameChanged}
-                  value={nameInput}
-                  onChange={handleNameChange}
-                  onBlur={handleNameBlur}
-                  onFocus={handleNameFocus}
-                  onSave={handleNameSave}
-                  onHistoryClick={handleNameHistoryClick}
-                />
-                {nameHistory.length > 0 && (
-                  <DraggableWindow
-                    open={isDialogOpen}
-                    onClose={() => {
-                      setIsDialogOpen((prev) => !prev);
-                    }}
-                    data={<HistoryTable data={nameHistory} />}
-                  />
-                )}
-                <SocketInput
-                  disabled={isCurrentDescriptionChanged}
-                  label="description"
-                  value={descriptionInput}
-                  onChange={handleDescriptionChange}
-                  onBlur={handleDescriptionBlur}
-                  onFocus={handleDescriptionFocus}
-                  onSave={handleDescriptionSave}
-                />
-              </Stack>
+              <AccessTagInput />
             </form>
           </Box>
         </Grid>
       </Grid>
-      <button
-        onClick={() => {
-          dispatch(fetchAuthMe());
-        }}
-      >
-        Редакс
-      </button>
       <button
         onClick={() => {
           socket.disconnect();
@@ -232,7 +62,7 @@ export default function Tags() {
       </button>
       <button
         onClick={() => {
-          socket.emit("Accounts|getTagList", "testSome Cool Message");
+          getAccessTags(AccessTagsFilters);
         }}
       >
         getTagList

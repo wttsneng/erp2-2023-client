@@ -1,10 +1,18 @@
 import { configureStore, combineReducers } from "@reduxjs/toolkit";
 import { authReducer } from "./slices/authSlice";
-import { accountReducer } from "./slices/accountSlice";
+import { AccessTagsHistoryReducer } from "./slices/AccessTagsHistorySlice";
+import { AccessTagsFilterReducer } from "./slices/AccessTagsFilterSlice";
+import { AccessTagsReducer } from "./slices/AccessTagsSlice";
+import { AccessTagsHistoryFilterReducer } from "./slices/AccessTagsHistoryFilterSlice";
+import { AccessTagsInputReducer } from "./slices/AccessTagsInputSlice";
 
 const rootReducer = combineReducers({
   auth: authReducer,
-  account: accountReducer,
+  accessTags: AccessTagsReducer,
+  accessTagsHistory: AccessTagsHistoryReducer,
+  accessTagsFilter: AccessTagsFilterReducer,
+  accessTagsHistoryFilter: AccessTagsHistoryFilterReducer,
+  accessTagsInput: AccessTagsInputReducer,
 });
 const makeStore = () =>
   configureStore({
