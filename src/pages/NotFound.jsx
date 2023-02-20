@@ -10,7 +10,7 @@ function NotFound() {
         display: "flex",
         justifyContent: "center",
         alignItems: "center",
-        height: "100vh",
+        height: "calc(100vh - 88px)",
         fontSize: "2rem",
         fontWeight: "bold",
       }}

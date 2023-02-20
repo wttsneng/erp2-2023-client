@@ -1,7 +1,12 @@
 import { Stack, Skeleton } from "@mui/material";
 export default function SidebarLoading() {
   return (
-    <Stack spacing={1}>
+    <Stack
+      spacing={1}
+      sx={{
+        marginX: 1,
+      }}
+    >
       {Array(11)
         .fill()
         .map((_, index) => (

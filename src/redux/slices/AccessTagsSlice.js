@@ -20,6 +20,7 @@ const accessTagsSlice = createSlice({
   initialState,
   reducers: {
     setAccessTags: (state, action) => {
+      state.status = "loading";
       state.data = action.payload.rows;
       state.count = action.payload.count;
       state.status = "success";

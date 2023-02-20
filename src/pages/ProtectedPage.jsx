@@ -3,7 +3,8 @@ function ProtectedPage({ element }) {
   const [isPageDisplayed, setIsPageDisplayed] = React.useState(false);
   const [PageComponent, setPageComponent] = React.useState(null);
   const loadPage = async () => {
-    const loadResult = await import(`./${element}`);
+    console.log("loadPage", element);
+    const loadResult = await import(`./Page_${element}`);
     setPageComponent(() => loadResult.default);
   };
   React.useEffect(() => {

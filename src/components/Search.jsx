@@ -1,5 +1,5 @@
 import React from "react";
-import { TextField, Button, Box } from "@mui/material";
+import { TextField } from "@mui/material";
 import debounce from "lodash.debounce";
 function Search({
   value,
@@ -14,7 +14,8 @@ function Search({
   const updateSearchValue = React.useCallback(
     debounce((value) => {
       onChange(value);
-    }, 500)
+    }, 500),
+    []
   );
   const onChangeInput = (e) => {
     setInputValue(e.target.value);
@@ -32,6 +33,7 @@ function Search({
         value={inputValue}
         disabled={disabled}
         variant={`${disabled ? "filled" : "outlined"}`}
+        size="small"
         onChange={(e) => {
           onChangeInput(e);
         }}

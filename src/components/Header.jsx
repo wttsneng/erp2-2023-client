@@ -12,6 +12,9 @@ import NotificationsIcon from "@mui/icons-material/Notifications";
 import InputBase from "@mui/material/InputBase";
 import { styled, alpha } from "@mui/material/styles";
 
+import { useSelector } from "react-redux";
+import { selectSidebarActive } from "../redux/slices/sidebarSlice";
+
 const Search = styled("div")(({ theme }) => ({
   position: "relative",
   borderRadius: theme.shape.borderRadius,
@@ -53,7 +56,8 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
     },
   },
 }));
-function Header({ pageName }) {
+function Header() {
+  const { activeTitle } = useSelector(selectSidebarActive);
   return (
     <Box
       sx={{
@@ -64,7 +68,7 @@ function Header({ pageName }) {
       <AppBar position="static" elevation={0} color={"transparent"}>
         <Toolbar>
           <Typography variant="h5" component="div" sx={{ flexGrow: 1 }}>
-            {pageName}
+            {activeTitle}
           </Typography>
           <Box
             display={"flex"}

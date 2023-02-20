@@ -1,17 +1,38 @@
-import { Box, Grid } from "@mui/material";
 import React from "react";
-import { useDispatch, useSelector } from "react-redux";
+
 import { socket } from "../core";
+
+import { Box, Grid } from "@mui/material";
+
+import { useDispatch, useSelector } from "react-redux";
+import { setSidebarActiveByLink } from "../redux/slices/sidebarSlice";
+import {
+  setAccessTagsSearchValue,
+  selectAccessTagsFilters,
+} from "../redux/slices/AccessTagsFilterSlice";
 import { getAccessTags } from "../redux/slices/AccessTagsSlice";
-import { selectAccessTagsFilters } from "../redux/slices/AccessTagsFilterSlice";
+
 import translateSocketRedux from "../data/translateSocketRedux.json";
-import { Header } from "../components";
-import AccessTagInput from "../containers/AccessTagInput";
-import AccessTagSearch from "../containers/AccessTagSearch";
+
+import AccessTagInput from "../components/AccessTags/AccessTagEdit";
+import Search from "../components/Search";
+import AccessTagsTable from "../components/AccessTags/AccessTagsTable";
+import AccessTagsFilters from "../components/AccessTags/AccessTagsFilters";
+import AccessTagsAddDelete from "../components/AccessTags/AccessTagsAddDelete";
+
 export default function Tags() {
   const dispatch = useDispatch();
-  const AccessTagsFilters = useSelector(selectAccessTagsFilters);
-  React.useEffect(() => {}, []);
+  const tagsFilters = useSelector(selectAccessTagsFilters);
+
+  const onSearch = (value) => {
+    dispatch(setAccessTagsSearchValue(value));
+  };
+
+  React.useEffect(() => {
+    dispatch(setSidebarActiveByLink("page/1_1"));
+    socket.disconnect();
+    socket.connect();
+  }, []);
 
   React.useEffect(() => {
     socket.onAny((event, args) => {
@@ -23,26 +44,54 @@ export default function Tags() {
     });
   }, []);
 
+  React.useEffect(() => {
+    getAccessTags(tagsFilters);
+  }, [tagsFilters]);
+
   return (
     <div className="">
-      <Header pageName={"Access tags"} />
       <Grid container spacing={2}>
         <Grid item md={8} xs={12} order={{ xs: 2, md: 1 }}>
           <Box
             sx={{
               backgroundColor: "white",
-              borderRadius: 2,
+              borderRadius: 1,
               padding: 2,
             }}
           >
-            <AccessTagSearch />
+            <Search
+              onChange={onSearch}
+              sx={{ width: "100%" }}
+              label="Access tags search"
+              value={tagsFilters.searchValue}
+            />
+          </Box>
+          <Box
+            sx={{
+              backgroundColor: "white",
+              borderRadius: 1,
+              padding: 2,
+              marginBlockStart: 2,
+            }}
+          >
+            <Box
+              sx={{
+                display: "flex",
+                justifyContent: "space-between",
+                alignItems: "center",
+              }}
+            >
+              <AccessTagsFilters />
+              <AccessTagsAddDelete />
+            </Box>
+            <AccessTagsTable />
           </Box>
         </Grid>
         <Grid item md={4} xs={12} order={{ xs: 1, md: 2 }}>
           <Box
             sx={{
               backgroundColor: "white",
-              borderRadius: 2,
+              borderRadius: 1,
               padding: 2,
             }}
           >
@@ -52,21 +101,6 @@ export default function Tags() {
           </Box>
         </Grid>
       </Grid>
-      <button
-        onClick={() => {
-          socket.disconnect();
-          socket.connect();
-        }}
-      >
-        Подключить сокеты
-      </button>
-      <button
-        onClick={() => {
-          getAccessTags(AccessTagsFilters);
-        }}
-      >
-        getTagList
-      </button>
     </div>
   );
 }

@@ -3,12 +3,13 @@ import { FormControl, InputLabel, Select, MenuItem } from "@mui/material";
 function MySelect({ value, onChange, label, options }) {
   return (
     <FormControl fullWidth>
-      <InputLabel id="My-select">{label}</InputLabel>
+      {/* <InputLabel id="My-select">{label}</InputLabel> */}
       <Select
+        size="small"
         labelId="My-select"
         id="My-select"
         value={value}
-        label={label}
+        // label={label}
         onChange={onChange}
       >
         {Array.isArray(options)

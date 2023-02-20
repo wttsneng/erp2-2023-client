@@ -5,6 +5,7 @@ import { AccessTagsFilterReducer } from "./slices/AccessTagsFilterSlice";
 import { AccessTagsReducer } from "./slices/AccessTagsSlice";
 import { AccessTagsHistoryFilterReducer } from "./slices/AccessTagsHistoryFilterSlice";
 import { AccessTagsInputReducer } from "./slices/AccessTagsInputSlice";
+import { sidebarReducer } from "./slices/sidebarSlice";
 
 const rootReducer = combineReducers({
   auth: authReducer,
@@ -13,6 +14,7 @@ const rootReducer = combineReducers({
   accessTagsFilter: AccessTagsFilterReducer,
   accessTagsHistoryFilter: AccessTagsHistoryFilterReducer,
   accessTagsInput: AccessTagsInputReducer,
+  sidebar: sidebarReducer,
 });
 const makeStore = () =>
   configureStore({

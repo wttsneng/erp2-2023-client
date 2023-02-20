@@ -2,15 +2,15 @@ import { createSlice } from "@reduxjs/toolkit";
 import { socket } from "../../core";
 
 export const changeAccessTagsInputStarted = ({ itemId, attribute }) => {
-  socket.emit("changeAccessTagValueStart", { itemId, attribute });
+  socket.emit("changeAccessTagsValueStart", { itemId, attribute });
 };
 
 export const changeAccessTagsInputEnded = ({ itemId, attribute }) => {
-  socket.emit("changeAccessTagValueEnd", { itemId, attribute });
+  socket.emit("changeAccessTagsValueEnd", { itemId, attribute });
 };
 
 export const changeAccessTagValue = ({ itemId, attribute, value }) => {
-  socket.emit("changeAccessTagValue", { itemId, attribute, value });
+  socket.emit("changeAccessTagsValue", { itemId, attribute, value });
 };
 
 export const createAccessTag = ({ name, description }) => {

@@ -11,7 +11,7 @@ function TagsList({ arr, onClick, onDelete, ...props }) {
             onClick={() => {
               onClick(item);
             }}
-            onDelete={() => {}}
+            // color="primary"
             sx={{ marginRight: 1, marginBottom: 1 }}
             {...props}
           />
