@@ -16,6 +16,9 @@ export const changeAccessTagValue = ({ itemId, attribute, value }) => {
 export const createAccessTag = ({ name, description }) => {
   socket.emit("createAccessTag", { name, description });
 };
+export const deleteAccessTag = (id) => {
+  socket.emit("deleteAccessTag", id);
+};
 
 const initialState = {
   id: null,
@@ -27,7 +30,6 @@ const initialState = {
   isDescriptionDisabled: false,
   isNameFocused: false,
   isDescriptionFocused: false,
-  mode: "create", // create, edit
 };
 
 const accessTagsInput = createSlice({
@@ -49,9 +51,6 @@ const accessTagsInput = createSlice({
     setAccessTagsInputDescription: (state, action) => {
       state.description = action.payload;
     },
-    setAccessTagsInputMode: (state, action) => {
-      state.mode = action.payload;
-    },
     setAccessTagsInputIsNameDisabled: (state, action) => {
       state.isNameDisabled = action.payload;
     },
@@ -64,6 +63,17 @@ const accessTagsInput = createSlice({
     setAccessTagsInputIsDescriptionFocused: (state, action) => {
       state.isDescriptionFocused = action.payload;
     },
+    clearAccessTagsInput: (state) => {
+      state.id = null;
+      state.initialName = "";
+      state.initialDescription = "";
+      state.name = "";
+      state.description = "";
+      state.isNameDisabled = false;
+      state.isDescriptionDisabled = false;
+      state.isNameFocused = false;
+      state.isDescriptionFocused = false;
+    },
   },
   extraReducers: (builder) => {},
 });
@@ -74,11 +84,11 @@ export const {
   setAccessTagsInputInitialDescription,
   setAccessTagsInputName,
   setAccessTagsInputDescription,
-  setAccessTagsInputMode,
   setAccessTagsInputIsNameDisabled,
   setAccessTagsInputIsDescriptionDisabled,
   setAccessTagsInputIsNameFocused,
   setAccessTagsInputIsDescriptionFocused,
+  clearAccessTagsInput,
 } = accessTagsInput.actions;
 export const AccessTagsInputReducer = accessTagsInput.reducer;
 export const selectAccessTagsInputData = (state) => state.accessTagsInput;

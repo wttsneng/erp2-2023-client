@@ -32,7 +32,7 @@ function HistoryTable({ data }) {
                 </TableCell>
                 <TableCell>{row.new_value}</TableCell>
                 <TableCell>{row.createdAt}</TableCell>
-                <TableCell>{row.userLogin}</TableCell>
+                <TableCell>{row["user.login"]}</TableCell>
               </TableRow>
             ))}
           </TableBody>

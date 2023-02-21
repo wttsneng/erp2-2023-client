@@ -6,8 +6,6 @@ export const getAccessTagsHistory = ({
   order,
   id,
   sortBy,
-  fields,
-  withFields,
   limit,
   withUserLogin,
   page,
@@ -17,8 +15,6 @@ export const getAccessTagsHistory = ({
     order,
     id,
     sortBy,
-    fields,
-    withFields,
     limit,
     withUserLogin,
     page,
@@ -27,13 +23,11 @@ export const getAccessTagsHistory = ({
 
 const initialState = {
   searchValue: "",
-  order: "asc",
+  order: "ASC",
   id: null,
   sortBy: "createdAt", // createdAt, userLogin, new_value
-  fields: ["createdAt", "userLogin", "new_value", "field"],
-  withFields: ["name", "description"],
   limit: 50,
-  withUserLogin: ["*"], // ["*"] - all users, ["user1", "user2"] - only user1 and user2
+  withUserLogin: "",
   page: 1,
 };
 

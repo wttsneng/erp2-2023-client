@@ -1,5 +1,4 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { socket } from "../../core";
 
 export const sortByVariants = {
   createdAt: "Date",
@@ -60,6 +59,7 @@ export const {
   setAccessTagsOrder,
   setAccessTagsSortBy,
   setAccessTagsLimit,
+  setAccessTagsPage,
 } = AccessTagsFilterSlice.actions;
 export const AccessTagsFilterReducer = AccessTagsFilterSlice.reducer;
 export const selectAccessTagsFilters = (state) => state.accessTagsFilter;

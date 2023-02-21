@@ -1,20 +1,25 @@
 import React from "react";
-import { Chip } from "@mui/material";
-function TagsList({ arr, onClick, onDelete, ...props }) {
+import { Chip, Tooltip } from "@mui/material";
+function TagsList({ arr, onClick, selectedTags, onContextMenu, ...props }) {
   return (
     <React.Fragment>
       {arr.map((item) => {
         return (
-          <Chip
-            key={item.id}
-            label={item.name}
-            onClick={() => {
-              onClick(item);
-            }}
-            // color="primary"
-            sx={{ marginRight: 1, marginBottom: 1 }}
-            {...props}
-          />
+          <Tooltip title={item.description} key={item.id}>
+            <Chip
+              label={item.name}
+              onClick={(e) => {
+                onClick(item);
+              }}
+              onContextMenu={(e) => {
+                e.preventDefault();
+                onContextMenu(e.currentTarget);
+              }}
+              color={selectedTags.includes(item.id) ? "primary" : "default"}
+              sx={{ marginRight: 1, marginBottom: 1 }}
+              {...props}
+            />
+          </Tooltip>
         );
       })}
     </React.Fragment>

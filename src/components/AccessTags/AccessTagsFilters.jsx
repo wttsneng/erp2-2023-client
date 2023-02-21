@@ -28,7 +28,7 @@ function AccessTagsFilters() {
   };
 
   return (
-    <Stack direction="row" spacing={2} sx={{ width: "50%" }}>
+    <Stack direction="row" spacing={2}>
       <MySelect
         label={"Sort by"}
         value={tagsFilters.sortBy.value}

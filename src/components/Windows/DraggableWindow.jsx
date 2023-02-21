@@ -19,7 +19,7 @@ function PaperComponent(props) {
   );
 }
 
-function DraggableWindow({ open, onClose, data }) {
+function DraggableWindow({ open, onClose, childrens }) {
   return (
     <Dialog
       open={open}
@@ -31,7 +31,7 @@ function DraggableWindow({ open, onClose, data }) {
         Subscribe
       </DialogTitle>
       <DialogContent>
-        <DialogContentText>{data}</DialogContentText>
+        <DialogContentText>{childrens}</DialogContentText>
       </DialogContent>
       <DialogActions>
         <Button autoFocus onClick={onClose}>

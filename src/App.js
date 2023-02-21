@@ -2,6 +2,8 @@ import React from "react";
 
 import { Routes, Route } from "react-router-dom";
 
+import { socket } from "./core";
+
 import { MainLayout, AuthProtect, HomeRoute, ProtectedRoutes } from "./layouts";
 
 import { useSelector, useDispatch } from "react-redux";
@@ -24,8 +26,17 @@ function App() {
     }
     if (authStatus === "success") {
       dispatch(setSidebarData(authData.uimodules));
+      if (socket.disconnected) {
+        socket.connect();
+      }
     }
   }, [authStatus]);
+
+  React.useEffect(() => {
+    socket.onAny((event, ...args) => {
+      dispatch({ type: event, payload: args[0] });
+    });
+  }, []);
 
   return (
     <React.Fragment>

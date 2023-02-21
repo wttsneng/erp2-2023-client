@@ -42,20 +42,19 @@ function findAndOpenParentElementsByLink(link, data) {
 
 function findFirstObjectWithLinkAndOpenParents(data) {
   const firstElement = data[0];
+  if (!firstElement) return { data, resultObj: null };
   let resultObj = null;
 
   function traverse(element, parentElements = []) {
     if (element.link) {
-      // Found the element with link, set all parent elements to open:true
       for (const parentElement of parentElements) {
         parentElement.open = true;
       }
       resultObj = element;
     } else if (element.items) {
-      // Traverse child elements recursively, passing current element as parent
       for (const childElement of element.items) {
         traverse(childElement, [...parentElements, element]);
-        if (resultObj) break; // Stop traversal if link is found
+        if (resultObj) break;
       }
     }
   }

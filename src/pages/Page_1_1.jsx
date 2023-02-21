@@ -1,7 +1,5 @@
 import React from "react";
 
-import { socket } from "../core";
-
 import { Box, Grid } from "@mui/material";
 
 import { useDispatch, useSelector } from "react-redux";
@@ -12,13 +10,12 @@ import {
 } from "../redux/slices/AccessTagsFilterSlice";
 import { getAccessTags } from "../redux/slices/AccessTagsSlice";
 
-import translateSocketRedux from "../data/translateSocketRedux.json";
-
 import AccessTagInput from "../components/AccessTags/AccessTagEdit";
 import Search from "../components/Search";
 import AccessTagsTable from "../components/AccessTags/AccessTagsTable";
 import AccessTagsFilters from "../components/AccessTags/AccessTagsFilters";
 import AccessTagsAddDelete from "../components/AccessTags/AccessTagsAddDelete";
+import AccessTagsHistoryWindow from "../components/AccessTags/AccessTagsHistoryWindow";
 
 export default function Tags() {
   const dispatch = useDispatch();
@@ -30,18 +27,6 @@ export default function Tags() {
 
   React.useEffect(() => {
     dispatch(setSidebarActiveByLink("page/1_1"));
-    socket.disconnect();
-    socket.connect();
-  }, []);
-
-  React.useEffect(() => {
-    socket.onAny((event, args) => {
-      const type = translateSocketRedux[event];
-      console.log("type", type);
-      if (type) {
-        dispatch({ type, payload: args });
-      }
-    });
   }, []);
 
   React.useEffect(() => {
@@ -52,6 +37,8 @@ export default function Tags() {
     <div className="">
       <Grid container spacing={2}>
         <Grid item md={8} xs={12} order={{ xs: 2, md: 1 }}>
+          <AccessTagsHistoryWindow />
+
           <Box
             sx={{
               backgroundColor: "white",
@@ -74,16 +61,14 @@ export default function Tags() {
               marginBlockStart: 2,
             }}
           >
-            <Box
-              sx={{
-                display: "flex",
-                justifyContent: "space-between",
-                alignItems: "center",
-              }}
-            >
-              <AccessTagsFilters />
-              <AccessTagsAddDelete />
-            </Box>
+            <Grid container justifyContent={"space-between"} spacing={2}>
+              <Grid item xs={12} md={6}>
+                <AccessTagsFilters />
+              </Grid>
+              <Grid item xs={12} md={"auto"}>
+                <AccessTagsAddDelete />
+              </Grid>
+            </Grid>
             <AccessTagsTable />
           </Box>
         </Grid>

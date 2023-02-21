@@ -5,41 +5,58 @@ import DeleteOutlineIcon from "@mui/icons-material/DeleteOutline";
 
 import { useDispatch, useSelector } from "react-redux";
 import {
-  setAccessTagsInputName,
-  setAccessTagsInputDescription,
-  setAccessTagsInputInitialName,
-  setAccessTagsInputInitialDescription,
-  setAccessTagsInputIsDescriptionDisabled,
-  setAccessTagsInputIsNameDisabled,
-  setAccessTagsInputIsNameFocused,
-  setAccessTagsInputIsDescriptionFocused,
   setAccessTagsInputId,
-  selectAccessTagsInputData,
+  clearAccessTagsInput,
+  createAccessTag,
+  deleteAccessTag,
 } from "../../redux/slices/AccessTagsInputSlice";
+import {
+  multiAddRemoveSelectedAccessTag,
+  selectAccessTagsTableSelected,
+} from "../../redux/slices/AccessTagsTableSlice";
+
 function AccessTagsAddDelete() {
   const dispatch = useDispatch();
-  const inputData = useSelector(selectAccessTagsInputData);
+  const accessTagsAddedId = useSelector((state) => state.accessTags.addedId);
+  const accessTagsTableSelected = useSelector(selectAccessTagsTableSelected);
+
+  const handleAddClick = () => {
+    dispatch(clearAccessTagsInput());
+    createAccessTag({
+      name: "New Access tag",
+      description: "New description",
+    });
+  };
+  const handleDeleteClick = () => {
+    dispatch(clearAccessTagsInput());
+    accessTagsTableSelected.forEach((id) => {
+      deleteAccessTag({ itemId: id });
+    });
+  };
+
   React.useEffect(() => {
-    if (inputData.mode === "create") {
-      dispatch(setAccessTagsInputName(""));
-      dispatch(setAccessTagsInputDescription(""));
-      dispatch(setAccessTagsInputInitialName(""));
-      dispatch(setAccessTagsInputInitialDescription(""));
-      dispatch(setAccessTagsInputIsDescriptionDisabled(false));
-      dispatch(setAccessTagsInputIsNameDisabled(false));
-      dispatch(setAccessTagsInputIsNameFocused(true));
-      dispatch(setAccessTagsInputIsDescriptionFocused(false));
-      dispatch(setAccessTagsInputId(null));
+    if (accessTagsAddedId) {
+      dispatch(setAccessTagsInputId(accessTagsAddedId));
+      dispatch(multiAddRemoveSelectedAccessTag(accessTagsAddedId));
     }
-  }, [inputData.mode, dispatch]);
+  }, [accessTagsAddedId]);
 
   return (
     <div className="buttons">
       <Stack direction="row" spacing={2}>
-        <Button variant="contained">
+        <Button
+          variant="contained"
+          onClick={handleAddClick}
+          sx={{ width: { xs: "50%", md: "initial" } }}
+        >
           <AddCircleOutlineIcon />
         </Button>
-        <Button variant="contained" color="error">
+        <Button
+          variant="contained"
+          color="error"
+          sx={{ width: { xs: "50%", md: "initial" } }}
+          onClick={handleDeleteClick}
+        >
           <DeleteOutlineIcon />
         </Button>
       </Stack>
