@@ -13,7 +13,7 @@ import InputBase from "@mui/material/InputBase";
 import { styled, alpha } from "@mui/material/styles";
 
 import { useSelector } from "react-redux";
-import { selectSidebarActive } from "../redux/slices/sidebarSlice";
+import { selectSidebarActive } from "../../redux/slices/sidebarSlice";
 
 const Search = styled("div")(({ theme }) => ({
   position: "relative",

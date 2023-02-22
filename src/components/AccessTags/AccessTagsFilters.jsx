@@ -2,7 +2,7 @@ import React from "react";
 import { Stack } from "@mui/material";
 import { useSelector, useDispatch } from "react-redux";
 import { selectAccessTagsFilters } from "../../redux/slices/AccessTagsFilterSlice";
-import MySelect from "../MySelect";
+import { MySelect } from "../Basic";
 import {
   setAccessTagsSortBy,
   setAccessTagsOrder,

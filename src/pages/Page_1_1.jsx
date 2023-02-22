@@ -8,10 +8,10 @@ import {
   setAccessTagsSearchValue,
   selectAccessTagsFilters,
 } from "../redux/slices/AccessTagsFilterSlice";
-import { getAccessTags } from "../redux/slices/AccessTagsSlice";
+import { fetchAccessTags } from "../redux/slices/AccessTagsSlice";
 
+import { Search } from "../components/Basic";
 import AccessTagInput from "../components/AccessTags/AccessTagEdit";
-import Search from "../components/Search";
 import AccessTagsTable from "../components/AccessTags/AccessTagsTable";
 import AccessTagsFilters from "../components/AccessTags/AccessTagsFilters";
 import AccessTagsAddDelete from "../components/AccessTags/AccessTagsAddDelete";
@@ -30,7 +30,7 @@ export default function Tags() {
   }, []);
 
   React.useEffect(() => {
-    getAccessTags(tagsFilters);
+    dispatch(fetchAccessTags(tagsFilters));
   }, [tagsFilters]);
 
   return (

@@ -4,10 +4,9 @@ import {
   selectAccessTagsHistoryWindowIsOpen,
   setAccessTagsHistoryWindowOpen,
 } from "../../redux/slices/AccessTagsHistoryWindowSlice";
-import DraggableWindow from "../Windows/DraggableWindow";
+import { DraggableWindow, HistoryTable } from "../Basic";
 import { selectAccessTagsHistoryData } from "../../redux/slices/AccessTagsHistorySlice";
 import { setTagHistoryId } from "../../redux/slices/AccessTagsHistoryFilterSlice";
-import HistoryTable from "../HistoryTable";
 function AccessTagsHistoryWindow() {
   const dispatch = useDispatch();
   const isOpen = useSelector(selectAccessTagsHistoryWindowIsOpen);

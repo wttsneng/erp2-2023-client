@@ -1,4 +1,4 @@
-import { Sidebar, Header } from "../components";
+import { Sidebar, Header } from "../components/Basic";
 import React from "react";
 import { Outlet } from "react-router-dom";
 

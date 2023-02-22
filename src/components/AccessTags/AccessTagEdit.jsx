@@ -2,7 +2,7 @@ import React from "react";
 
 import { Stack } from "@mui/material";
 
-import { SocketInput } from "../index";
+import { SocketInput } from "../Basic";
 
 import { useDispatch, useSelector } from "react-redux";
 import {

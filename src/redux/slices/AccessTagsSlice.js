@@ -1,16 +1,15 @@
-import { createSlice } from "@reduxjs/toolkit";
-import { socket } from "../../core";
+import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
+import { axios } from "../../core";
 
-export const getAccessTags = ({ searchValue, order, sortBy, limit, page }) => {
-  socket.emit("getAccessTags", {
-    query: searchValue,
-    order: order.value,
-    sortBy: sortBy.value,
-    limit,
-    page,
-  });
-};
-
+export const fetchAccessTags = createAsyncThunk(
+  "accessTags/fetchAccessTags",
+  async ({ searchValue, order, sortBy, limit, page }) => {
+    const response = await axios.get(
+      `/api/accounts/access_tags?query=${searchValue}&order=${order.value}&sortBy=${sortBy.value}&limit=${limit}&page=${page}`
+    );
+    return response.data;
+  }
+);
 const initialState = {
   data: [],
   count: 0,
@@ -52,7 +51,21 @@ const accessTagsSlice = createSlice({
       state.status = "success";
     },
   },
-  extraReducers: (builder) => {},
+  extraReducers: (builder) => {
+    builder
+      .addCase(fetchAccessTags.pending, (state, action) => {
+        state.status = "loading";
+      })
+      .addCase(fetchAccessTags.fulfilled, (state, action) => {
+        state.status = "success";
+        state.data = action.payload.rows;
+        state.count = action.payload.count;
+        state.totalPages = action.payload.totalPages;
+      })
+      .addCase(fetchAccessTags.rejected, (state, action) => {
+        state.status = "error";
+      });
+  },
 });
 
 export const { setAccessTags, addAccessTag, updateAccessTag, deleteAccessTag } =

@@ -9,6 +9,38 @@ import { createTheme, ThemeProvider } from "@mui/material/styles";
 
 const theme = createTheme({
   spacing: 4,
+  typography: {
+    fontSize: 16,
+  },
+  components: {
+    MuiButton: {
+      defaultProps: {
+        size: "small",
+      },
+    },
+    MuiInputBase: {
+      defaultProps: {
+        size: "small",
+      },
+      styleOverrides: {
+        root: {
+          padding: "0px",
+        },
+      },
+    },
+    MuiFormControl: {
+      styleOverrides: {
+        size: "small",
+        root: {
+          // "& .MuiInputBase-input": {
+          //   height: "20px",
+          //   padding: "0px 14px",
+          // },
+          // height: "35px",
+        },
+      },
+    },
+  },
 });
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(

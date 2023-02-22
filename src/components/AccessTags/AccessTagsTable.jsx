@@ -11,7 +11,7 @@ import {
 import DeleteOutlineIcon from "@mui/icons-material/DeleteOutline";
 import { useTheme } from "@mui/material/styles";
 
-import TagsList from "../TagsList";
+import { TagsList, TagsListLoading } from "../Basic";
 
 import { useSelector, useDispatch } from "react-redux";
 import {
@@ -93,14 +93,16 @@ function AccessTagsTable() {
           marginBlockStart: 2,
         }}
       >
-        {tagsStatus === "success" && (
+        {tagsStatus === "success" ? (
           <TagsList
             arr={tags}
             selectedTags={selectedTags}
             onClick={handleTagClick}
             onContextMenu={handleTagContextMenu}
           />
-        )}
+        ) : tagsStatus === "loading" || tagsStatus === "idle" ? (
+          <TagsListLoading />
+        ) : null}
       </Box>
 
       <Box sx={{ position: "relative", marginBlockStart: 2 }}>

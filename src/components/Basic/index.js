@@ -5,3 +5,8 @@ export { default as MainLoading } from "./MainLoading";
 export { default as SocketInput } from "./SocketInput/index";
 export { default as HistoryTable } from "./HistoryTable";
 export { default as DraggableWindow } from "./Windows/DraggableWindow";
+export { default as MobileHeader } from "./MobileHeader";
+export { default as MySelect } from "./MySelect";
+export { default as Search } from "./Search";
+export { default as TagsList } from "./TagsList";
+export { default as TagsListLoading } from "./TagsListLoading";
