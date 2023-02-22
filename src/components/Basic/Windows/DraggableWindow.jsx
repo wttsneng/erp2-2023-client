@@ -6,6 +6,7 @@ import DialogContent from "@mui/material/DialogContent";
 import DialogContentText from "@mui/material/DialogContentText";
 import DialogTitle from "@mui/material/DialogTitle";
 import Paper from "@mui/material/Paper";
+import { ResizableBox } from "react-resizable";
 import Draggable from "react-draggable";
 
 function PaperComponent(props) {
@@ -19,11 +20,15 @@ function PaperComponent(props) {
   );
 }
 
-function DraggableWindow({ open, onClose, childrens }) {
+function DraggableWindow({ open, onClose, children }) {
   return (
     <Dialog
       open={open}
-      onClose={onClose}
+      onClose={(e, reason) => {
+        if (reason === "backdropClick") return;
+        onClose();
+      }}
+      hideBackdrop={true}
       PaperComponent={PaperComponent}
       aria-labelledby="draggable-dialog-title"
     >
@@ -31,7 +36,7 @@ function DraggableWindow({ open, onClose, childrens }) {
         Subscribe
       </DialogTitle>
       <DialogContent>
-        <DialogContentText>{childrens}</DialogContentText>
+        <DialogContentText>{children}</DialogContentText>
       </DialogContent>
       <DialogActions>
         <Button autoFocus onClick={onClose}>

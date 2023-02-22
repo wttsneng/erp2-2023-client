@@ -23,30 +23,30 @@ const theme = createTheme({
         },
       },
     },
-    // MuiFormControl: {
-    //   styleOverrides: {
-    //     root: {
-    //       height: 30,
-    //     },
-    //   },
-    // },
-    // MuiFormLabel: {
-    //   styleOverrides: {
-    //     root: {
-    //       top: "-20% !important",
-    //     },
-    //   },
-    // },
-    // MuiInputBase: {
-    //   styleOverrides: {
-    //     root: {
-    //       height: 30,
-    //       "& .MuiInputBase-input": {
-    //         padding: "5px 14px",
-    //       },
-    //     },
-    //   },
-    // },
+    MuiFormControl: {
+      styleOverrides: {
+        root: {
+          height: 30,
+        },
+      },
+    },
+    MuiFormLabel: {
+      styleOverrides: {
+        root: {
+          top: "-20% !important",
+        },
+      },
+    },
+    MuiInputBase: {
+      styleOverrides: {
+        root: {
+          height: 30,
+          "& .MuiInputBase-input": {
+            padding: "5px 14px",
+          },
+        },
+      },
+    },
   },
 });
 const root = ReactDOM.createRoot(document.getElementById("root"));

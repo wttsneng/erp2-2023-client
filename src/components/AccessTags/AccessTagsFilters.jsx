@@ -6,7 +6,6 @@ import { MySelect } from "../Basic";
 import {
   setAccessTagsSortBy,
   setAccessTagsOrder,
-  setAccessTagsLimit,
   sortByVariants,
   orderVariants,
 } from "../../redux/slices/AccessTagsFilterSlice";

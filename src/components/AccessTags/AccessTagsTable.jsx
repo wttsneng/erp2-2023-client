@@ -75,7 +75,10 @@ function AccessTagsTable() {
           paddingTop: 1,
           paddingX: 1,
           marginBlockStart: 2,
-          minHeight: "calc(100vh - 230px)",
+          minHeight: {
+            xs: "calc(100vh - 400px)",
+            md: "calc(100vh - 240px)",
+          },
         }}
       >
         {tagsStatus === "success" ? (
@@ -85,7 +88,7 @@ function AccessTagsTable() {
             onClick={handleTagClick}
             onContextMenu={handleTagContextMenu}
           />
-        ) : tagsStatus === "loading" || tagsStatus === "idle" ? (
+        ) : tagsStatus === "idle" ? (
           <TagsListLoading />
         ) : null}
       </Box>

@@ -1,6 +1,6 @@
 import React from "react";
 
-import { Box, Grid, Stack } from "@mui/material";
+import { Box, Grid } from "@mui/material";
 
 import { useDispatch, useSelector } from "react-redux";
 import { setSidebarActiveByLink } from "../redux/slices/sidebarSlice";
@@ -17,6 +17,29 @@ import AccessTagsFilters from "../components/AccessTags/AccessTagsFilters";
 import AccessTagsAddDelete from "../components/AccessTags/AccessTagsAddDelete";
 import AccessTagsHistoryWindow from "../components/AccessTags/AccessTagsHistoryWindow";
 import AccessTagsTableFooter from "../components/AccessTags/AccessTagsTableFooter";
+import { Resizable } from "react-resizable";
+
+const ResizableComponent = () => {
+  const [width, setWidth] = React.useState(200);
+  const [height, setHeight] = React.useState(200);
+
+  const handleResize = (event, { size }) => {
+    setWidth(size.width);
+    setHeight(size.height);
+  };
+
+  return (
+    <Resizable
+      className="resizable-component"
+      width={width}
+      height={height}
+      onResize={handleResize}
+      draggableOpts={{ grid: [1, 1] }} // Sets a grid for resizing
+    >
+      <div className="resizable-component-content">Resizable Component</div>
+    </Resizable>
+  );
+};
 
 export default function Tags() {
   const dispatch = useDispatch();
@@ -32,14 +55,13 @@ export default function Tags() {
 
   React.useEffect(() => {
     dispatch(fetchAccessTags(tagsFilters));
-  }, [tagsFilters]);
+  }, [tagsFilters, dispatch]);
 
   return (
     <div className="">
       <Grid container spacing={2}>
         <Grid item md={8} xs={12} order={{ xs: 2, md: 1 }}>
           <AccessTagsHistoryWindow />
-
           <Box
             sx={{
               backgroundColor: "white",
@@ -60,6 +82,8 @@ export default function Tags() {
               </Grid>
             </Grid>
             <AccessTagsAddDelete />
+            <ResizableComponent />
+
             <AccessTagsTable />
             <AccessTagsTableFooter />
           </Box>

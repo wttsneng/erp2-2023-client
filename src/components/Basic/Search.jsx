@@ -1,5 +1,5 @@
 import React from "react";
-import { TextField } from "@mui/material";
+import { TextField, InputAdornment } from "@mui/material";
 import debounce from "lodash.debounce";
 function Search({
   value,
@@ -29,10 +29,16 @@ function Search({
   return (
     <React.Fragment>
       <TextField
-        label={label}
+        hiddenLabel
         value={inputValue}
         disabled={disabled}
-        variant={`${disabled ? "filled" : "outlined"}`}
+        // variant={`${disabled ? "filled" : "outlined"}`}
+        variant="outlined"
+        InputProps={{
+          startAdornment: (
+            <InputAdornment position="start">{label}:</InputAdornment>
+          ),
+        }}
         size="small"
         sx={{ width: "100%" }}
         onChange={(e) => {

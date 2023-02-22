@@ -37,7 +37,11 @@ function AccessTagsTableFooter() {
           paddingBlockStart: 1,
         }}
       >
-        <Pagination count={20} page={page} onChange={handlePageChange} />
+        <Pagination
+          count={tagsTotalPages}
+          page={page}
+          onChange={handlePageChange}
+        />
         <Box>
           <MySelect
             label={"Show per page"}

@@ -4,8 +4,12 @@ import {
   selectAccessTagsHistoryWindowIsOpen,
   setAccessTagsHistoryWindowOpen,
 } from "../../redux/slices/AccessTagsHistoryWindowSlice";
-import { DraggableWindow, HistoryTable } from "../Basic";
-import { selectAccessTagsHistoryData } from "../../redux/slices/AccessTagsHistorySlice";
+import { DraggableWindow } from "../Basic";
+import AccessTagsHistoryTable from "./AccessTagsHistoryTable";
+import {
+  selectAccessTagsHistoryData,
+  fetchAccessTagsHistory,
+} from "../../redux/slices/AccessTagsHistorySlice";
 import { setTagHistoryId } from "../../redux/slices/AccessTagsHistoryFilterSlice";
 function AccessTagsHistoryWindow() {
   const dispatch = useDispatch();
@@ -16,11 +20,16 @@ function AccessTagsHistoryWindow() {
     dispatch(setAccessTagsHistoryWindowOpen(false));
     dispatch(setTagHistoryId(null));
   };
+  React.useEffect(() => {
+    if (isOpen) {
+      dispatch(fetchAccessTagsHistory());
+    }
+  }, [isOpen]);
   return (
     <React.Fragment>
       {isOpen && data.length !== 0 && (
         <DraggableWindow open={true} onClose={handleWindowClose}>
-          <HistoryTable data={data} />
+          <AccessTagsHistoryTable data={data} />
         </DraggableWindow>
       )}
     </React.Fragment>

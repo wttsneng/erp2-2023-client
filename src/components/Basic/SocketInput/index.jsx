@@ -1,5 +1,5 @@
 import React from "react";
-import { TextField, Typography, Box } from "@mui/material";
+import { TextField, Typography, Box, InputAdornment } from "@mui/material";
 import { useTheme } from "@mui/material/styles";
 const SocketInput = React.forwardRef(
   (
@@ -21,9 +21,13 @@ const SocketInput = React.forwardRef(
       <Box sx={{ position: "relative", width: "100%" }}>
         <TextField
           size="small"
-          label={label}
           value={value}
           disabled={disabled}
+          InputProps={{
+            startAdornment: (
+              <InputAdornment position="start">{label}:</InputAdornment>
+            ),
+          }}
           variant={`${disabled ? "filled" : "outlined"}`}
           sx={{
             backgroundColor: `${

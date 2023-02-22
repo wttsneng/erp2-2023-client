@@ -4,6 +4,7 @@ import {
   addAccessTag,
   updateAccessTag,
   deleteAccessTag,
+  fetchAccessTags,
 } from "./AccessTagsSlice";
 
 const initialState = {
@@ -81,6 +82,9 @@ const accessTagsTableSlice = createSlice({
         state.currentAccessTags = state.currentAccessTags.filter(
           (accessTag) => accessTag.id !== action.payload.id
         );
+      })
+      .addCase(fetchAccessTags.fulfilled, (state, action) => {
+        state.currentAccessTags = action.payload.rows;
       });
   },
 });

@@ -1,11 +1,18 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import { axios } from "../../core";
-
+import qs from "qs";
 export const fetchAccessTags = createAsyncThunk(
   "accessTags/fetchAccessTags",
   async ({ searchValue, order, sortBy, limit, page }) => {
+    const queryParams = qs.stringify({
+      query: searchValue,
+      order: order.value,
+      sortBy: sortBy.value,
+      limit,
+      page,
+    });
     const response = await axios.get(
-      `/api/accounts/access_tags?query=${searchValue}&order=${order.value}&sortBy=${sortBy.value}&limit=${limit}&page=${page}`
+      `/api/accounts/access_tags?${queryParams}`
     );
     return response.data;
   }

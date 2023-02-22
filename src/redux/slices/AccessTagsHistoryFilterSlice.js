@@ -1,33 +1,12 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { socket } from "../../core";
-
-export const getAccessTagsHistory = ({
-  searchValue,
-  order,
-  id,
-  sortBy,
-  limit,
-  withUserLogin,
-  page,
-}) => {
-  socket.emit("getAccessTagsHistory", {
-    query: searchValue,
-    order,
-    id,
-    sortBy,
-    limit,
-    withUserLogin,
-    page,
-  });
-};
 
 const initialState = {
   searchValue: "",
   order: "ASC",
   id: null,
   sortBy: "createdAt", // createdAt, userLogin, new_value
+  field: "name", // name, description
   limit: 50,
-  withUserLogin: "",
   page: 1,
 };
 
@@ -44,11 +23,8 @@ const AccessTagsHistoryFilterSlice = createSlice({
     setAccessTagsHistorySortBy: (state, action) => {
       state.sortBy = action.payload;
     },
-    setAccessTagsHistoryFields: (state, action) => {
-      state.fields = action.payload;
-    },
-    setAccessTagsHistoryWithFields: (state, action) => {
-      state.withFields = action.payload;
+    setAccessTagsHistoryField: (state, action) => {
+      state.field = action.payload;
     },
     setAccessTagsHistoryWithUserLogin: (state, action) => {
       state.withUserLogin = action.payload;
@@ -70,7 +46,7 @@ export const {
   setAccessTagsHistorySearchValue,
   setAccessTagsHistoryOrder,
   setAccessTagsHistorySortBy,
-  setAccessTagsHistoryFields,
+  setAccessTagsHistoryField,
   setAccessTagsHistoryWithFields,
   setAccessTagsHistoryWithUserLogin,
   setAccessTagsHistoryPage,

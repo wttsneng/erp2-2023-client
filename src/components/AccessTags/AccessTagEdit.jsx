@@ -25,9 +25,8 @@ import {
 } from "../../redux/slices/AccessTagsSlice";
 import { setAccessTagsHistoryWindowOpen } from "../../redux/slices/AccessTagsHistoryWindowSlice";
 import {
-  getAccessTagsHistory,
   setTagHistoryId,
-  selectAccessTagsHistoryFilterData,
+  setAccessTagsHistoryField,
 } from "../../redux/slices/AccessTagsHistoryFilterSlice";
 
 function AccessTagInput() {
@@ -35,7 +34,6 @@ function AccessTagInput() {
   const inputData = useSelector(selectAccessTagsInputData);
   const tags = useSelector(selectAccessTags);
   const tagsStatus = useSelector(selectAccessTagStatus);
-  const historyFilterData = useSelector(selectAccessTagsHistoryFilterData);
 
   const inputNameRef = React.useRef();
 
@@ -77,9 +75,16 @@ function AccessTagInput() {
       attribute: "description",
     });
   };
-  const handleHistoryClick = () => {
+  const handleNameHistoryClick = () => {
+    if (!inputData.id) return;
+    dispatch(setAccessTagsHistoryField("name"));
     dispatch(setTagHistoryId(inputData.id));
-    getAccessTagsHistory(historyFilterData);
+    dispatch(setAccessTagsHistoryWindowOpen(true));
+  };
+  const handleDescriptionHistoryClick = () => {
+    if (!inputData.id) return;
+    dispatch(setAccessTagsHistoryField("description"));
+    dispatch(setTagHistoryId(inputData.id));
     dispatch(setAccessTagsHistoryWindowOpen(true));
   };
 
@@ -114,7 +119,7 @@ function AccessTagInput() {
           onChange={handleNameChange}
           onBlur={handleNameBlur}
           onFocus={handleNameFocus}
-          onHistoryClick={handleHistoryClick}
+          onHistoryClick={handleNameHistoryClick}
           isHistoryShow={inputData.isNameFocused}
           ref={inputNameRef}
         />
@@ -125,7 +130,7 @@ function AccessTagInput() {
           onChange={handleDescriptionChange}
           onBlur={handleDescriptionBlur}
           onFocus={handleDescriptionFocus}
-          onHistoryClick={() => {}}
+          onHistoryClick={handleDescriptionHistoryClick}
           isHistoryShow={inputData.isDescriptionFocused}
         />
       </Stack>
