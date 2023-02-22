@@ -43,8 +43,9 @@ function AccessTagsAddDelete() {
 
   return (
     <div className="buttons">
-      <Stack direction="row" spacing={2}>
+      <Stack direction="row" spacing={2} sx={{ marginY: 2 }}>
         <Button
+          size="small"
           variant="contained"
           onClick={handleAddClick}
           sx={{ width: { xs: "50%", md: "initial" } }}
@@ -52,6 +53,7 @@ function AccessTagsAddDelete() {
           <AddCircleOutlineIcon />
         </Button>
         <Button
+          size="small"
           variant="contained"
           color="error"
           sx={{ width: { xs: "50%", md: "initial" } }}

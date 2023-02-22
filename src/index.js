@@ -14,32 +14,39 @@ const theme = createTheme({
   },
   components: {
     MuiButton: {
-      defaultProps: {
-        size: "small",
-      },
-    },
-    MuiInputBase: {
-      defaultProps: {
-        size: "small",
-      },
       styleOverrides: {
         root: {
-          padding: "0px",
+          height: 27,
+          "& .MuiSvgIcon-root": {
+            fontSize: "1.7em",
+          },
         },
       },
     },
-    MuiFormControl: {
-      styleOverrides: {
-        size: "small",
-        root: {
-          // "& .MuiInputBase-input": {
-          //   height: "20px",
-          //   padding: "0px 14px",
-          // },
-          // height: "35px",
-        },
-      },
-    },
+    // MuiFormControl: {
+    //   styleOverrides: {
+    //     root: {
+    //       height: 30,
+    //     },
+    //   },
+    // },
+    // MuiFormLabel: {
+    //   styleOverrides: {
+    //     root: {
+    //       top: "-20% !important",
+    //     },
+    //   },
+    // },
+    // MuiInputBase: {
+    //   styleOverrides: {
+    //     root: {
+    //       height: 30,
+    //       "& .MuiInputBase-input": {
+    //         padding: "5px 14px",
+    //       },
+    //     },
+    //   },
+    // },
   },
 });
 const root = ReactDOM.createRoot(document.getElementById("root"));

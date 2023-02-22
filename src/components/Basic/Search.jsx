@@ -34,6 +34,7 @@ function Search({
         disabled={disabled}
         variant={`${disabled ? "filled" : "outlined"}`}
         size="small"
+        sx={{ width: "100%" }}
         onChange={(e) => {
           onChangeInput(e);
         }}

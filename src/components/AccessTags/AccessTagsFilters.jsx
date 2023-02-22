@@ -23,10 +23,6 @@ function AccessTagsFilters() {
     dispatch(setAccessTagsOrder(event.target.value));
   };
 
-  const handleLimitChange = (event) => {
-    dispatch(setAccessTagsLimit(event.target.value));
-  };
-
   return (
     <Stack direction="row" spacing={2}>
       <MySelect
@@ -40,12 +36,6 @@ function AccessTagsFilters() {
         value={tagsFilters.order.value}
         options={orderVariants}
         onChange={handleOrderByChange}
-      />
-      <MySelect
-        label={"Show per page"}
-        value={tagsFilters.limit}
-        options={[50, 100, 200]}
-        onChange={handleLimitChange}
       />
     </Stack>
   );

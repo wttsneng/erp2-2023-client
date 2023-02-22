@@ -1,13 +1,5 @@
 import React from "react";
-import {
-  Box,
-  Pagination,
-  Menu,
-  MenuItem,
-  Typography,
-  ListItemIcon,
-  ListItemText,
-} from "@mui/material";
+import { Box, Menu, MenuItem, ListItemIcon, ListItemText } from "@mui/material";
 import DeleteOutlineIcon from "@mui/icons-material/DeleteOutline";
 import { useTheme } from "@mui/material/styles";
 
@@ -28,7 +20,6 @@ import {
   clearAccessTagsInput,
   deleteAccessTag,
 } from "../../redux/slices/AccessTagsInputSlice";
-import { setAccessTagsPage } from "../../redux/slices/AccessTagsFilterSlice";
 
 function AccessTagsTable() {
   const theme = useTheme();
@@ -39,13 +30,6 @@ function AccessTagsTable() {
   const selectedTags = useSelector(selectAccessTagsTableSelected);
   const tagsStatus = useSelector(selectAccessTagStatus);
   const tags = useSelector(selectAccessTags);
-  const tagsCount = useSelector((state) => state.accessTags.count);
-  const tagsTotalPages = useSelector((state) => state.accessTags.totalPages);
-  const page = useSelector((state) => state.accessTagsFilter.page);
-
-  const handlePageChange = (event, value) => {
-    dispatch(setAccessTagsPage(value));
-  };
 
   const handleTagClick = (tag) => {
     dispatch(setAccessTagsInputId(tag.id));
@@ -91,6 +75,7 @@ function AccessTagsTable() {
           paddingTop: 1,
           paddingX: 1,
           marginBlockStart: 2,
+          minHeight: "calc(100vh - 230px)",
         }}
       >
         {tagsStatus === "success" ? (
@@ -105,30 +90,6 @@ function AccessTagsTable() {
         ) : null}
       </Box>
 
-      <Box sx={{ position: "relative", marginBlockStart: 2 }}>
-        <Box
-          sx={{
-            display: "flex",
-            justifyContent: "center",
-          }}
-        >
-          <Pagination
-            count={tagsTotalPages}
-            page={page}
-            onChange={handlePageChange}
-          />
-        </Box>
-        <Typography
-          sx={{
-            position: "absolute",
-            top: "50%",
-            right: 0,
-            transform: "translateY(-50%)",
-          }}
-        >
-          Total count:{tagsCount}
-        </Typography>
-      </Box>
       <Menu
         id="basic-menu"
         anchorEl={contextMenuAnchorEl}

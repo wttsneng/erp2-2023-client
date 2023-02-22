@@ -16,8 +16,8 @@ const ListItemButton = styled(MuiListItemButton, {
   shouldForwardProp: (prop) => prop !== "isMini" && prop !== "isCircle",
 })(({ theme, isMini, isCircle }) => ({
   borderRadius: "5px",
-  // paddingBlockStart: "3px",
-  // paddingBlockEnd: "3px",
+  paddingBlockStart: "3px",
+  paddingBlockEnd: "3px",
   ...(isMini && {
     paddingLeft: "12px",
     paddingBlockStart: "7px",

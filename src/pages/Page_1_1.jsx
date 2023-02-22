@@ -1,6 +1,6 @@
 import React from "react";
 
-import { Box, Grid } from "@mui/material";
+import { Box, Grid, Stack } from "@mui/material";
 
 import { useDispatch, useSelector } from "react-redux";
 import { setSidebarActiveByLink } from "../redux/slices/sidebarSlice";
@@ -16,6 +16,7 @@ import AccessTagsTable from "../components/AccessTags/AccessTagsTable";
 import AccessTagsFilters from "../components/AccessTags/AccessTagsFilters";
 import AccessTagsAddDelete from "../components/AccessTags/AccessTagsAddDelete";
 import AccessTagsHistoryWindow from "../components/AccessTags/AccessTagsHistoryWindow";
+import AccessTagsTableFooter from "../components/AccessTags/AccessTagsTableFooter";
 
 export default function Tags() {
   const dispatch = useDispatch();
@@ -46,38 +47,39 @@ export default function Tags() {
               padding: 2,
             }}
           >
-            <Search
-              onChange={onSearch}
-              sx={{ width: "100%" }}
-              label="Access tags search"
-              value={tagsFilters.searchValue}
-            />
-          </Box>
-          <Box
-            sx={{
-              backgroundColor: "white",
-              borderRadius: 1,
-              padding: 2,
-              marginBlockStart: 2,
-            }}
-          >
-            <Grid container justifyContent={"space-between"} spacing={2}>
-              <Grid item xs={12} md={6}>
+            <Grid container spacing={2}>
+              <Grid item xs={12} md={8}>
+                <Search
+                  onChange={onSearch}
+                  label="Access tags search"
+                  value={tagsFilters.searchValue}
+                />
+              </Grid>
+              <Grid item xs={12} md={4}>
                 <AccessTagsFilters />
               </Grid>
-              <Grid item xs={12} md={"auto"}>
-                <AccessTagsAddDelete />
-              </Grid>
             </Grid>
+            <AccessTagsAddDelete />
             <AccessTagsTable />
+            <AccessTagsTableFooter />
           </Box>
         </Grid>
-        <Grid item md={4} xs={12} order={{ xs: 1, md: 2 }}>
+
+        <Grid
+          item
+          md={4}
+          xs={12}
+          order={{ xs: 1, md: 2 }}
+          sx={{
+            borderRadius: 1,
+          }}
+        >
           <Box
             sx={{
               backgroundColor: "white",
               borderRadius: 1,
               padding: 2,
+              marginBottom: 2,
             }}
           >
             <form>
