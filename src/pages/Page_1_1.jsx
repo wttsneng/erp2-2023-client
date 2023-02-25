@@ -1,5 +1,5 @@
 import React from "react";
-
+import { store, allReducers } from "../redux/store";
 import { Box, Grid } from "@mui/material";
 
 import { useDispatch, useSelector } from "react-redux";
@@ -18,6 +18,7 @@ import AccessTagsAddDelete from "../components/AccessTags/AccessTagsAddDelete";
 import AccessTagsHistoryWindow from "../components/AccessTags/AccessTagsHistoryWindow";
 import AccessTagsTableFooter from "../components/AccessTags/AccessTagsTableFooter";
 import { Resizable } from "react-resizable";
+import { combineReducers } from "redux";
 
 const ResizableComponent = () => {
   const [width, setWidth] = React.useState(200);
@@ -83,7 +84,17 @@ export default function Tags() {
             </Grid>
             <AccessTagsAddDelete />
             <ResizableComponent />
-
+            <button
+              onClick={() => {
+                import("../redux/slices/newSlice").then((data) => {
+                  store.replaceReducer(
+                    combineReducers({ ...allReducers, new: data.newReducer })
+                  );
+                });
+              }}
+            >
+              Добавить ещё один reducer
+            </button>
             <AccessTagsTable />
             <AccessTagsTableFooter />
           </Box>

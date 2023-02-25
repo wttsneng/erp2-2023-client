@@ -48,13 +48,13 @@ function AuthForm({ onSubmit }) {
               variant="h6"
               component={"h1"}
               gridColumn={"span 4"}
-              gap="10px"
-              sx={{ textAlign: "center" }}
+              sx={{ textAlign: "center", paddingBottom: 0 }}
             >
               Authorization
             </Typography>
 
             <TextField
+              size="small"
               label="login"
               onBlur={handleBlur}
               onChange={handleChange}
@@ -65,6 +65,7 @@ function AuthForm({ onSubmit }) {
               sx={{ gridColumn: "span 4" }}
             />
             <TextField
+              size="small"
               label="Password"
               type="password"
               onBlur={handleBlur}

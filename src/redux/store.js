@@ -9,7 +9,7 @@ import { sidebarReducer } from "./slices/sidebarSlice";
 import { AccessTagsTableReducer } from "./slices/AccessTagsTableSlice";
 import { AccessTagsHistoryWindowReducer } from "./slices/AccessTagsHistoryWindowSlice";
 
-const rootReducer = combineReducers({
+export const allReducers = {
   auth: authReducer,
   accessTags: AccessTagsReducer,
   accessTagsHistory: AccessTagsHistoryReducer,
@@ -19,7 +19,8 @@ const rootReducer = combineReducers({
   accessTagsTable: AccessTagsTableReducer,
   sidebar: sidebarReducer,
   accessTagsHistoryWindow: AccessTagsHistoryWindowReducer,
-});
+};
+export const rootReducer = combineReducers(allReducers);
 const makeStore = () =>
   configureStore({
     reducer: rootReducer,
