@@ -1,5 +1,5 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import { axios } from "../../core";
+import { axios } from "@/core";
 import qs from "qs";
 
 export const fetchAccessTagsHistory = createAsyncThunk(
@@ -20,7 +20,7 @@ export const fetchAccessTagsHistory = createAsyncThunk(
       page,
     });
     const { data } = await axios.get(
-      `/api/accounts/access_tags_history?${query}`
+      `/api/accounts/access_tags/history?${query}`
     );
     return data;
   }

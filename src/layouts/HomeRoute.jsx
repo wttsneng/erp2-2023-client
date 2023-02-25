@@ -14,6 +14,7 @@ function HomeRoute() {
       dispatch(setSidebarHomeActive());
     }
   }, [sidebarStatus, dispatch]);
+
   return (
     <React.Fragment>
       {sidebarHomeLink ? (

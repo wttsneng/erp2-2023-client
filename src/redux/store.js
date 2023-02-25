@@ -1,28 +1,18 @@
-import { configureStore, combineReducers } from "@reduxjs/toolkit";
+import { configureStore } from "@reduxjs/toolkit";
 import { authReducer } from "./slices/authSlice";
-import { AccessTagsHistoryReducer } from "./slices/AccessTagsHistorySlice";
-import { AccessTagsFilterReducer } from "./slices/AccessTagsFilterSlice";
-import { AccessTagsReducer } from "./slices/AccessTagsSlice";
-import { AccessTagsHistoryFilterReducer } from "./slices/AccessTagsHistoryFilterSlice";
-import { AccessTagsInputReducer } from "./slices/AccessTagsInputSlice";
 import { sidebarReducer } from "./slices/sidebarSlice";
-import { AccessTagsTableReducer } from "./slices/AccessTagsTableSlice";
-import { AccessTagsHistoryWindowReducer } from "./slices/AccessTagsHistoryWindowSlice";
+import rootReducer, { extendReducer } from "redux-extendable-reducer";
 
-export const allReducers = {
+export const defaultReducers = {
   auth: authReducer,
-  accessTags: AccessTagsReducer,
-  accessTagsHistory: AccessTagsHistoryReducer,
-  accessTagsFilter: AccessTagsFilterReducer,
-  accessTagsHistoryFilter: AccessTagsHistoryFilterReducer,
-  accessTagsInput: AccessTagsInputReducer,
-  accessTagsTable: AccessTagsTableReducer,
   sidebar: sidebarReducer,
-  accessTagsHistoryWindow: AccessTagsHistoryWindowReducer,
 };
-export const rootReducer = combineReducers(allReducers);
-const makeStore = () =>
-  configureStore({
-    reducer: rootReducer,
-  });
-export const store = makeStore();
+
+export const store = configureStore({
+  reducer: rootReducer,
+  middleware: (getDefaultMiddleware) =>
+    getDefaultMiddleware({
+      serializableCheck: false,
+    }),
+});
+store.dispatch(extendReducer(defaultReducers));

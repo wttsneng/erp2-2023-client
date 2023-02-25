@@ -1,5 +1,5 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import { axios } from "../../core";
+import { axios } from "@/core";
 import qs from "qs";
 export const fetchAccessTags = createAsyncThunk(
   "accessTags/fetchAccessTags",

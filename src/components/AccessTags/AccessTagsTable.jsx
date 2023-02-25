@@ -9,17 +9,17 @@ import { useSelector, useDispatch } from "react-redux";
 import {
   selectAccessTagStatus,
   selectAccessTags,
-} from "../../redux/slices/AccessTagsSlice";
+} from "../../redux/slices/AccessTags/AccessTagsSlice";
 import {
   multiAddRemoveSelectedAccessTag,
   selectAccessTagsTableSelected,
   setAccessTagsTableMode,
-} from "../../redux/slices/AccessTagsTableSlice";
+} from "../../redux/slices/AccessTags/AccessTagsTableSlice";
 import {
   setAccessTagsInputId,
   clearAccessTagsInput,
   deleteAccessTag,
-} from "../../redux/slices/AccessTagsInputSlice";
+} from "../../redux/slices/AccessTags/AccessTagsInputSlice";
 
 function AccessTagsTable() {
   const theme = useTheme();

@@ -2,11 +2,11 @@ import React from "react";
 import { Box, Typography, Pagination } from "@mui/material";
 
 import { useSelector, useDispatch } from "react-redux";
-import { setAccessTagsPage } from "../../redux/slices/AccessTagsFilterSlice";
+import { setAccessTagsPage } from "../../redux/slices/AccessTags/AccessTagsFilterSlice";
 import {
   selectAccessTagsFilters,
   setAccessTagsLimit,
-} from "../../redux/slices/AccessTagsFilterSlice";
+} from "../../redux/slices/AccessTags/AccessTagsFilterSlice";
 import { MySelect } from "../Basic";
 
 function AccessTagsTableFooter() {

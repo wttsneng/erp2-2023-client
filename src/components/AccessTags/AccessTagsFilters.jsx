@@ -1,14 +1,14 @@
 import React from "react";
 import { Stack } from "@mui/material";
 import { useSelector, useDispatch } from "react-redux";
-import { selectAccessTagsFilters } from "../../redux/slices/AccessTagsFilterSlice";
+import { selectAccessTagsFilters } from "@/redux/slices/AccessTags/AccessTagsFilterSlice";
 import { MySelect } from "../Basic";
 import {
   setAccessTagsSortBy,
   setAccessTagsOrder,
   sortByVariants,
   orderVariants,
-} from "../../redux/slices/AccessTagsFilterSlice";
+} from "@/redux/slices/AccessTags/AccessTagsFilterSlice";
 
 function AccessTagsFilters() {
   const dispatch = useDispatch();

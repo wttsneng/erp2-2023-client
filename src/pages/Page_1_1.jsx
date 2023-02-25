@@ -1,14 +1,14 @@
 import React from "react";
-import { store, allReducers } from "../redux/store";
 import { Box, Grid } from "@mui/material";
-
 import { useDispatch, useSelector } from "react-redux";
 import { setSidebarActiveByLink } from "../redux/slices/sidebarSlice";
 import {
   setAccessTagsSearchValue,
   selectAccessTagsFilters,
-} from "../redux/slices/AccessTagsFilterSlice";
-import { fetchAccessTags } from "../redux/slices/AccessTagsSlice";
+} from "../redux/slices/AccessTags/AccessTagsFilterSlice";
+import { fetchAccessTags } from "../redux/slices/AccessTags/AccessTagsSlice";
+
+import { extendReducer } from "redux-extendable-reducer";
 
 import { Search } from "../components/Basic";
 import AccessTagInput from "../components/AccessTags/AccessTagEdit";
@@ -17,40 +17,63 @@ import AccessTagsFilters from "../components/AccessTags/AccessTagsFilters";
 import AccessTagsAddDelete from "../components/AccessTags/AccessTagsAddDelete";
 import AccessTagsHistoryWindow from "../components/AccessTags/AccessTagsHistoryWindow";
 import AccessTagsTableFooter from "../components/AccessTags/AccessTagsTableFooter";
-import { Resizable } from "react-resizable";
-import { combineReducers } from "redux";
-
-const ResizableComponent = () => {
-  const [width, setWidth] = React.useState(200);
-  const [height, setHeight] = React.useState(200);
-
-  const handleResize = (event, { size }) => {
-    setWidth(size.width);
-    setHeight(size.height);
-  };
-
-  return (
-    <Resizable
-      className="resizable-component"
-      width={width}
-      height={height}
-      onResize={handleResize}
-      draggableOpts={{ grid: [1, 1] }} // Sets a grid for resizing
-    >
-      <div className="resizable-component-content">Resizable Component</div>
-    </Resizable>
-  );
-};
 
 export default function Tags() {
   const dispatch = useDispatch();
   const tagsFilters = useSelector(selectAccessTagsFilters);
+  const [isLoaded, setIsLoaded] = React.useState(false);
 
   const onSearch = (value) => {
     dispatch(setAccessTagsSearchValue(value));
   };
 
   React.useEffect(() => {
+    import("../redux/slices/AccessTags/AccessTagsFilterSlice").then(
+      (module) => {
+        dispatch(
+          extendReducer({ accessTagsFilter: module.AccessTagsFilterReducer })
+        );
+      }
+    );
+    import("../redux/slices/AccessTags/AccessTagsSlice").then((module) => {
+      dispatch(extendReducer({ accessTags: module.AccessTagsReducer }));
+    });
+    import("../redux/slices/AccessTags/AccessTagsHistorySlice").then(
+      (module) => {
+        dispatch(
+          extendReducer({ accessTagsHistory: module.AccessTagsHistoryReducer })
+        );
+      }
+    );
+    import("../redux/slices/AccessTags/AccessTagsHistoryFilterSlice").then(
+      (module) => {
+        dispatch(
+          extendReducer({
+            accessTagsHistoryFilter: module.AccessTagsHistoryFilterReducer,
+          })
+        );
+      }
+    );
+    import("../redux/slices/AccessTags/AccessTagsHistoryWindowSlice").then(
+      (module) => {
+        dispatch(
+          extendReducer({
+            accessTagsHistoryWindow: module.AccessTagsHistoryWindowReducer,
+          })
+        );
+      }
+    );
+    import("../redux/slices/AccessTags/AccessTagsInputSlice").then((module) => {
+      dispatch(
+        extendReducer({ accessTagsInput: module.AccessTagsInputReducer })
+      );
+    });
+    import("../redux/slices/AccessTags/AccessTagsTableSlice").then((module) => {
+      dispatch(
+        extendReducer({ accessTagsTable: module.AccessTagsTableReducer })
+      );
+    });
+    setIsLoaded(true);
     dispatch(setSidebarActiveByLink("page/1_1"));
   }, []);
 
@@ -58,6 +81,9 @@ export default function Tags() {
     dispatch(fetchAccessTags(tagsFilters));
   }, [tagsFilters, dispatch]);
 
+  if (!isLoaded) {
+    return <div>Loading...</div>;
+  }
   return (
     <div className="">
       <Grid container spacing={2}>
@@ -75,7 +101,7 @@ export default function Tags() {
                 <Search
                   onChange={onSearch}
                   label="Access tags search"
-                  value={tagsFilters.searchValue}
+                  // value={tagsFilters.searchValue}
                 />
               </Grid>
               <Grid item xs={12} md={4}>
@@ -83,18 +109,6 @@ export default function Tags() {
               </Grid>
             </Grid>
             <AccessTagsAddDelete />
-            <ResizableComponent />
-            <button
-              onClick={() => {
-                import("../redux/slices/newSlice").then((data) => {
-                  store.replaceReducer(
-                    combineReducers({ ...allReducers, new: data.newReducer })
-                  );
-                });
-              }}
-            >
-              Добавить ещё один reducer
-            </button>
             <AccessTagsTable />
             <AccessTagsTableFooter />
           </Box>

@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { socket } from "../../core";
+import { socket } from "@/core";
 
 export const changeAccessTagsInputStarted = ({ itemId, attribute }) => {
   socket.emit("changeAccessTagsValueStart", { itemId, attribute });

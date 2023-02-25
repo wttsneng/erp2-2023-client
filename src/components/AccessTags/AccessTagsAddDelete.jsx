@@ -9,11 +9,11 @@ import {
   clearAccessTagsInput,
   createAccessTag,
   deleteAccessTag,
-} from "../../redux/slices/AccessTagsInputSlice";
+} from "../../redux/slices/AccessTags/AccessTagsInputSlice";
 import {
   multiAddRemoveSelectedAccessTag,
   selectAccessTagsTableSelected,
-} from "../../redux/slices/AccessTagsTableSlice";
+} from "../../redux/slices/AccessTags/AccessTagsTableSlice";
 
 function AccessTagsAddDelete() {
   const dispatch = useDispatch();

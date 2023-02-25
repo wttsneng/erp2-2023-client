@@ -18,16 +18,16 @@ import {
   changeAccessTagsInputEnded,
   setAccessTagsInputInitialName,
   setAccessTagsInputInitialDescription,
-} from "../../redux/slices/AccessTagsInputSlice";
+} from "../../redux/slices/AccessTags/AccessTagsInputSlice";
 import {
   selectAccessTags,
   selectAccessTagStatus,
-} from "../../redux/slices/AccessTagsSlice";
-import { setAccessTagsHistoryWindowOpen } from "../../redux/slices/AccessTagsHistoryWindowSlice";
+} from "../../redux/slices/AccessTags/AccessTagsSlice";
+import { setAccessTagsHistoryWindowOpen } from "../../redux/slices/AccessTags/AccessTagsHistoryWindowSlice";
 import {
   setTagHistoryId,
   setAccessTagsHistoryField,
-} from "../../redux/slices/AccessTagsHistoryFilterSlice";
+} from "../../redux/slices/AccessTags/AccessTagsHistoryFilterSlice";
 
 function AccessTagInput() {
   const dispatch = useDispatch();
