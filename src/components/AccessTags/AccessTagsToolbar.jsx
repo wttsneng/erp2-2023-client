@@ -2,6 +2,7 @@ import React from "react";
 import { Button, Stack } from "@mui/material";
 import AddCircleOutlineIcon from "@mui/icons-material/AddCircleOutline";
 import DeleteOutlineIcon from "@mui/icons-material/DeleteOutline";
+import HistoryIcon from "@mui/icons-material/History";
 
 import { useDispatch, useSelector } from "react-redux";
 import {
@@ -16,6 +17,12 @@ import {
   multiAddRemoveSelectedTag as multiAddRemoveSelectedAccessTag,
   selectTableSelected as selectAccessTagsTableSelected,
 } from "@src/redux/slices/AccessTags/table";
+import {
+  setHistoryWindowMode,
+  setHistoryWindowOpen,
+} from "@src/redux/slices/AccessTags/historyWindow";
+import { fetchHistory } from "@src/redux/slices/AccessTags/history";
+import { clearHistoryFilter } from "@src/redux/slices/AccessTags/historyFilter";
 
 function AccessTagsAddDelete() {
   const dispatch = useDispatch();
@@ -34,6 +41,12 @@ function AccessTagsAddDelete() {
     accessTagsTableSelected.forEach((id) => {
       deleteAccessTag({ itemId: id });
     });
+  };
+  const handleHistoryClick = () => {
+    dispatch(clearHistoryFilter());
+    dispatch(setHistoryWindowMode("accessTags"));
+    dispatch(setHistoryWindowOpen(true));
+    fetchHistory();
   };
 
   React.useEffect(() => {
@@ -62,6 +75,15 @@ function AccessTagsAddDelete() {
           onClick={handleDeleteClick}
         >
           <DeleteOutlineIcon />
+        </Button>
+        <Button
+          size="small"
+          variant="contained"
+          color="info"
+          sx={{ width: { xs: "50%", md: "initial" } }}
+          onClick={handleHistoryClick}
+        >
+          <HistoryIcon />
         </Button>
       </Stack>
     </div>

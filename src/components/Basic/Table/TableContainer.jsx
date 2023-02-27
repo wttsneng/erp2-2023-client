@@ -1,9 +1,11 @@
 import React from "react";
 import MUITableContainer from "@mui/material/TableContainer";
-import Paper from "@mui/material/Paper";
 function TableContainer({ children, ...props }) {
   return (
-    <MUITableContainer {...props} component={Paper}>
+    <MUITableContainer
+      sx={{ borderBottom: "1px solid rgba(224, 224, 224, 1)" }}
+      {...props}
+    >
       {children}
     </MUITableContainer>
   );

@@ -1,10 +1,17 @@
 import { configureStore } from "@reduxjs/toolkit";
 import { combineReducers } from "redux";
-import { authReducer, sidebarReducer } from "./slices/Basic";
+import {
+  authReducer,
+  sidebarReducer,
+  variablesReducer,
+  contextMenuReducer,
+} from "./slices/Basic";
 
 const defaultReducers = {
   auth: authReducer,
   sidebar: sidebarReducer,
+  variables: variablesReducer,
+  contextMenu: contextMenuReducer,
 };
 function createReducer(asyncReducers) {
   return combineReducers({

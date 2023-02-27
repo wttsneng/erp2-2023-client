@@ -10,8 +10,10 @@ import IconChevronLeft from "@mui/icons-material/ChevronLeft";
 import IconChevronRight from "@mui/icons-material/ChevronRight";
 
 import MenuList from "./MenuList";
-import MoblieHeader from "../MobileHeader";
+import MoblieHeader from "../Header/MobileHeader";
 import SidebarLoading from "./SidebarLoading";
+
+import { useNavigate } from "react-router-dom";
 
 import { useSelector, useDispatch } from "react-redux";
 import {
@@ -29,10 +31,12 @@ function Sidebar(props) {
   const { window } = props;
   const [mobileOpen, setMobileOpen] = React.useState(false);
   const [isMini, setIsMini] = React.useState(false);
+  const navigate = useNavigate();
   const dispatch = useDispatch();
   const sidebarData = useSelector(selectSidebarData);
   const sidebarStatus = useSelector(selectSidebarStatus);
-  const { activeTitle, activeId } = useSelector(selectSidebarActive);
+  const { activeTitle, activeId, activeLink } =
+    useSelector(selectSidebarActive);
 
   const handleDrawerToggle = () => {
     setMobileOpen(!mobileOpen);
@@ -43,6 +47,11 @@ function Sidebar(props) {
   const handleSingleClick = (id) => {
     dispatch(setSidebarActiveById(id));
   };
+  React.useEffect(() => {
+    if (activeLink) {
+      navigate(activeLink);
+    }
+  }, [activeLink, navigate]);
 
   const container =
     window !== undefined ? () => window().document.body : undefined;

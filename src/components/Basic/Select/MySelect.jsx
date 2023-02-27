@@ -1,15 +1,14 @@
 import React from "react";
-import { FormControl, InputLabel, Select, MenuItem } from "@mui/material";
-function MySelect({ value, onChange, label, options }) {
+import { FormControl, Select, MenuItem, InputLabel } from "@mui/material";
+function MySelect({ value, onChange, options, label }) {
   return (
-    <FormControl fullWidth>
-      {/* <InputLabel id="My-select">{label}</InputLabel> */}
+    <FormControl fullWidth label="sdfs">
+      {label ? <InputLabel id="My-select">{label}</InputLabel> : null}
       <Select
         size="small"
         labelId="My-select"
         id="My-select"
         value={value}
-        // label={label}
         onChange={onChange}
       >
         {Array.isArray(options)

@@ -3,10 +3,7 @@ import { Box, Grid } from "@mui/material";
 
 import { useDispatch, useSelector } from "react-redux";
 import { setSidebarActiveByLink } from "@src/redux/slices/Basic/sidebarSlice";
-import {
-  setSearchValue as setAccessTagsSearchValue,
-  selectFilters as selectAccessTagsFilters,
-} from "@src/redux/slices/AccessTags/filter";
+import { selectFilters as selectAccessTagsFilters } from "@src/redux/slices/AccessTags/filter";
 
 import { fetchTags as fetchAccessTags } from "@src/redux/slices/AccessTags/data";
 import { filterReducer } from "@src/redux/slices/AccessTags/filter";
@@ -21,15 +18,16 @@ import { store } from "@src/index";
 import { injectAsyncReducer } from "@src/redux/store";
 import { combineReducers } from "redux";
 
-import { Search } from "@src/components/Basic";
+import AccessTagsSearch from "@src/components/AccessTags/AccessTagsSearch";
 import AccessTagInput from "@src/components/AccessTags/AccessTagEdit";
 import AccessTagsTable from "@src/components/AccessTags/AccessTagsTable";
 import AccessTagsFilters from "@src/components/AccessTags/AccessTagsFilters";
-import AccessTagsAddDelete from "@src/components/AccessTags/AccessTagsAddDelete";
-import AccessTagsHistoryWindow from "@src/components/AccessTags/AccessTagsHistoryWindow";
+import AccessTagsToolbar from "@src/components/AccessTags/AccessTagsToolbar";
+import AccessTagsHistoryWindow from "@src/components/AccessTags/AccessTagsWindow/AccessTagsHistoryWindow";
 import AccessTagsTableFooter from "@src/components/AccessTags/AccessTagsTableFooter";
+import AccessTagContextMenu from "@src/components/AccessTags/AccessTagContextMenu";
 
-const AccessTag = combineReducers({
+const AccessTagCombinedReducer = combineReducers({
   data: dataReducer,
   filter: filterReducer,
   history: historyReducer,
@@ -38,33 +36,23 @@ const AccessTag = combineReducers({
   historyWindow: historyWindowReducer,
   table: tableReducer,
 });
+injectAsyncReducer(store, "accessTags", AccessTagCombinedReducer);
 
-export default function Tags() {
+export default function AccessTags() {
   const dispatch = useDispatch();
   const tagsFilters = useSelector(selectAccessTagsFilters);
-  const [isPageLoaded, setIsPageLoaded] = React.useState(false);
-
-  const onSearch = (value) => {
-    dispatch(setAccessTagsSearchValue(value));
-  };
 
   React.useEffect(() => {
-    injectAsyncReducer(store, "accessTags", AccessTag);
     dispatch(setSidebarActiveByLink("page/1_1"));
-    setIsPageLoaded(true);
   }, []);
 
   React.useEffect(() => {
-    if (isPageLoaded) {
-      dispatch(fetchAccessTags(tagsFilters));
-    }
-  }, [tagsFilters, dispatch, isPageLoaded]);
-  if (!isPageLoaded) return <div>Loading...</div>;
+    dispatch(fetchAccessTags(tagsFilters));
+  }, [tagsFilters, dispatch]);
   return (
-    <div className="">
+    <div>
       <Grid container spacing={2}>
         <Grid item md={8} xs={12} order={{ xs: 2, md: 1 }}>
-          <AccessTagsHistoryWindow />
           <Box
             sx={{
               backgroundColor: "white",
@@ -74,22 +62,17 @@ export default function Tags() {
           >
             <Grid container spacing={2}>
               <Grid item xs={12} md={8}>
-                <Search
-                  onChange={onSearch}
-                  label="Access tags search"
-                  // value={tagsFilters.searchValue}
-                />
+                <AccessTagsSearch />
               </Grid>
               <Grid item xs={12} md={4}>
                 <AccessTagsFilters />
               </Grid>
             </Grid>
-            <AccessTagsAddDelete />
+            <AccessTagsToolbar />
             <AccessTagsTable />
             <AccessTagsTableFooter />
           </Box>
         </Grid>
-
         <Grid
           item
           md={4}
@@ -113,6 +96,8 @@ export default function Tags() {
           </Box>
         </Grid>
       </Grid>
+      <AccessTagContextMenu />
+      <AccessTagsHistoryWindow />
     </div>
   );
 }

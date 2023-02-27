@@ -11,7 +11,7 @@ const initialState = {
 };
 
 const historyFilterSlice = createSlice({
-  name: "accessTags/historyFilter",
+  name: "accessGroups/historyFilter",
   initialState,
   reducers: {
     setHistorySearchValue: (state, action) => {
@@ -62,4 +62,4 @@ export const {
   clearHistoryFilter,
 } = historyFilterSlice.actions;
 export const historyFilterReducer = historyFilterSlice.reducer;
-export const selectHistoryFilter = (state) => state.accessTags.historyFilter;
+export const selectHistoryFilter = (state) => state.accessGroups.historyFilter;

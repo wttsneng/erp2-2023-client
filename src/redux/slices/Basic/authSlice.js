@@ -27,11 +27,7 @@ const initialState = {
 const authSlice = createSlice({
   name: "auth",
   initialState,
-  reducers: {
-    some: (state, action) => {
-      state.status = "spomej";
-    },
-  },
+  reducers: {},
   extraReducers: (builder) => {
     builder
       .addCase(fetchAuthMe.pending, (state, action) => {

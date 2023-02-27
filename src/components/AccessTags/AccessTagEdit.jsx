@@ -18,12 +18,16 @@ import {
   changeInputEnded as changeAccessTagsInputEnded,
   selectInputData as selectAccessTagsInputData,
 } from "@src/redux/slices/AccessTags/input";
+import { fetchHistory as fetchAccessTagsHistory } from "@src/redux/slices/AccessTags/history";
 import {
   selectData as selectAccessTags,
   selectDataStatus as selectAccessTagStatus,
   changeAccessTagValue,
 } from "@src/redux/slices/AccessTags/data";
-import { setHistoryWindowOpen as setAccessTagsHistoryWindowOpen } from "@src/redux/slices/AccessTags/historyWindow";
+import {
+  setHistoryWindowOpen as setAccessTagsHistoryWindowOpen,
+  setHistoryWindowMode,
+} from "@src/redux/slices/AccessTags/historyWindow";
 import {
   setHistoryField as setAccessTagsHistoryField,
   setTagHistoryId as setAccessTagsTagHistoryId,
@@ -77,15 +81,19 @@ function AccessTagInput() {
   };
   const handleNameHistoryClick = () => {
     if (!inputData.id) return;
-    dispatch(setAccessTagsHistoryField("name"));
-    dispatch(setAccessTagsTagHistoryId(inputData.id));
-    dispatch(setAccessTagsHistoryWindowOpen(true));
+    dispatch(setHistoryWindowMode("mini"));
+    dispatch(fetchAccessTagsHistory()).then(() => {
+      dispatch(setAccessTagsHistoryField("name"));
+      dispatch(setAccessTagsHistoryWindowOpen(true));
+    });
   };
   const handleDescriptionHistoryClick = () => {
     if (!inputData.id) return;
-    dispatch(setAccessTagsHistoryField("description"));
-    dispatch(setAccessTagsTagHistoryId(inputData.id));
-    dispatch(setAccessTagsHistoryWindowOpen(true));
+    dispatch(setHistoryWindowMode("mini"));
+    dispatch(fetchAccessTagsHistory()).then(() => {
+      dispatch(setAccessTagsHistoryField("description"));
+      dispatch(setAccessTagsHistoryWindowOpen(true));
+    });
   };
 
   React.useEffect(() => {
@@ -93,6 +101,7 @@ function AccessTagInput() {
     const currentTag = tags.find((tag) => tag.id === inputData.id);
     if (!currentTag) return;
     dispatch(setAccessTagsInputName(currentTag.name));
+    dispatch(setAccessTagsTagHistoryId(inputData.id));
     dispatch(setAccessTagsInputDescription(currentTag.description));
     dispatch(setAccessTagsInputInitialName(currentTag.name));
     dispatch(setAccessTagsInputInitialDescription(currentTag.description));

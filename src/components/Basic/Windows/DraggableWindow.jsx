@@ -6,9 +6,18 @@ import DialogContent from "@mui/material/DialogContent";
 import DialogContentText from "@mui/material/DialogContentText";
 import DialogTitle from "@mui/material/DialogTitle";
 import Paper from "@mui/material/Paper";
-import { ResizableBox } from "react-resizable";
 import Draggable from "react-draggable";
 
+function FullPaperComponent(props) {
+  return (
+    <Draggable
+      handle="#draggable-dialog-title"
+      cancel={'[class*="MuiDialogContent-root"]'}
+    >
+      <Paper {...props} sx={{ minWidth: "900px" }} />
+    </Draggable>
+  );
+}
 function PaperComponent(props) {
   return (
     <Draggable
@@ -20,7 +29,7 @@ function PaperComponent(props) {
   );
 }
 
-function DraggableWindow({ open, onClose, children }) {
+function DraggableWindow({ open, onClose, children, isFull }) {
   return (
     <Dialog
       open={open}
@@ -29,20 +38,20 @@ function DraggableWindow({ open, onClose, children }) {
         onClose();
       }}
       hideBackdrop={true}
-      PaperComponent={PaperComponent}
+      PaperComponent={isFull ? FullPaperComponent : PaperComponent}
       aria-labelledby="draggable-dialog-title"
     >
-      <DialogTitle style={{ cursor: "move" }} id="draggable-dialog-title">
-        Subscribe
-      </DialogTitle>
-      <DialogContent>
-        <DialogContentText>{children}</DialogContentText>
+      <DialogTitle
+        style={{ cursor: "move" }}
+        id="draggable-dialog-title"
+      ></DialogTitle>
+      <DialogContent sx={{ paddingY: 0, paddingX: 2, maxWidth: "100%" }}>
+        {children}
       </DialogContent>
-      <DialogActions>
+      <DialogActions sx={{ paddingY: 1 }}>
         <Button autoFocus onClick={onClose}>
           Cancel
         </Button>
-        <Button onClick={onClose}>Subscribe</Button>
       </DialogActions>
     </Dialog>
   );

@@ -1,6 +1,5 @@
 import React from "react";
-import { Box, Menu, MenuItem, ListItemIcon, ListItemText } from "@mui/material";
-import DeleteOutlineIcon from "@mui/icons-material/DeleteOutline";
+import { Box } from "@mui/material";
 import { useTheme } from "@mui/material/styles";
 
 import { TagsList, TagsListLoading } from "../Basic";
@@ -9,23 +8,21 @@ import { useSelector, useDispatch } from "react-redux";
 import {
   selectDataStatus as selectAccessTagStatus,
   selectData as selectAccessTags,
-  deleteTag as deleteAccessTag,
 } from "@src/redux/slices/AccessTags/data";
 import {
   selectTableSelected as selectAccessTagsTableSelected,
   multiAddRemoveSelectedTag as multiAddRemoveSelectedAccessTag,
-  setTableMode as setAccessTagsTableMode,
 } from "@src/redux/slices/AccessTags/table";
+import { setInputId as setAccessTagsInputId } from "@src/redux/slices/AccessTags/input";
 import {
-  setInputId as setAccessTagsInputId,
-  clearInput as clearAccessTagsInput,
-} from "@src/redux/slices/AccessTags/input";
+  setContextMenuOpen,
+  setContextMenuType,
+  setContextMenuPosition,
+} from "@src/redux/slices/Basic/contextMenuSlice";
 
 function AccessTagsTable() {
   const theme = useTheme();
   const dispatch = useDispatch();
-  const [contextMenuAnchorEl, setContextMenuAnchorEl] = React.useState(null);
-  const isContextMenuOpen = Boolean(contextMenuAnchorEl);
 
   const selectedTags = useSelector(selectAccessTagsTableSelected);
   const tagsStatus = useSelector(selectAccessTagStatus);
@@ -35,40 +32,16 @@ function AccessTagsTable() {
     dispatch(setAccessTagsInputId(tag.id));
     dispatch(multiAddRemoveSelectedAccessTag(tag.id));
   };
-  const handleTagContextMenu = (tag) => {
-    setContextMenuAnchorEl(tag);
-  };
-
-  const handleDeleteClick = () => {
-    dispatch(clearAccessTagsInput());
-    selectedTags.forEach((id) => {
-      deleteAccessTag({ itemId: id });
-    });
-  };
-
-  React.useEffect(() => {
-    const handleKeyDown = (event) => {
-      if (event.key === "Shift") {
-        dispatch(setAccessTagsTableMode("multiMany"));
-      }
-      if (event.key === "Control") {
-        dispatch(setAccessTagsTableMode("multiOne"));
-      }
-    };
-    const handleKeyUp = (event) => {
-      dispatch(setAccessTagsTableMode("single"));
-    };
-    window.addEventListener("keydown", handleKeyDown);
-    window.addEventListener("keyup", handleKeyUp);
-    return () => {
-      window.removeEventListener("keydown", handleKeyDown);
-      window.removeEventListener("keyup", handleKeyUp);
-    };
-  }, []);
 
   return (
     <Box>
       <Box
+        onContextMenu={(e) => {
+          e.preventDefault();
+          dispatch(setContextMenuOpen(true));
+          dispatch(setContextMenuType("access_tag_table"));
+          dispatch(setContextMenuPosition({ x: e.clientX, y: e.clientY }));
+        }}
         sx={{
           border: `1px solid ${theme.palette.grey[400]}`,
           borderRadius: 1,
@@ -86,33 +59,11 @@ function AccessTagsTable() {
             arr={tags}
             selectedTags={selectedTags}
             onClick={handleTagClick}
-            onContextMenu={handleTagContextMenu}
           />
         ) : tagsStatus === "idle" ? (
           <TagsListLoading />
         ) : null}
       </Box>
-
-      <Menu
-        id="basic-menu"
-        anchorEl={contextMenuAnchorEl}
-        open={isContextMenuOpen}
-        onClose={() => {
-          setContextMenuAnchorEl(null);
-        }}
-      >
-        <MenuItem
-          onClick={() => {
-            setContextMenuAnchorEl(null);
-            handleDeleteClick();
-          }}
-        >
-          <ListItemIcon>
-            <DeleteOutlineIcon />
-          </ListItemIcon>
-          <ListItemText>Удалить</ListItemText>
-        </MenuItem>
-      </Menu>
     </Box>
   );
 }

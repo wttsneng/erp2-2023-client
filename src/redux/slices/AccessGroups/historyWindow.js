@@ -23,4 +23,4 @@ export const { setHistoryWindowOpen, setHistoryWindowMode } =
   historyWindow.actions;
 export const historyWindowReducer = historyWindow.reducer;
 export const selectHistoryWindowIsOpen = (state) =>
-  state.accessTags.historyWindow.isOpen;
+  state.accessGroups.historyWindow.isOpen;

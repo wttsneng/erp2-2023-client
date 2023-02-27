@@ -4,6 +4,8 @@ import { Routes, Route } from "react-router-dom";
 
 import { socket } from "./core";
 
+import { useGlobalEventListeners } from "./hooks";
+
 import { MainLayout, AuthProtect, HomeRoute, ProtectedRoutes } from "./layouts";
 
 import { useSelector, useDispatch } from "react-redux";
@@ -20,6 +22,7 @@ function App() {
   const dispatch = useDispatch();
   const authStatus = useSelector(selectAuthStatus);
   const authData = useSelector(selectAuthData);
+  useGlobalEventListeners();
   React.useEffect(() => {
     if (authStatus === "idle") {
       dispatch(fetchAuthMe());

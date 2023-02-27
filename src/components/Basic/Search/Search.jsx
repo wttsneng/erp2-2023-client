@@ -1,15 +1,7 @@
 import React from "react";
 import { TextField, InputAdornment } from "@mui/material";
 import debounce from "lodash.debounce";
-function Search({
-  value,
-  label,
-  onChange,
-  onBlur,
-  onFocus,
-  disabled,
-  ...props
-}) {
+function Search({ value, label, onChange, disabled, ...props }) {
   const [inputValue, setInputValue] = React.useState("");
   const updateSearchValue = React.useCallback(
     debounce((value) => {
@@ -32,8 +24,7 @@ function Search({
         hiddenLabel
         value={inputValue}
         disabled={disabled}
-        // variant={`${disabled ? "filled" : "outlined"}`}
-        variant="outlined"
+        variant={`${disabled ? "filled" : "outlined"}`}
         InputProps={{
           startAdornment: (
             <InputAdornment position="start">{label}:</InputAdornment>
@@ -43,12 +34,6 @@ function Search({
         sx={{ width: "100%" }}
         onChange={(e) => {
           onChangeInput(e);
-        }}
-        onBlur={(e) => {
-          // onBlur(e.target.value);
-        }}
-        onFocus={() => {
-          // onFocus();
         }}
         {...props}
       />

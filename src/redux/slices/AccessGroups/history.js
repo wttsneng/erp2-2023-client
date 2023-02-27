@@ -3,11 +3,11 @@ import { axios } from "@src/core";
 import qs from "qs";
 
 export const fetchHistory = createAsyncThunk(
-  "accessTags/history/fetchHistory",
+  "accessGroups/history/fetchHistory",
   async (params, thunkAPI) => {
     const { getState } = thunkAPI;
     const state = getState();
-    const historyFilter = state.accessTags.historyFilter;
+    const historyFilter = state.accessGroups.historyFilter;
     const { searchValue, order, id, sortBy, limit, page, field } =
       historyFilter;
     const query = qs.stringify({
@@ -33,7 +33,7 @@ const initialState = {
 };
 
 const historySlice = createSlice({
-  name: "accessTags/history",
+  name: "accessGroups/history",
   initialState,
   reducers: {
     setAccessTagHistory: (state, action) => {
@@ -59,6 +59,6 @@ const historySlice = createSlice({
 
 export const { setTagHistory } = historySlice.actions;
 export const historyReducer = historySlice.reducer;
-export const selectHistoryData = (state) => state.accessTags.history.data;
+export const selectHistoryData = (state) => state.accessGroups.history.data;
 export const selectHistoryStatus = (state) =>
-  state.accessTags.tagsHistory.status;
+  state.accessGroups.tagsHistory.status;

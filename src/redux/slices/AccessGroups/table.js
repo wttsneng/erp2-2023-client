@@ -8,7 +8,7 @@ const initialState = {
   selectionMode: "single", //single, multiOne, multiMany
 };
 const tableSlice = createSlice({
-  name: "accessTags/table",
+  name: "accessGroups/table",
   initialState,
   reducers: {
     setSelectedTag(state, action) {
@@ -63,13 +63,13 @@ const tableSlice = createSlice({
         state.current.push(action.payload);
       })
       .addCase(updateTag, (state, action) => {
-        state.current = state.current.map((accessTag) =>
-          accessTag.id === action.payload.id ? action.payload : accessTag
+        state.current = state.current.map((accessGroup) =>
+          accessGroup.id === action.payload.id ? action.payload : accessGroup
         );
       })
       .addCase(deleteTag, (state, action) => {
         state.current = state.current.filter(
-          (accessTag) => accessTag.id !== action.payload.id
+          (accessGroup) => accessGroup.id !== action.payload.id
         );
       })
       .addCase(fetchTags.fulfilled, (state, action) => {
@@ -83,4 +83,4 @@ const tableSlice = createSlice({
 
 export const { multiAddRemoveSelectedTag, setSelectedTag } = tableSlice.actions;
 export const tableReducer = tableSlice.reducer;
-export const selectTableSelected = (state) => state.accessTags.table.selected;
+export const selectTableSelected = (state) => state.accessGroups.table.selected;

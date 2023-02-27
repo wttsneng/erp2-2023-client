@@ -26,6 +26,20 @@ export const theme = createTheme({
       styleOverrides: {
         root: {
           top: "-20% !important",
+          marginTop: "-8px !important",
+          "& .MuiInputLabel-animated": {
+            display: "none !important",
+          },
+          "& #My-select": {
+            display: "none !important",
+          },
+        },
+      },
+    },
+    MuiInputLabel: {
+      styleOverrides: {
+        root: {
+          top: "-20% !important",
         },
       },
     },
@@ -34,7 +48,14 @@ export const theme = createTheme({
         root: {
           height: 30,
           "& .MuiInputBase-input": {
-            padding: "5px 14px",
+            padding: "5px 14px ",
+          },
+          "& .MuiAutocomplete-input": {
+            padding: "0px 5px !important",
+            marginTop: "-5px !important",
+          },
+          "& .MuiInputLabel-root": {
+            marginTop: "-5px !important",
           },
         },
       },

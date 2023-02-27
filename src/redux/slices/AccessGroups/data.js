@@ -3,7 +3,7 @@ import { axios, socket } from "@src/core";
 import qs from "qs";
 
 export const fetchTags = createAsyncThunk(
-  "accessTags/data/fetchTags",
+  "accessGroup/data/fetchTags",
   async ({ searchValue, order, sortBy, limit, page }) => {
     const queryParams = qs.stringify({
       query: searchValue,
@@ -18,15 +18,14 @@ export const fetchTags = createAsyncThunk(
     return response.data;
   }
 );
-export const changeAccessTagValue = ({ itemId, attribute, value }) => {
-  socket.emit("changeAccessTagsValue", { itemId, attribute, value });
+export const changeaccessGroupValue = ({ itemId, attribute, value }) => {
+  socket.emit("changeAccessGroupValue", { itemId, attribute, value });
 };
-
-export const createAccessTag = ({ name, description }) => {
-  socket.emit("createAccessTag", { name, description });
+export const createaccessGroup = ({ name, description }) => {
+  socket.emit("createAccessGroup", { name, description });
 };
-export const deleteAccessTag = (id) => {
-  socket.emit("deleteAccessTag", id);
+export const deleteaccessGroup = (id) => {
+  socket.emit("deleteAccessGroup", id);
 };
 
 const initialState = {
@@ -36,7 +35,7 @@ const initialState = {
   status: "idle", // idle, loading, success, error
 };
 const dataSlice = createSlice({
-  name: "accessTags/data",
+  name: "accessGroup/data",
   initialState,
   reducers: {
     setData: (state, action) => {
@@ -85,5 +84,5 @@ const dataSlice = createSlice({
 
 export const { setData, addTag, updateTag, deleteTag } = dataSlice.actions;
 export const dataReducer = dataSlice.reducer;
-export const selectData = (state) => state.accessTags.data.data;
-export const selectDataStatus = (state) => state.accessTags.data.status;
+export const selectData = (state) => state.accessGroup.data.data;
+export const selectDataStatus = (state) => state.accessGroup.data.status;
