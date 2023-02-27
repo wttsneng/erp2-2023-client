@@ -7,19 +7,19 @@ import { TagsList, TagsListLoading } from "../Basic";
 
 import { useSelector, useDispatch } from "react-redux";
 import {
-  selectAccessTagStatus,
-  selectAccessTags,
-} from "../../redux/slices/AccessTags/AccessTagsSlice";
+  selectDataStatus as selectAccessTagStatus,
+  selectData as selectAccessTags,
+  deleteTag as deleteAccessTag,
+} from "@src/redux/slices/AccessTags/data";
 import {
-  multiAddRemoveSelectedAccessTag,
-  selectAccessTagsTableSelected,
-  setAccessTagsTableMode,
-} from "../../redux/slices/AccessTags/AccessTagsTableSlice";
+  selectTableSelected as selectAccessTagsTableSelected,
+  multiAddRemoveSelectedTag as multiAddRemoveSelectedAccessTag,
+  setTableMode as setAccessTagsTableMode,
+} from "@src/redux/slices/AccessTags/table";
 import {
-  setAccessTagsInputId,
-  clearAccessTagsInput,
-  deleteAccessTag,
-} from "../../redux/slices/AccessTags/AccessTagsInputSlice";
+  setInputId as setAccessTagsInputId,
+  clearInput as clearAccessTagsInput,
+} from "@src/redux/slices/AccessTags/input";
 
 function AccessTagsTable() {
   const theme = useTheme();

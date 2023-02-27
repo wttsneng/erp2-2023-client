@@ -19,11 +19,9 @@ function ProtectedRoutes({ uiModules }) {
     for (const element of data) {
       traverse(element);
     }
-
     return result;
   }
   const links = findLinks(uiModules);
-  console.log("links", `/${links[0]}`);
   return (
     <Routes>
       {links.length > 0 &&

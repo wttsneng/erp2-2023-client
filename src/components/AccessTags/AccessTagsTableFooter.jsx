@@ -1,19 +1,22 @@
 import React from "react";
 import { Box, Typography, Pagination } from "@mui/material";
 
-import { useSelector, useDispatch } from "react-redux";
-import { setAccessTagsPage } from "../../redux/slices/AccessTags/AccessTagsFilterSlice";
-import {
-  selectAccessTagsFilters,
-  setAccessTagsLimit,
-} from "../../redux/slices/AccessTags/AccessTagsFilterSlice";
 import { MySelect } from "../Basic";
+
+import { useSelector, useDispatch } from "react-redux";
+import { setPage as setAccessTagsPage } from "@src/redux/slices/AccessTags/filter";
+import {
+  selectFilters as selectAccessTagsFilters,
+  setLimit as setAccessTagsLimit,
+} from "@src/redux/slices/AccessTags/filter";
 
 function AccessTagsTableFooter() {
   const dispatch = useDispatch();
-  const tagsCount = useSelector((state) => state.accessTags.count);
-  const tagsTotalPages = useSelector((state) => state.accessTags.totalPages);
-  const page = useSelector((state) => state.accessTagsFilter.page);
+  const tagsCount = useSelector((state) => state.accessTags.data.count);
+  const tagsTotalPages = useSelector(
+    (state) => state.accessTags.data.totalPages
+  );
+  const page = useSelector((state) => state.accessTags.filter.page);
   const tagsFilters = useSelector(selectAccessTagsFilters);
   const handlePageChange = (event, value) => {
     dispatch(setAccessTagsPage(value));

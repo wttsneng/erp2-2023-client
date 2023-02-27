@@ -5,15 +5,17 @@ import DeleteOutlineIcon from "@mui/icons-material/DeleteOutline";
 
 import { useDispatch, useSelector } from "react-redux";
 import {
-  setAccessTagsInputId,
-  clearAccessTagsInput,
+  setInputId as setAccessTagsInputId,
+  clearInput as clearAccessTagsInput,
+} from "@src/redux/slices/AccessTags/input";
+import {
   createAccessTag,
   deleteAccessTag,
-} from "../../redux/slices/AccessTags/AccessTagsInputSlice";
+} from "@src/redux/slices/AccessTags/data";
 import {
-  multiAddRemoveSelectedAccessTag,
-  selectAccessTagsTableSelected,
-} from "../../redux/slices/AccessTags/AccessTagsTableSlice";
+  multiAddRemoveSelectedTag as multiAddRemoveSelectedAccessTag,
+  selectTableSelected as selectAccessTagsTableSelected,
+} from "@src/redux/slices/AccessTags/table";
 
 function AccessTagsAddDelete() {
   const dispatch = useDispatch();
@@ -39,7 +41,7 @@ function AccessTagsAddDelete() {
       dispatch(setAccessTagsInputId(accessTagsAddedId));
       dispatch(multiAddRemoveSelectedAccessTag(accessTagsAddedId));
     }
-  }, [accessTagsAddedId]);
+  }, [accessTagsAddedId, dispatch]);
 
   return (
     <div className="buttons">

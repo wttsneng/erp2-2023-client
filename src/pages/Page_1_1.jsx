@@ -1,89 +1,65 @@
 import React from "react";
 import { Box, Grid } from "@mui/material";
+
 import { useDispatch, useSelector } from "react-redux";
-import { setSidebarActiveByLink } from "../redux/slices/sidebarSlice";
+import { setSidebarActiveByLink } from "@src/redux/slices/Basic/sidebarSlice";
 import {
-  setAccessTagsSearchValue,
-  selectAccessTagsFilters,
-} from "../redux/slices/AccessTags/AccessTagsFilterSlice";
-import { fetchAccessTags } from "../redux/slices/AccessTags/AccessTagsSlice";
+  setSearchValue as setAccessTagsSearchValue,
+  selectFilters as selectAccessTagsFilters,
+} from "@src/redux/slices/AccessTags/filter";
 
-import { extendReducer } from "redux-extendable-reducer";
+import { fetchTags as fetchAccessTags } from "@src/redux/slices/AccessTags/data";
+import { filterReducer } from "@src/redux/slices/AccessTags/filter";
+import { historyFilterReducer } from "@src/redux/slices/AccessTags/historyFilter";
+import { dataReducer } from "@src/redux/slices/AccessTags/data";
+import { historyReducer } from "@src/redux/slices/AccessTags/history";
+import { inputReducer } from "@src/redux/slices/AccessTags/input";
+import { historyWindowReducer } from "@src/redux/slices/AccessTags/historyWindow";
+import { tableReducer } from "@src/redux/slices/AccessTags/table";
 
-import { Search } from "../components/Basic";
-import AccessTagInput from "../components/AccessTags/AccessTagEdit";
-import AccessTagsTable from "../components/AccessTags/AccessTagsTable";
-import AccessTagsFilters from "../components/AccessTags/AccessTagsFilters";
-import AccessTagsAddDelete from "../components/AccessTags/AccessTagsAddDelete";
-import AccessTagsHistoryWindow from "../components/AccessTags/AccessTagsHistoryWindow";
-import AccessTagsTableFooter from "../components/AccessTags/AccessTagsTableFooter";
+import { store } from "@src/index";
+import { injectAsyncReducer } from "@src/redux/store";
+import { combineReducers } from "redux";
+
+import { Search } from "@src/components/Basic";
+import AccessTagInput from "@src/components/AccessTags/AccessTagEdit";
+import AccessTagsTable from "@src/components/AccessTags/AccessTagsTable";
+import AccessTagsFilters from "@src/components/AccessTags/AccessTagsFilters";
+import AccessTagsAddDelete from "@src/components/AccessTags/AccessTagsAddDelete";
+import AccessTagsHistoryWindow from "@src/components/AccessTags/AccessTagsHistoryWindow";
+import AccessTagsTableFooter from "@src/components/AccessTags/AccessTagsTableFooter";
+
+const AccessTag = combineReducers({
+  data: dataReducer,
+  filter: filterReducer,
+  history: historyReducer,
+  historyFilter: historyFilterReducer,
+  input: inputReducer,
+  historyWindow: historyWindowReducer,
+  table: tableReducer,
+});
 
 export default function Tags() {
   const dispatch = useDispatch();
   const tagsFilters = useSelector(selectAccessTagsFilters);
-  const [isLoaded, setIsLoaded] = React.useState(false);
+  const [isPageLoaded, setIsPageLoaded] = React.useState(false);
 
   const onSearch = (value) => {
     dispatch(setAccessTagsSearchValue(value));
   };
 
   React.useEffect(() => {
-    import("../redux/slices/AccessTags/AccessTagsFilterSlice").then(
-      (module) => {
-        dispatch(
-          extendReducer({ accessTagsFilter: module.AccessTagsFilterReducer })
-        );
-      }
-    );
-    import("../redux/slices/AccessTags/AccessTagsSlice").then((module) => {
-      dispatch(extendReducer({ accessTags: module.AccessTagsReducer }));
-    });
-    import("../redux/slices/AccessTags/AccessTagsHistorySlice").then(
-      (module) => {
-        dispatch(
-          extendReducer({ accessTagsHistory: module.AccessTagsHistoryReducer })
-        );
-      }
-    );
-    import("../redux/slices/AccessTags/AccessTagsHistoryFilterSlice").then(
-      (module) => {
-        dispatch(
-          extendReducer({
-            accessTagsHistoryFilter: module.AccessTagsHistoryFilterReducer,
-          })
-        );
-      }
-    );
-    import("../redux/slices/AccessTags/AccessTagsHistoryWindowSlice").then(
-      (module) => {
-        dispatch(
-          extendReducer({
-            accessTagsHistoryWindow: module.AccessTagsHistoryWindowReducer,
-          })
-        );
-      }
-    );
-    import("../redux/slices/AccessTags/AccessTagsInputSlice").then((module) => {
-      dispatch(
-        extendReducer({ accessTagsInput: module.AccessTagsInputReducer })
-      );
-    });
-    import("../redux/slices/AccessTags/AccessTagsTableSlice").then((module) => {
-      dispatch(
-        extendReducer({ accessTagsTable: module.AccessTagsTableReducer })
-      );
-    });
-    setIsLoaded(true);
+    injectAsyncReducer(store, "accessTags", AccessTag);
     dispatch(setSidebarActiveByLink("page/1_1"));
+    setIsPageLoaded(true);
   }, []);
 
   React.useEffect(() => {
-    dispatch(fetchAccessTags(tagsFilters));
-  }, [tagsFilters, dispatch]);
-
-  if (!isLoaded) {
-    return <div>Loading...</div>;
-  }
+    if (isPageLoaded) {
+      dispatch(fetchAccessTags(tagsFilters));
+    }
+  }, [tagsFilters, dispatch, isPageLoaded]);
+  if (!isPageLoaded) return <div>Loading...</div>;
   return (
     <div className="">
       <Grid container spacing={2}>

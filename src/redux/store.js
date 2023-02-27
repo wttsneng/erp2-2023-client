@@ -1,18 +1,26 @@
 import { configureStore } from "@reduxjs/toolkit";
-import { authReducer } from "./slices/authSlice";
-import { sidebarReducer } from "./slices/sidebarSlice";
-import rootReducer, { extendReducer } from "redux-extendable-reducer";
+import { combineReducers } from "redux";
+import { authReducer, sidebarReducer } from "./slices/Basic";
 
-export const defaultReducers = {
+const defaultReducers = {
   auth: authReducer,
   sidebar: sidebarReducer,
 };
+function createReducer(asyncReducers) {
+  return combineReducers({
+    ...defaultReducers,
+    ...asyncReducers,
+  });
+}
+export function injectAsyncReducer(store, name, asyncReducer) {
+  store.asyncReducers[name] = asyncReducer;
+  store.replaceReducer(createReducer(store.asyncReducers));
+}
 
-export const store = configureStore({
-  reducer: rootReducer,
-  middleware: (getDefaultMiddleware) =>
-    getDefaultMiddleware({
-      serializableCheck: false,
-    }),
-});
-store.dispatch(extendReducer(defaultReducers));
+export default function configureAppStore() {
+  const store = configureStore({
+    reducer: createReducer(),
+  });
+  store.asyncReducers = {};
+  return store;
+}

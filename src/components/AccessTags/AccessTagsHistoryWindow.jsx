@@ -1,16 +1,20 @@
 import React from "react";
+
+import { DraggableWindow } from "../Basic";
+
 import { useSelector, useDispatch } from "react-redux";
 import {
-  selectAccessTagsHistoryWindowIsOpen,
-  setAccessTagsHistoryWindowOpen,
-} from "@/redux/slices/AccessTags/AccessTagsHistoryWindowSlice";
-import { DraggableWindow } from "../Basic";
+  selectHistoryWindowIsOpen as selectAccessTagsHistoryWindowIsOpen,
+  setHistoryWindowOpen as setAccessTagsHistoryWindowOpen,
+} from "@src/redux/slices/AccessTags/historyWindow";
 import AccessTagsHistoryTable from "./AccessTagsHistoryTable";
 import {
-  selectAccessTagsHistoryData,
-  fetchAccessTagsHistory,
-} from "@/redux/slices/AccessTags/AccessTagsHistorySlice";
-import { setTagHistoryId } from "@/redux/slices/AccessTags/AccessTagsHistoryFilterSlice";
+  selectHistoryData as selectAccessTagsHistoryData,
+  fetchHistory as fetchAccessTagsHistory,
+} from "@src/redux/slices/AccessTags/history";
+
+import { setTagHistoryId } from "@src/redux/slices/AccessTags/historyFilter";
+
 function AccessTagsHistoryWindow() {
   const dispatch = useDispatch();
   const isOpen = useSelector(selectAccessTagsHistoryWindowIsOpen);

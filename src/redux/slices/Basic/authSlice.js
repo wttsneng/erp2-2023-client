@@ -1,5 +1,5 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import { axios } from "../../core";
+import { axios } from "@src/core";
 
 export const fetchAuthMe = createAsyncThunk("auth/fetchAuthMe", async () => {
   const { data } = await axios.get("/api/auth/me");
@@ -29,7 +29,7 @@ const authSlice = createSlice({
   initialState,
   reducers: {
     some: (state, action) => {
-      state.status = "idle";
+      state.status = "spomej";
     },
   },
   extraReducers: (builder) => {

@@ -1,8 +1,9 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import { axios } from "@/core";
+import { axios, socket } from "@src/core";
 import qs from "qs";
-export const fetchAccessTags = createAsyncThunk(
-  "accessTags/fetchAccessTags",
+
+export const fetchTags = createAsyncThunk(
+  "accessTags/data/fetchTags",
   async ({ searchValue, order, sortBy, limit, page }) => {
     const queryParams = qs.stringify({
       query: searchValue,
@@ -17,42 +18,49 @@ export const fetchAccessTags = createAsyncThunk(
     return response.data;
   }
 );
+export const changeAccessTagValue = ({ itemId, attribute, value }) => {
+  socket.emit("changeValue", { itemId, attribute, value });
+};
+
+export const createAccessTag = ({ name, description }) => {
+  socket.emit("createAccessTag", { name, description });
+};
+export const deleteAccessTag = (id) => {
+  socket.emit("deleteAccessTag", id);
+};
+
 const initialState = {
   data: [],
   count: 0,
   totalPages: 0,
   status: "idle", // idle, loading, success, error
 };
-const accessTagsSlice = createSlice({
-  name: "accessTags",
+const dataSlice = createSlice({
+  name: "accessTags/data",
   initialState,
   reducers: {
-    setAccessTags: (state, action) => {
+    setData: (state, action) => {
       state.status = "loading";
       state.data = action.payload.rows;
       state.count = action.payload.count;
       state.totalPages = action.payload.totalPages;
       state.status = "success";
     },
-    addAccessTag: (state, action) => {
+    addTag: (state, action) => {
       state.status = "loading";
       state.data.push(action.payload);
       state.count++;
       state.status = "success";
     },
-    updateAccessTag: (state, action) => {
+    updateTag: (state, action) => {
       state.status = "loading";
-      const index = state.data.findIndex(
-        (accessTag) => accessTag.id === action.payload.id
-      );
+      const index = state.data.findIndex((tag) => tag.id === action.payload.id);
       state.data[index] = action.payload;
       state.status = "success";
     },
-    deleteAccessTag: (state, action) => {
+    deleteTag: (state, action) => {
       state.status = "loading";
-      const index = state.data.findIndex(
-        (accessTag) => accessTag.id === action.payload.id
-      );
+      const index = state.data.findIndex((tag) => tag.id === action.payload.id);
       state.data.splice(index, 1);
       state.count--;
       state.status = "success";
@@ -60,23 +68,22 @@ const accessTagsSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder
-      .addCase(fetchAccessTags.pending, (state, action) => {
+      .addCase(fetchTags.pending, (state, action) => {
         state.status = "loading";
       })
-      .addCase(fetchAccessTags.fulfilled, (state, action) => {
+      .addCase(fetchTags.fulfilled, (state, action) => {
         state.status = "success";
         state.data = action.payload.rows;
         state.count = action.payload.count;
         state.totalPages = action.payload.totalPages;
       })
-      .addCase(fetchAccessTags.rejected, (state, action) => {
+      .addCase(fetchTags.rejected, (state, action) => {
         state.status = "error";
       });
   },
 });
 
-export const { setAccessTags, addAccessTag, updateAccessTag, deleteAccessTag } =
-  accessTagsSlice.actions;
-export const AccessTagsReducer = accessTagsSlice.reducer;
-export const selectAccessTags = (state) => state.accessTags.data;
-export const selectAccessTagStatus = (state) => state.accessTags.status;
+export const { setData, addTag, updateTag, deleteTag } = dataSlice.actions;
+export const dataReducer = dataSlice.reducer;
+export const selectData = (state) => state.accessTags.data.data;
+export const selectDataStatus = (state) => state.accessTags.data.status;

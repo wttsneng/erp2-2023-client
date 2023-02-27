@@ -1,25 +1,19 @@
 import { createSlice } from "@reduxjs/toolkit";
-import {
-  setAccessTags,
-  addAccessTag,
-  updateAccessTag,
-  deleteAccessTag,
-  fetchAccessTags,
-} from "./AccessTagsSlice";
+import { setData, addTag, updateTag, deleteTag, fetchTags } from "./data";
 
 const initialState = {
   selected: [],
-  currentAccessTags: [],
+  current: [],
   mode: "single", //single, multiOne, multiMany
 };
-const accessTagsTableSlice = createSlice({
-  name: "accessTagsTable",
+const tableSlice = createSlice({
+  name: "accessTags/table",
   initialState,
   reducers: {
-    setSelectedAccessTag(state, action) {
+    setSelectedTag(state, action) {
       state.selected = action.payload;
     },
-    multiAddRemoveSelectedAccessTag(state, action) {
+    multiAddRemoveSelectedTag(state, action) {
       if (state.mode === "single") {
         state.selected = [];
         state.selected.push(action.payload);
@@ -40,10 +34,10 @@ const accessTagsTableSlice = createSlice({
         }
         const lastSelectedId = state.selected[state.selected.length - 1];
         const currentSelectedId = action.payload;
-        const indexOfLastSelectedId = state.currentAccessTags.findIndex(
+        const indexOfLastSelectedId = state.current.findIndex(
           (item) => item.id === lastSelectedId
         );
-        const indexOfCurrentSelectedId = state.currentAccessTags.findIndex(
+        const indexOfCurrentSelectedId = state.current.findIndex(
           (item) => item.id === currentSelectedId
         );
         const sliceStart = Math.min(
@@ -54,43 +48,39 @@ const accessTagsTableSlice = createSlice({
           indexOfLastSelectedId,
           indexOfCurrentSelectedId
         );
-        const candidates = state.currentAccessTags.slice(
-          sliceStart,
-          sliceEnd + 1
-        );
+        const candidates = state.current.slice(sliceStart, sliceEnd + 1);
         candidates.forEach((item) => state.selected.push(item.id));
       }
     },
-    setAccessTagsTableMode(state, action) {
+    setTableMode(state, action) {
       state.mode = action.payload;
     },
   },
   extraReducers: (builder) => {
     builder
-      .addCase(setAccessTags, (state, action) => {
-        state.currentAccessTags = action.payload.rows;
+      .addCase(setData, (state, action) => {
+        state.current = action.payload.rows;
       })
-      .addCase(addAccessTag, (state, action) => {
-        state.currentAccessTags.push(action.payload);
+      .addCase(addTag, (state, action) => {
+        state.current.push(action.payload);
       })
-      .addCase(updateAccessTag, (state, action) => {
-        state.currentAccessTags = state.currentAccessTags.map((accessTag) =>
+      .addCase(updateTag, (state, action) => {
+        state.current = state.current.map((accessTag) =>
           accessTag.id === action.payload.id ? action.payload : accessTag
         );
       })
-      .addCase(deleteAccessTag, (state, action) => {
-        state.currentAccessTags = state.currentAccessTags.filter(
+      .addCase(deleteTag, (state, action) => {
+        state.current = state.current.filter(
           (accessTag) => accessTag.id !== action.payload.id
         );
       })
-      .addCase(fetchAccessTags.fulfilled, (state, action) => {
-        state.currentAccessTags = action.payload.rows;
+      .addCase(fetchTags.fulfilled, (state, action) => {
+        state.current = action.payload.rows;
       });
   },
 });
 
-export const { multiAddRemoveSelectedAccessTag, setAccessTagsTableMode } =
-  accessTagsTableSlice.actions;
-export const AccessTagsTableReducer = accessTagsTableSlice.reducer;
-export const selectAccessTagsTableSelected = (state) =>
-  state.accessTagsTable.selected;
+export const { multiAddRemoveSelectedTag, setTableMode, setSelectedTag } =
+  tableSlice.actions;
+export const tableReducer = tableSlice.reducer;
+export const selectTableSelected = (state) => state.accessTags.table.selected;

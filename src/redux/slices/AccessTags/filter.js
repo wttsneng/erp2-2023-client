@@ -18,32 +18,32 @@ const initialState = {
   page: 1,
 };
 
-const AccessTagsFilterSlice = createSlice({
-  name: "accessTagsFilter",
+const filterSlice = createSlice({
+  name: "accessTags/filter",
   initialState,
   reducers: {
-    setAccessTagsSearchValue: (state, action) => {
+    setSearchValue: (state, action) => {
       state.searchValue = action.payload;
     },
-    setAccessTagsOrder: (state, action) => {
+    setOrder: (state, action) => {
       state.order = {
         value: action.payload,
         label: orderVariants[action.payload],
       };
     },
-    setAccessTagsSortBy: (state, action) => {
+    setSortBy: (state, action) => {
       state.sortBy = {
         value: action.payload,
         label: sortByVariants[action.payload],
       };
     },
-    setAccessTagsLimit: (state, action) => {
+    setLimit: (state, action) => {
       state.limit = action.payload;
     },
-    setAccessTagsPage: (state, action) => {
+    setPage: (state, action) => {
       state.page = action.payload;
     },
-    clearAccessTagsFilter: (state) => {
+    clearFilter: (state) => {
       state.searchValue = "";
       state.order = { value: "ASC", label: "Ascending" };
       state.sortBy = { value: "createdAt", label: "Date" };
@@ -54,12 +54,7 @@ const AccessTagsFilterSlice = createSlice({
   extraReducers: (builder) => {},
 });
 
-export const {
-  setAccessTagsSearchValue,
-  setAccessTagsOrder,
-  setAccessTagsSortBy,
-  setAccessTagsLimit,
-  setAccessTagsPage,
-} = AccessTagsFilterSlice.actions;
-export const AccessTagsFilterReducer = AccessTagsFilterSlice.reducer;
-export const selectAccessTagsFilters = (state) => state.accessTagsFilter;
+export const { setSearchValue, setOrder, setSortBy, setLimit, setPage } =
+  filterSlice.actions;
+export const filterReducer = filterSlice.reducer;
+export const selectFilters = (state) => state.accessTags.filter;

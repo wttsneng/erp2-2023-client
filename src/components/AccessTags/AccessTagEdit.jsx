@@ -6,28 +6,28 @@ import { SocketInput } from "../Basic";
 
 import { useDispatch, useSelector } from "react-redux";
 import {
-  selectAccessTagsInputData,
-  setAccessTagsInputName,
-  setAccessTagsInputDescription,
-  setAccessTagsInputIsDescriptionDisabled,
-  setAccessTagsInputIsNameDisabled,
-  setAccessTagsInputIsNameFocused,
-  setAccessTagsInputIsDescriptionFocused,
+  setInputInitialName as setAccessTagsInputInitialName,
+  setInputInitialDescription as setAccessTagsInputInitialDescription,
+  setInputName as setAccessTagsInputName,
+  setInputDescription as setAccessTagsInputDescription,
+  setInputIsNameDisabled as setAccessTagsInputIsNameDisabled,
+  setInputIsDescriptionDisabled as setAccessTagsInputIsDescriptionDisabled,
+  setInputIsNameFocused as setAccessTagsInputIsNameFocused,
+  setInputIsDescriptionFocused as setAccessTagsInputIsDescriptionFocused,
+  changeInputStarted as changeAccessTagsInputStarted,
+  changeInputEnded as changeAccessTagsInputEnded,
+  selectInputData as selectAccessTagsInputData,
+} from "@src/redux/slices/AccessTags/input";
+import {
+  selectData as selectAccessTags,
+  selectDataStatus as selectAccessTagStatus,
   changeAccessTagValue,
-  changeAccessTagsInputStarted,
-  changeAccessTagsInputEnded,
-  setAccessTagsInputInitialName,
-  setAccessTagsInputInitialDescription,
-} from "../../redux/slices/AccessTags/AccessTagsInputSlice";
+} from "@src/redux/slices/AccessTags/data";
+import { setHistoryWindowOpen as setAccessTagsHistoryWindowOpen } from "@src/redux/slices/AccessTags/historyWindow";
 import {
-  selectAccessTags,
-  selectAccessTagStatus,
-} from "../../redux/slices/AccessTags/AccessTagsSlice";
-import { setAccessTagsHistoryWindowOpen } from "../../redux/slices/AccessTags/AccessTagsHistoryWindowSlice";
-import {
-  setTagHistoryId,
-  setAccessTagsHistoryField,
-} from "../../redux/slices/AccessTags/AccessTagsHistoryFilterSlice";
+  setHistoryField as setAccessTagsHistoryField,
+  setTagHistoryId as setAccessTagsTagHistoryId,
+} from "@src/redux/slices/AccessTags/historyFilter";
 
 function AccessTagInput() {
   const dispatch = useDispatch();
@@ -78,13 +78,13 @@ function AccessTagInput() {
   const handleNameHistoryClick = () => {
     if (!inputData.id) return;
     dispatch(setAccessTagsHistoryField("name"));
-    dispatch(setTagHistoryId(inputData.id));
+    dispatch(setAccessTagsTagHistoryId(inputData.id));
     dispatch(setAccessTagsHistoryWindowOpen(true));
   };
   const handleDescriptionHistoryClick = () => {
     if (!inputData.id) return;
     dispatch(setAccessTagsHistoryField("description"));
-    dispatch(setTagHistoryId(inputData.id));
+    dispatch(setAccessTagsTagHistoryId(inputData.id));
     dispatch(setAccessTagsHistoryWindowOpen(true));
   };
 

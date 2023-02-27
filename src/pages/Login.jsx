@@ -2,7 +2,7 @@ import React from "react";
 import { AuthForm } from "../components/Basic";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { selectAuthStatus, fetchAuthMe } from "../redux/slices/authSlice";
+import { selectAuthStatus, fetchAuthMe } from "../redux/slices/Basic/authSlice";
 import { Container, Box } from "@mui/material";
 import { socket, axios } from "../core";
 export default function Login() {

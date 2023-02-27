@@ -1,10 +1,13 @@
 import React from "react";
-import TableContainer from "../Basic/Table/TableContainer";
-import Table from "../Basic/Table/Table";
-import TableHead from "../Basic/Table/TableHead";
-import TableRow from "../Basic/Table/TableRow";
-import TableCell from "../Basic/Table/TableCell";
-import TableBody from "../Basic/Table/TableBody";
+import {
+  Table,
+  TableHead,
+  TableRow,
+  TableCell,
+  TableBody,
+  TableContainer,
+} from "../Basic/Table";
+
 function AccessTagsHistoryTable({ data }) {
   return (
     <div>

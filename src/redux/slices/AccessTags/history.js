@@ -1,15 +1,15 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import { axios } from "@/core";
+import { axios } from "@src/core";
 import qs from "qs";
 
-export const fetchAccessTagsHistory = createAsyncThunk(
-  "accessTagsHistory/fetchAccessTagsHistory",
+export const fetchHistory = createAsyncThunk(
+  "accessTags/history/fetchHistory",
   async (params, thunkAPI) => {
     const { getState } = thunkAPI;
     const state = getState();
-    const { accessTagsHistoryFilter } = state;
+    const { HistoryFilter } = state;
     const { searchValue, order, id, sortBy, limit, page, field } =
-      accessTagsHistoryFilter;
+      HistoryFilter;
     const query = qs.stringify({
       searchValue,
       order,
@@ -31,8 +31,8 @@ const initialState = {
   status: "idle", // idle, loading, success, error
 };
 
-const AccessTagsHistorySlice = createSlice({
-  name: "accessTagsHistory",
+const historySlice = createSlice({
+  name: "accessTags/history",
   initialState,
   reducers: {
     setAccessTagHistory: (state, action) => {
@@ -42,23 +42,22 @@ const AccessTagsHistorySlice = createSlice({
   },
   extraReducers: (builder) => {
     builder
-      .addCase(fetchAccessTagsHistory.pending, (state, action) => {
+      .addCase(fetchHistory.pending, (state, action) => {
         state.status = "loading";
       })
-      .addCase(fetchAccessTagsHistory.fulfilled, (state, action) => {
+      .addCase(fetchHistory.fulfilled, (state, action) => {
         state.status = "success";
         state.data = action.payload.rows;
         state.count = action.payload.count;
       })
-      .addCase(fetchAccessTagsHistory.rejected, (state, action) => {
+      .addCase(fetchHistory.rejected, (state, action) => {
         state.status = "error";
       });
   },
 });
 
-export const { setTagHistory } = AccessTagsHistorySlice.actions;
-export const AccessTagsHistoryReducer = AccessTagsHistorySlice.reducer;
-export const selectAccessTagsHistoryData = (state) =>
-  state.accessTagsHistory.data;
-export const selectAccessTagsHistoryStatus = (state) =>
-  state.tagsHistory.status;
+export const { setTagHistory } = historySlice.actions;
+export const historyReducer = historySlice.reducer;
+export const selectHistoryData = (state) => state.accessTags.history.data;
+export const selectHistoryStatus = (state) =>
+  state.accessTags.tagsHistory.status;

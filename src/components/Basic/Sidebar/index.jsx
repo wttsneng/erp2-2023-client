@@ -20,7 +20,7 @@ import {
   selectSidebarData,
   selectSidebarStatus,
   selectSidebarActive,
-} from "../../../redux/slices/sidebarSlice";
+} from "@src/redux/slices/Basic/sidebarSlice";
 
 const miniDrawerWidth = 40;
 const drawerWidth = 240;

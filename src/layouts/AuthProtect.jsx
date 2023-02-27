@@ -4,7 +4,6 @@ import { Outlet, Navigate } from "react-router-dom";
 import { MainLoading } from "../components/Basic";
 
 function AuthProtect({ authStatus }) {
-  console.log("authStatus", authStatus);
   if (!window.localStorage.getItem("token")) {
     return <Navigate to="login" />;
   }

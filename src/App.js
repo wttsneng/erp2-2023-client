@@ -11,8 +11,8 @@ import {
   selectAuthStatus,
   selectAuthData,
   fetchAuthMe,
-} from "./redux/slices/authSlice";
-import { setSidebarData } from "./redux/slices/sidebarSlice";
+} from "./redux/slices/Basic/authSlice";
+import { setSidebarData } from "./redux/slices/Basic/sidebarSlice";
 
 import { Login, NotFound } from "./pages";
 
@@ -42,17 +42,16 @@ function App() {
     <React.Fragment>
       <Routes>
         <Route path="/login" element={<Login />} />
+
         <Route path="/*" element={<MainLayout />}>
           <Route path="*" element={<AuthProtect authStatus={authStatus} />}>
             <Route index element={<HomeRoute />} />
-            <Route
-              path="page/*"
-              element={
-                <ProtectedRoutes
-                  uiModules={authStatus === "success" && authData.uimodules}
-                />
-              }
-            />
+            {authStatus === "success" && (
+              <Route
+                path="page/*"
+                element={<ProtectedRoutes uiModules={authData.uimodules} />}
+              />
+            )}
             <Route path="404" element={<NotFound />} />
             <Route path="*" element={<NotFound />} />
           </Route>

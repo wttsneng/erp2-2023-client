@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import {
   setSidebarHomeActive,
   selectSidebarStatus,
-} from "../redux/slices/sidebarSlice";
+} from "@src/redux/slices/Basic/sidebarSlice";
 function HomeRoute() {
   const dispatch = useDispatch();
   const sidebarHomeLink = useSelector((state) => state.sidebar.homeLink);
