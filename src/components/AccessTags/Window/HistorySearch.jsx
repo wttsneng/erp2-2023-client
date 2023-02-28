@@ -2,16 +2,16 @@ import React from "react";
 import { Search } from "@src/components/Basic";
 import { useSelector, useDispatch } from "react-redux";
 import {
-  selectHistoryFilter,
-  setHistorySearchValue,
+  selectAccessTagsHistoryFilter,
+  setAccessTagsHistorySearchValue,
 } from "@src/redux/slices/AccessTags/historyFilter";
 import { Box } from "@mui/material";
 
 function AccessTagsHistorySearch() {
   const dispatch = useDispatch();
-  const filter = useSelector(selectHistoryFilter);
+  const filter = useSelector(selectAccessTagsHistoryFilter);
   const handleChange = (value) => {
-    dispatch(setHistorySearchValue(value));
+    dispatch(setAccessTagsHistorySearchValue(value));
   };
   return (
     <Box sx={{ paddingBottom: 2 }}>

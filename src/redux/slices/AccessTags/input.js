@@ -1,12 +1,12 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { socket } from "@src/core";
 
-export const changeInputStarted = ({ itemId, attribute }) => {
-  socket.emit("changeValueStart", { itemId, attribute });
+export const changeAccessTagsInputStarted = ({ itemId, attribute }) => {
+  socket.emit("changeAccessTagsInputStarted", { itemId, attribute });
 };
 
-export const changeInputEnded = ({ itemId, attribute }) => {
-  socket.emit("changeValueEnd", { itemId, attribute });
+export const changeAccessTagsInputEnded = ({ itemId, attribute }) => {
+  socket.emit("changeAccessTagsInputEnded", { itemId, attribute });
 };
 
 const initialState = {
@@ -21,38 +21,38 @@ const initialState = {
   isDescriptionFocused: false,
 };
 
-const inputSlice = createSlice({
-  name: "accessTags/input",
+const AccessTagsInputSlice = createSlice({
+  name: "accessTagsInput",
   initialState,
   reducers: {
-    setInputId: (state, action) => {
+    setAccessTagsInputId: (state, action) => {
       state.id = action.payload;
     },
-    setInputInitialName: (state, action) => {
+    setAccessTagsInputInitialName: (state, action) => {
       state.initialName = action.payload;
     },
-    setInputInitialDescription: (state, action) => {
+    setAccessTagsInputInitialDescription: (state, action) => {
       state.initialDescription = action.payload;
     },
-    setInputName: (state, action) => {
+    setAccessTagsInputName: (state, action) => {
       state.name = action.payload;
     },
-    setInputDescription: (state, action) => {
+    setAccessTagsInputDescription: (state, action) => {
       state.description = action.payload;
     },
-    setInputIsNameDisabled: (state, action) => {
+    setAccessTagsInputIsNameDisabled: (state, action) => {
       state.isNameDisabled = action.payload;
     },
-    setInputIsDescriptionDisabled: (state, action) => {
+    setAccessTagsInputIsDescriptionDisabled: (state, action) => {
       state.isDescriptionDisabled = action.payload;
     },
-    setInputIsNameFocused: (state, action) => {
+    setAccessTagsInputIsNameFocused: (state, action) => {
       state.isNameFocused = action.payload;
     },
-    setInputIsDescriptionFocused: (state, action) => {
+    setAccessTagsInputIsDescriptionFocused: (state, action) => {
       state.isDescriptionFocused = action.payload;
     },
-    clearInput: (state) => {
+    clearAccessTagsInput: (state) => {
       state.id = null;
       state.initialName = "";
       state.initialDescription = "";
@@ -68,16 +68,16 @@ const inputSlice = createSlice({
 });
 
 export const {
-  setInputId,
-  setInputInitialName,
-  setInputInitialDescription,
-  setInputName,
-  setInputDescription,
-  setInputIsNameDisabled,
-  setInputIsDescriptionDisabled,
-  setInputIsNameFocused,
-  setInputIsDescriptionFocused,
-  clearInput,
-} = inputSlice.actions;
-export const inputReducer = inputSlice.reducer;
-export const selectInputData = (state) => state.accessTags.input;
+  setAccessTagsInputId,
+  setAccessTagsInputInitialName,
+  setAccessTagsInputInitialDescription,
+  setAccessTagsInputName,
+  setAccessTagsInputDescription,
+  setAccessTagsInputIsNameDisabled,
+  setAccessTagsInputIsDescriptionDisabled,
+  setAccessTagsInputIsNameFocused,
+  setAccessTagsInputIsDescriptionFocused,
+  clearAccessTagsInput,
+} = AccessTagsInputSlice.actions;
+export const accessTagsInputReducer = AccessTagsInputSlice.reducer;
+export const selectAccessTagsInputData = (state) => state.accessTags.input;

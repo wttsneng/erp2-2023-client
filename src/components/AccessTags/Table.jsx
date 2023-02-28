@@ -6,32 +6,39 @@ import { TagsList, TagsListLoading } from "../Basic";
 
 import { useSelector, useDispatch } from "react-redux";
 import {
-  selectDataStatus as selectAccessTagStatus,
-  selectData as selectAccessTags,
+  selectAccessTagsStatus,
+  selectAccessTagsData,
 } from "@src/redux/slices/AccessTags/data";
 import {
-  selectTableSelected as selectAccessTagsTableSelected,
-  multiAddRemoveSelectedTag as multiAddRemoveSelectedAccessTag,
+  selectAccessTagsTableSelected,
+  multiAddRemoveAccessTagsSelectedTag,
 } from "@src/redux/slices/AccessTags/table";
-import { setInputId as setAccessTagsInputId } from "@src/redux/slices/AccessTags/input";
+import { setAccessTagsInputId } from "@src/redux/slices/AccessTags/input";
 import {
   setContextMenuOpen,
   setContextMenuType,
   setContextMenuPosition,
 } from "@src/redux/slices/Basic/contextMenuSlice";
+import { fetchAccessTags } from "@src/redux/slices/AccessTags/data";
+import { selectAccessTagsFilters } from "@src/redux/slices/AccessTags/filter";
 
 function AccessTagsTable() {
   const theme = useTheme();
   const dispatch = useDispatch();
+  const tagsFilters = useSelector(selectAccessTagsFilters);
 
   const selectedTags = useSelector(selectAccessTagsTableSelected);
-  const tagsStatus = useSelector(selectAccessTagStatus);
-  const tags = useSelector(selectAccessTags);
+  const tagsStatus = useSelector(selectAccessTagsStatus);
+  const tags = useSelector(selectAccessTagsData);
 
   const handleTagClick = (tag) => {
     dispatch(setAccessTagsInputId(tag.id));
-    dispatch(multiAddRemoveSelectedAccessTag(tag.id));
+    dispatch(multiAddRemoveAccessTagsSelectedTag(tag.id));
   };
+
+  React.useEffect(() => {
+    dispatch(fetchAccessTags(tagsFilters));
+  }, [tagsFilters, dispatch]);
 
   return (
     <Box>

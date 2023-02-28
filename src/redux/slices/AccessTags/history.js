@@ -2,8 +2,8 @@ import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import { axios } from "@src/core";
 import qs from "qs";
 
-export const fetchHistory = createAsyncThunk(
-  "accessTags/history/fetchHistory",
+export const fetchAccessTagsHistory = createAsyncThunk(
+  "accessTagsHistory/fetchAccessTagsHistory",
   async (params, thunkAPI) => {
     const { getState } = thunkAPI;
     const state = getState();
@@ -31,8 +31,8 @@ const initialState = {
   status: "idle", // idle, loading, success, error
 };
 
-const historySlice = createSlice({
-  name: "accessTags/history",
+const accessTagsHistory = createSlice({
+  name: "accessTagsHistory",
   initialState,
   reducers: {
     setAccessTagHistory: (state, action) => {
@@ -42,22 +42,23 @@ const historySlice = createSlice({
   },
   extraReducers: (builder) => {
     builder
-      .addCase(fetchHistory.pending, (state, action) => {
+      .addCase(fetchAccessTagsHistory.pending, (state, action) => {
         state.status = "loading";
       })
-      .addCase(fetchHistory.fulfilled, (state, action) => {
+      .addCase(fetchAccessTagsHistory.fulfilled, (state, action) => {
         state.status = "success";
         state.data = action.payload.rows;
         state.count = action.payload.count;
       })
-      .addCase(fetchHistory.rejected, (state, action) => {
+      .addCase(fetchAccessTagsHistory.rejected, (state, action) => {
         state.status = "error";
       });
   },
 });
 
-export const { setTagHistory } = historySlice.actions;
-export const historyReducer = historySlice.reducer;
-export const selectHistoryData = (state) => state.accessTags.history.data;
-export const selectHistoryStatus = (state) =>
-  state.accessTags.tagsHistory.status;
+export const { setAccessTagHistory } = accessTagsHistory.actions;
+export const accessTagsHistoryReducer = accessTagsHistory.reducer;
+export const selectAccessTagsHistoryData = (state) =>
+  state.accessTags.history.data;
+export const selectAccessTagsHistoryStatus = (state) =>
+  state.accessTags.history.status;

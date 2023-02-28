@@ -6,38 +6,38 @@ import { SocketInput } from "../Basic";
 
 import { useDispatch, useSelector } from "react-redux";
 import {
-  setInputInitialName as setAccessTagsInputInitialName,
-  setInputInitialDescription as setAccessTagsInputInitialDescription,
-  setInputName as setAccessTagsInputName,
-  setInputDescription as setAccessTagsInputDescription,
-  setInputIsNameDisabled as setAccessTagsInputIsNameDisabled,
-  setInputIsDescriptionDisabled as setAccessTagsInputIsDescriptionDisabled,
-  setInputIsNameFocused as setAccessTagsInputIsNameFocused,
-  setInputIsDescriptionFocused as setAccessTagsInputIsDescriptionFocused,
-  changeInputStarted as changeAccessTagsInputStarted,
-  changeInputEnded as changeAccessTagsInputEnded,
-  selectInputData as selectAccessTagsInputData,
+  setAccessTagsInputInitialName,
+  setAccessTagsInputInitialDescription,
+  setAccessTagsInputName,
+  setAccessTagsInputDescription,
+  setAccessTagsInputIsNameDisabled,
+  setAccessTagsInputIsDescriptionDisabled,
+  setAccessTagsInputIsNameFocused,
+  setAccessTagsInputIsDescriptionFocused,
+  changeAccessTagsInputStarted,
+  changeAccessTagsInputEnded,
+  selectAccessTagsInputData,
 } from "@src/redux/slices/AccessTags/input";
-import { fetchHistory as fetchAccessTagsHistory } from "@src/redux/slices/AccessTags/history";
+import { fetchAccessTagsHistory } from "@src/redux/slices/AccessTags/history";
 import {
-  selectData as selectAccessTags,
-  selectDataStatus as selectAccessTagStatus,
+  selectAccessTagsData,
+  selectAccessTagsStatus,
   changeAccessTagValue,
 } from "@src/redux/slices/AccessTags/data";
 import {
-  setHistoryWindowOpen as setAccessTagsHistoryWindowOpen,
-  setHistoryWindowMode,
+  setAccessTagsHistoryWindowOpen,
+  setAccessTagsHistoryWindowMode,
 } from "@src/redux/slices/AccessTags/historyWindow";
 import {
-  setHistoryField as setAccessTagsHistoryField,
-  setTagHistoryId as setAccessTagsTagHistoryId,
+  setAccessTagsHistoryField,
+  setAccessTagsTagHistoryId,
 } from "@src/redux/slices/AccessTags/historyFilter";
 
 function AccessTagInput() {
   const dispatch = useDispatch();
   const inputData = useSelector(selectAccessTagsInputData);
-  const tags = useSelector(selectAccessTags);
-  const tagsStatus = useSelector(selectAccessTagStatus);
+  const tags = useSelector(selectAccessTagsData);
+  const tagsStatus = useSelector(selectAccessTagsStatus);
 
   const inputNameRef = React.createRef();
 
@@ -81,7 +81,7 @@ function AccessTagInput() {
   };
   const handleNameHistoryClick = () => {
     if (!inputData.id) return;
-    dispatch(setHistoryWindowMode("mini"));
+    dispatch(setAccessTagsHistoryWindowMode("mini"));
     dispatch(fetchAccessTagsHistory()).then(() => {
       dispatch(setAccessTagsHistoryField("name"));
       dispatch(setAccessTagsHistoryWindowOpen(true));
@@ -89,7 +89,7 @@ function AccessTagInput() {
   };
   const handleDescriptionHistoryClick = () => {
     if (!inputData.id) return;
-    dispatch(setHistoryWindowMode("mini"));
+    dispatch(setAccessTagsHistoryWindowMode("mini"));
     dispatch(fetchAccessTagsHistory()).then(() => {
       dispatch(setAccessTagsHistoryField("description"));
       dispatch(setAccessTagsHistoryWindowOpen(true));

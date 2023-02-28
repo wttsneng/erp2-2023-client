@@ -13,8 +13,8 @@ import {
   createAccessTag,
   deleteAccessTag,
 } from "@src/redux/slices/AccessTags/data";
-import { selectTableSelected as selectAccessTagsTableSelected } from "@src/redux/slices/AccessTags/table";
-import { clearInput as clearAccessTagsInput } from "@src/redux/slices/AccessTags/input";
+import { selectAccessTagsTableSelected } from "@src/redux/slices/AccessTags/table";
+import { clearAccessTagsInput } from "@src/redux/slices/AccessTags/input";
 
 function AccessTagContextMenu() {
   const dispatch = useDispatch();

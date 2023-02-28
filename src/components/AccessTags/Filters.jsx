@@ -1,11 +1,11 @@
 import React from "react";
 import { Stack } from "@mui/material";
 import { useSelector, useDispatch } from "react-redux";
-import { selectFilters as selectAccessTagsFilters } from "@src/redux/slices/AccessTags/filter";
+import { selectAccessTagsFilters } from "@src/redux/slices/AccessTags/filter";
 import { MySelect } from "../Basic";
 import {
-  setSortBy as setAccessTagsSortBy,
-  setOrder as setAccessTagsOrder,
+  setAccessTagsSortBy,
+  setAccessTagsOrder,
   sortByVariants,
   orderVariants,
 } from "@src/redux/slices/AccessTags/filter";
@@ -26,11 +26,13 @@ function AccessTagsFilters() {
     <Stack direction="row" spacing={2}>
       <MySelect
         value={tagsFilters.sortBy.value}
+        label="Order by"
         options={sortByVariants}
         onChange={handleSortByChange}
       />
       <MySelect
         value={tagsFilters.order.value}
+        label="Order by"
         options={orderVariants}
         onChange={handleOrderByChange}
       />

@@ -6,23 +6,23 @@ import HistoryIcon from "@mui/icons-material/History";
 
 import { useDispatch, useSelector } from "react-redux";
 import {
-  setInputId as setAccessTagsInputId,
-  clearInput as clearAccessTagsInput,
+  setAccessTagsInputId,
+  clearAccessTagsInput,
 } from "@src/redux/slices/AccessTags/input";
 import {
   createAccessTag,
   deleteAccessTag,
 } from "@src/redux/slices/AccessTags/data";
 import {
-  multiAddRemoveSelectedTag as multiAddRemoveSelectedAccessTag,
-  selectTableSelected as selectAccessTagsTableSelected,
+  multiAddRemoveAccessTagsSelectedTag,
+  selectAccessTagsTableSelected,
 } from "@src/redux/slices/AccessTags/table";
 import {
-  setHistoryWindowMode,
-  setHistoryWindowOpen,
+  setAccessTagsHistoryWindowMode,
+  setAccessTagsHistoryWindowOpen,
 } from "@src/redux/slices/AccessTags/historyWindow";
-import { fetchHistory } from "@src/redux/slices/AccessTags/history";
-import { clearHistoryFilter } from "@src/redux/slices/AccessTags/historyFilter";
+import { fetchAccessTagsHistory } from "@src/redux/slices/AccessTags/history";
+import { clearAccessTagsHistoryFilter } from "@src/redux/slices/AccessTags/historyFilter";
 
 function AccessTagsAddDelete() {
   const dispatch = useDispatch();
@@ -43,16 +43,16 @@ function AccessTagsAddDelete() {
     });
   };
   const handleHistoryClick = () => {
-    dispatch(clearHistoryFilter());
-    dispatch(setHistoryWindowMode("accessTags"));
-    dispatch(setHistoryWindowOpen(true));
-    fetchHistory();
+    dispatch(clearAccessTagsHistoryFilter());
+    dispatch(setAccessTagsHistoryWindowMode("accessTags"));
+    dispatch(setAccessTagsHistoryWindowOpen(true));
+    fetchAccessTagsHistory();
   };
 
   React.useEffect(() => {
     if (accessTagsAddedId) {
       dispatch(setAccessTagsInputId(accessTagsAddedId));
-      dispatch(multiAddRemoveSelectedAccessTag(accessTagsAddedId));
+      dispatch(multiAddRemoveAccessTagsSelectedTag(accessTagsAddedId));
     }
   }, [accessTagsAddedId, dispatch]);
 

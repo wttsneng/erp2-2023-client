@@ -16,7 +16,6 @@ const StyledTextField = styled(TextField)(({ theme }) => ({
     [theme.breakpoints.down("md")]: {
       display: "none",
     },
-    zIndex: 10,
     marginRight: "4px",
   },
   "& .MuiInputBase-input": {

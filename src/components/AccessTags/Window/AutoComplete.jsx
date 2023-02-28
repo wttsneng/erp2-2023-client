@@ -1,10 +1,10 @@
 import React from "react";
-import { Autocomplete, TextField, Box } from "@mui/material";
+import { Autocomplete, Box } from "@mui/material";
 import Input from "@src/components/Basic/Input/input";
 
 import { useSelector, useDispatch } from "react-redux";
-import { selectData as selectAccessTagsData } from "@src/redux/slices/AccessTags/data";
-import { setTagHistoryId } from "@src/redux/slices/AccessTags/historyFilter";
+import { selectAccessTagsData } from "@src/redux/slices/AccessTags/data";
+import { setAccessTagsTagHistoryId } from "@src/redux/slices/AccessTags/historyFilter";
 
 function AccessTagsAutoComplete() {
   const dispatch = useDispatch();
@@ -24,10 +24,10 @@ function AccessTagsAutoComplete() {
       <Autocomplete
         options={normalizedAccessTags}
         onChange={(event, newValue) => {
-          dispatch(setTagHistoryId(newValue.id));
+          dispatch(setAccessTagsTagHistoryId(newValue.id));
         }}
         onInputChange={(event, newInputValue) => {
-          dispatch(setTagHistoryId(null));
+          dispatch(setAccessTagsTagHistoryId(null));
         }}
         clearOnEscape={true}
         renderInput={(params) => <Input {...params} label="someS" />}

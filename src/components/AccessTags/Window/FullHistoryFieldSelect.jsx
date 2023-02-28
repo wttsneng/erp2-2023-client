@@ -3,14 +3,14 @@ import { MySelect } from "@src/components/Basic";
 import { Box } from "@mui/material";
 
 import {
-  selectHistoryFilter,
-  setHistoryField,
+  selectAccessTagsHistoryFilter,
+  setAccessTagsHistoryField,
 } from "@src/redux/slices/AccessTags/historyFilter";
 import { useSelector, useDispatch } from "react-redux";
 
 function AccessTagsFullHistoryFieldSelect() {
   const dispatch = useDispatch();
-  const historyFilter = useSelector(selectHistoryFilter);
+  const historyFilter = useSelector(selectAccessTagsHistoryFilter);
   return (
     <Box
       sx={{
@@ -22,7 +22,7 @@ function AccessTagsFullHistoryFieldSelect() {
         options={["name", "description"]}
         label="Field"
         onChange={(e) => {
-          dispatch(setHistoryField(e.target.value));
+          dispatch(setAccessTagsHistoryField(e.target.value));
         }}
       ></MySelect>
     </Box>

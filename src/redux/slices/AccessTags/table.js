@@ -1,5 +1,11 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { setData, addTag, updateTag, deleteTag, fetchTags } from "./data";
+import {
+  setAccessTagsData,
+  addAccessTags,
+  updateAccessTags,
+  deleteAccessTags,
+  fetchAccessTags,
+} from "./data";
 import { setSelectionMode } from "@src/redux/slices/Basic/variableSlice";
 
 const initialState = {
@@ -7,14 +13,14 @@ const initialState = {
   current: [],
   selectionMode: "single", //single, multiOne, multiMany
 };
-const tableSlice = createSlice({
-  name: "accessTags/table",
+const accessTagsTableSlice = createSlice({
+  name: "accessTagsTable",
   initialState,
   reducers: {
-    setSelectedTag(state, action) {
+    setAccessTagsSelectedTag(state, action) {
       state.selected = action.payload;
     },
-    multiAddRemoveSelectedTag(state, action) {
+    multiAddRemoveAccessTagsSelectedTag(state, action) {
       if (state.selectionMode === "single") {
         state.selected = [];
         state.selected.push(action.payload);
@@ -56,23 +62,23 @@ const tableSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder
-      .addCase(setData, (state, action) => {
+      .addCase(setAccessTagsData, (state, action) => {
         state.current = action.payload.rows;
       })
-      .addCase(addTag, (state, action) => {
+      .addCase(addAccessTags, (state, action) => {
         state.current.push(action.payload);
       })
-      .addCase(updateTag, (state, action) => {
+      .addCase(updateAccessTags, (state, action) => {
         state.current = state.current.map((accessTag) =>
           accessTag.id === action.payload.id ? action.payload : accessTag
         );
       })
-      .addCase(deleteTag, (state, action) => {
+      .addCase(deleteAccessTags, (state, action) => {
         state.current = state.current.filter(
           (accessTag) => accessTag.id !== action.payload.id
         );
       })
-      .addCase(fetchTags.fulfilled, (state, action) => {
+      .addCase(fetchAccessTags.fulfilled, (state, action) => {
         state.current = action.payload.rows;
       })
       .addCase(setSelectionMode, (state, action) => {
@@ -81,6 +87,8 @@ const tableSlice = createSlice({
   },
 });
 
-export const { multiAddRemoveSelectedTag, setSelectedTag } = tableSlice.actions;
-export const tableReducer = tableSlice.reducer;
-export const selectTableSelected = (state) => state.accessTags.table.selected;
+export const { multiAddRemoveAccessTagsSelectedTag, setAccessTagsSelectedTag } =
+  accessTagsTableSlice.actions;
+export const accessTagsTableReducer = accessTagsTableSlice.reducer;
+export const selectAccessTagsTableSelected = (state) =>
+  state.accessTags.table.selected;

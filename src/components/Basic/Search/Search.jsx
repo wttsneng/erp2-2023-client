@@ -22,15 +22,10 @@ function Search({ value, label, onChange, disabled, ...props }) {
   return (
     <React.Fragment>
       <Input
-        hiddenLabel
         value={inputValue}
         disabled={disabled}
         variant={`${disabled ? "filled" : "outlined"}`}
-        InputProps={{
-          startAdornment: (
-            <InputAdornment position="start">{label}:</InputAdornment>
-          ),
-        }}
+        label={label}
         size="small"
         sx={{ width: "100%" }}
         onChange={(e) => {

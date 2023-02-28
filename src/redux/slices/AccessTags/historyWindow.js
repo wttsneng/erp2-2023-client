@@ -5,22 +5,24 @@ const initialState = {
   mode: "mini",
 };
 
-const historyWindow = createSlice({
+const AccessTagsHistoryWindow = createSlice({
   name: "accessGroups/historyWindow",
   initialState,
   reducers: {
-    setHistoryWindowOpen: (state, action) => {
+    setAccessTagsHistoryWindowOpen: (state, action) => {
       state.isOpen = action.payload;
     },
-    setHistoryWindowMode: (state, action) => {
+    setAccessTagsHistoryWindowMode: (state, action) => {
       state.mode = action.payload;
     },
   },
   extraReducers: (builder) => {},
 });
 
-export const { setHistoryWindowOpen, setHistoryWindowMode } =
-  historyWindow.actions;
-export const historyWindowReducer = historyWindow.reducer;
-export const selectHistoryWindowIsOpen = (state) =>
+export const {
+  setAccessTagsHistoryWindowOpen,
+  setAccessTagsHistoryWindowMode,
+} = AccessTagsHistoryWindow.actions;
+export const accessTagsHistoryWindowReducer = AccessTagsHistoryWindow.reducer;
+export const selectAccessTagsHistoryWindowIsOpen = (state) =>
   state.accessTags.historyWindow.isOpen;

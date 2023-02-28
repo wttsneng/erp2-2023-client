@@ -2,7 +2,6 @@ import React from "react";
 
 import { TableSortLabel, Box, Paper } from "@mui/material";
 import { visuallyHidden } from "@mui/utils";
-import { useTheme } from "@mui/material/styles";
 
 import {
   Table,
@@ -16,71 +15,48 @@ import {
 
 import { useSelector, useDispatch } from "react-redux";
 import {
-  selectHistoryFilter,
-  setHistorySortBy,
-  setHistoryOrder,
-  setTagHistoryLimit,
-  setHistoryPage,
+  selectAccessTagsHistoryFilter,
+  setAccessTagsHistorySortBy,
+  setAccessTagsHistoryOrder,
+  setAccessTagsTagHistoryLimit,
+  setAccessTagsHistoryPage,
 } from "@src/redux/slices/AccessTags/historyFilter";
-import {
-  setInputName,
-  setInputDescription,
-} from "@src/redux/slices/AccessTags/input";
-import { setHistoryWindowOpen } from "@src/redux/slices/AccessTags/historyWindow";
-import { changeAccessTagValue } from "@src/redux/slices/AccessTags/data";
 
 const headCells = [
+  { id: "field", numeric: false, label: "Field" },
   { id: "new_value", numeric: false, label: "Value" },
   { id: "createdAt", numeric: false, label: "Date" },
+  { id: "user.login", numeric: false, label: "User" },
 ];
 
-function AccessTagsHistoryTable({ data }) {
+function AccessTagsFullHistoryTable({ data }) {
   const dispatch = useDispatch();
-  const filter = useSelector(selectHistoryFilter);
+  const filter = useSelector(selectAccessTagsHistoryFilter);
   const historyCount = useSelector((state) => state.accessTags.history.count);
-  const theme = useTheme();
 
   const handleSort = (property) => {
     const isAsc = filter.sortBy === property && filter.order === "ASC";
-    dispatch(setHistorySortBy(property));
-    dispatch(setHistoryOrder(isAsc ? "DESC" : "ASC"));
+    dispatch(setAccessTagsHistorySortBy(property));
+    dispatch(setAccessTagsHistoryOrder(isAsc ? "DESC" : "ASC"));
   };
   const handleChangePage = (event, newPage) => {
-    dispatch(setHistoryPage(newPage));
+    dispatch(setAccessTagsHistoryPage(newPage + 1));
   };
   const handleChangeRowsPerPage = (event) => {
-    dispatch(setTagHistoryLimit(parseInt(event.target.value, 10)));
-    dispatch(setHistoryPage(1));
-  };
-  const handleValueClick = (value) => {
-    if (filter.field === "name") {
-      dispatch(setInputName(value));
-      changeAccessTagValue({
-        itemId: filter.id,
-        attribute: "name",
-        value,
-      });
-    }
-    if (filter.field === "description") {
-      dispatch(setInputDescription(value));
-      changeAccessTagValue({
-        itemId: filter.id,
-        attribute: "description",
-        value,
-      });
-    }
-    dispatch(setHistoryWindowOpen(false));
+    dispatch(setAccessTagsTagHistoryLimit(parseInt(event.target.value, 10)));
+    dispatch(setAccessTagsHistoryPage(1));
   };
   return (
     <Paper
       elevation={0}
       sx={{
         width: "100%",
+        padding: "0px",
         border: "1px solid rgba(224, 224, 224, 1)",
       }}
     >
       <TableContainer>
-        <Table sx={{ minWidth: 180 }} size="small" aria-label="simple table">
+        <Table stickyHeader size="small" aria-label="simple table">
           <TableHead>
             <TableRow>
               {headCells.map((headCell) => (
@@ -122,22 +98,12 @@ function AccessTagsHistoryTable({ data }) {
                 key={row.id}
                 sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
               >
-                <TableCell
-                  onClick={() => {
-                    handleValueClick(row.new_value);
-                  }}
-                  sx={{
-                    cursor: "pointer",
-                    "&:hover": {
-                      color: theme.palette.primary.main,
-                    },
-                  }}
-                >
-                  {row.new_value}
-                </TableCell>
+                <TableCell>{row.field}</TableCell>
+                <TableCell>{row.new_value}</TableCell>
                 <TableCell>{`${row.createdAt.split("T")[0]} ${row.createdAt
                   .split("T")[1]
                   .slice(0, 8)}`}</TableCell>
+                <TableCell>{row["user.login"]}</TableCell>
               </TableRow>
             ))}
           </TableBody>
@@ -155,4 +121,4 @@ function AccessTagsHistoryTable({ data }) {
   );
 }
 
-export default AccessTagsHistoryTable;
+export default AccessTagsFullHistoryTable;
