@@ -4,9 +4,9 @@ import qs from "qs";
 
 export const fetchAccessTags = createAsyncThunk(
   "accessTags/fetchAccessTags",
-  async ({ searchValue, order, sortBy, limit, page }) => {
+  async ({ quickSearchValue, order, sortBy, limit, page }) => {
     const queryParams = qs.stringify({
-      query: searchValue,
+      quickSearchValue: quickSearchValue,
       order: order.value,
       sortBy: sortBy.value,
       limit,

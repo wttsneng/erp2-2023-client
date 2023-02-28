@@ -39,8 +39,6 @@ function AccessTagInput() {
   const tags = useSelector(selectAccessTagsData);
   const tagsStatus = useSelector(selectAccessTagsStatus);
 
-  const inputNameRef = React.createRef();
-
   const handleNameChange = (value) => {
     dispatch(setAccessTagsInputName(value));
   };
@@ -115,7 +113,6 @@ function AccessTagInput() {
         currentTag.editingFields.includes("name")
       )
     );
-    inputNameRef.current.querySelector("input")?.focus();
   }, [inputData.id, tagsStatus, tags, dispatch]);
 
   return (
@@ -130,7 +127,6 @@ function AccessTagInput() {
           onFocus={handleNameFocus}
           onHistoryClick={handleNameHistoryClick}
           isHistoryShow={inputData.isNameFocused}
-          ref={inputNameRef}
         />
         <SocketInput
           disabled={inputData.isDescriptionDisabled}

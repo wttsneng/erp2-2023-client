@@ -9,3 +9,4 @@ export { default as MySelect } from "./Select/MySelect";
 export { default as Search } from "./Search/Search";
 export { default as TagsList } from "./TagList/TagsList";
 export { default as TagsListLoading } from "./TagList/TagsListLoading";
+export { default as MyWindow } from "./Windows/MyWindow";

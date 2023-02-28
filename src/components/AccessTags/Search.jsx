@@ -2,7 +2,7 @@ import React from "react";
 import { Search } from "@src/components/Basic";
 import { useDispatch, useSelector } from "react-redux";
 import {
-  setAccessTagsSearchValue,
+  setAccessTagsFiltersQuickSearchValue,
   selectAccessTagsFilters,
 } from "@src/redux/slices/AccessTags/filter";
 function AccessTagsSearch() {
@@ -10,7 +10,7 @@ function AccessTagsSearch() {
   const tagsFilters = useSelector(selectAccessTagsFilters);
 
   const onSearch = (value) => {
-    dispatch(setAccessTagsSearchValue(value));
+    dispatch(setAccessTagsFiltersQuickSearchValue(value));
   };
   return (
     <Search

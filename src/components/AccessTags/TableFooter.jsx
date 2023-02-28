@@ -4,10 +4,10 @@ import { Box, Typography, Pagination } from "@mui/material";
 import { MySelect } from "../Basic";
 
 import { useSelector, useDispatch } from "react-redux";
-import { setAccessTagsPage } from "@src/redux/slices/AccessTags/filter";
+import { setAccessTagsFiltersPage } from "@src/redux/slices/AccessTags/filter";
 import {
   selectAccessTagsFilters,
-  setAccessTagsLimit,
+  setAccessTagsFiltersLimit,
 } from "@src/redux/slices/AccessTags/filter";
 
 function AccessTagsTableFooter() {
@@ -19,10 +19,10 @@ function AccessTagsTableFooter() {
   const page = useSelector((state) => state.accessTags.filter.page);
   const tagsFilters = useSelector(selectAccessTagsFilters);
   const handlePageChange = (event, value) => {
-    dispatch(setAccessTagsPage(value));
+    dispatch(setAccessTagsFiltersPage(value));
   };
   const handleLimitChange = (event) => {
-    dispatch(setAccessTagsLimit(event.target.value));
+    dispatch(setAccessTagsFiltersLimit(event.target.value));
   };
   return (
     <Box

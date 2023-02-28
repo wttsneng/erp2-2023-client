@@ -1,5 +1,5 @@
 import React from "react";
-import { Box, Grid } from "@mui/material";
+import { Box, Grid, Stack } from "@mui/material";
 
 import { useDispatch } from "react-redux";
 import { setSidebarActiveByLink } from "@src/redux/slices/Basic/sidebarSlice";
@@ -12,7 +12,8 @@ import {
   AccessTagsToolbar,
   AccessTagsHistoryWindow,
   AccessTagsTableFooter,
-  AccessTagContextMenu,
+  AccessTagsToolsOpenFiltersButton,
+  AccessTagsWindowsFilterWindow,
 } from "@src/components/AccessTags";
 initAccessTagRedux();
 
@@ -34,7 +35,10 @@ export default function AccessTags() {
           >
             <Grid container spacing={2}>
               <Grid item xs={12}>
-                <AccessTagsSearch />
+                <Stack direction={"row"} spacing={2}>
+                  <AccessTagsSearch />
+                  <AccessTagsToolsOpenFiltersButton />
+                </Stack>
               </Grid>
             </Grid>
             <AccessTagsToolbar />
@@ -59,14 +63,12 @@ export default function AccessTags() {
               marginBottom: 2,
             }}
           >
-            <form>
-              <AccessTagEdit />
-            </form>
+            <AccessTagEdit />
           </Box>
         </Grid>
       </Grid>
-      <AccessTagContextMenu />
       <AccessTagsHistoryWindow />
+      <AccessTagsWindowsFilterWindow />
     </div>
   );
 }

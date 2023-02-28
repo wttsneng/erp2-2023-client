@@ -23,7 +23,6 @@ const SocketInput = React.forwardRef(
           ref={ref}
           value={value}
           disabled={disabled}
-          variant={`${disabled ? "filled" : "outlined"}`}
           sx={{
             "& .MuiOutlinedInput-root": {
               paddingRight: `${onHistoryClick ? 30 : 0}px`,

@@ -3,6 +3,7 @@ import { Box } from "@mui/material";
 import { useTheme } from "@mui/material/styles";
 
 import { TagsList, TagsListLoading } from "../Basic";
+import AccessTagContextMenu from "./ContextMenu";
 
 import { useSelector, useDispatch } from "react-redux";
 import {
@@ -71,6 +72,7 @@ function AccessTagsTable() {
           <TagsListLoading />
         ) : null}
       </Box>
+      <AccessTagContextMenu />
     </Box>
   );
 }

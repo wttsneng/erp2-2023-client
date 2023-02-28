@@ -6,6 +6,7 @@ import { accessTagsInputReducer } from "@src/redux/slices/AccessTags/input";
 import { accessTagsHistoryWindowReducer } from "@src/redux/slices/AccessTags/historyWindow";
 import { accessTagsTableReducer } from "@src/redux/slices/AccessTags/table";
 import { injectAsyncReducer } from "@src/redux/store";
+import { AccessTagsFilterWindowReducer } from "@src/redux/slices/AccessTags/filterWindow";
 import { combineReducers } from "redux";
 import { store } from "@src/index";
 
@@ -18,6 +19,7 @@ const initAccessTagRedux = () => {
     input: accessTagsInputReducer,
     historyWindow: accessTagsHistoryWindowReducer,
     table: accessTagsTableReducer,
+    filterWindow: AccessTagsFilterWindowReducer,
   });
   injectAsyncReducer(store, "accessTags", AccessTagCombinedReducer);
 };
