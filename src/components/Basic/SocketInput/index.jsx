@@ -1,5 +1,6 @@
 import React from "react";
-import { TextField, Typography, Box, InputAdornment } from "@mui/material";
+import { Typography, Box } from "@mui/material";
+import Input from "../Input/input";
 import { useTheme } from "@mui/material/styles";
 const SocketInput = React.forwardRef(
   (
@@ -8,7 +9,6 @@ const SocketInput = React.forwardRef(
       value,
       onChange,
       onBlur,
-      onFocus,
       disabled,
       isHistoryShow,
       onHistoryClick,
@@ -19,35 +19,22 @@ const SocketInput = React.forwardRef(
     const theme = useTheme();
     return (
       <Box sx={{ position: "relative", width: "100%" }}>
-        <TextField
-          size="small"
+        <Input
+          ref={ref}
           value={value}
           disabled={disabled}
-          InputProps={{
-            startAdornment: (
-              <InputAdornment position="start">{label}:</InputAdornment>
-            ),
-          }}
           variant={`${disabled ? "filled" : "outlined"}`}
           sx={{
-            backgroundColor: `${
-              disabled ? theme.palette.error.light : "white"
-            }`,
-            borderRadius: 1,
-            width: "100%",
             "& .MuiOutlinedInput-root": {
               paddingRight: `${onHistoryClick ? 30 : 0}px`,
             },
           }}
+          label={label}
           onChange={(e) => {
             onChange(e.target.value);
           }}
           onBlur={(e) => {
             onBlur(e.target.value);
-          }}
-          ref={ref}
-          onFocus={() => {
-            onFocus();
           }}
           {...props}
         />

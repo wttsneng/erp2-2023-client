@@ -19,7 +19,6 @@ export const fetchHistory = createAsyncThunk(
       field,
       page,
     });
-    console.log(query);
     const { data } = await axios.get(
       `/api/accounts/access_tags/history?${query}`
     );

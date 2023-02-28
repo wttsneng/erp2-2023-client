@@ -24,7 +24,6 @@ function AccessTagsHistoryWindow() {
   const windowMode = useSelector(
     (state) => state.accessTags.historyWindow.mode
   );
-  console.log("windowMode", windowMode);
   const data = useSelector(selectAccessTagsHistoryData);
   const filter = useSelector(selectHistoryFilter);
 

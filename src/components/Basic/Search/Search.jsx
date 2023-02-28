@@ -1,5 +1,6 @@
 import React from "react";
 import { TextField, InputAdornment } from "@mui/material";
+import Input from "@src/components/Basic/Input/input";
 import debounce from "lodash.debounce";
 function Search({ value, label, onChange, disabled, ...props }) {
   const [inputValue, setInputValue] = React.useState("");
@@ -20,7 +21,7 @@ function Search({ value, label, onChange, disabled, ...props }) {
 
   return (
     <React.Fragment>
-      <TextField
+      <Input
         hiddenLabel
         value={inputValue}
         disabled={disabled}

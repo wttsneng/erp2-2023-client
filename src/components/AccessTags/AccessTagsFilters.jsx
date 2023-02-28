@@ -25,13 +25,11 @@ function AccessTagsFilters() {
   return (
     <Stack direction="row" spacing={2}>
       <MySelect
-        label={"Sort by"}
         value={tagsFilters.sortBy.value}
         options={sortByVariants}
         onChange={handleSortByChange}
       />
       <MySelect
-        label={"Order by"}
         value={tagsFilters.order.value}
         options={orderVariants}
         onChange={handleOrderByChange}

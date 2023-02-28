@@ -39,7 +39,7 @@ function AccessTagInput() {
   const tags = useSelector(selectAccessTags);
   const tagsStatus = useSelector(selectAccessTagStatus);
 
-  const inputNameRef = React.useRef();
+  const inputNameRef = React.createRef();
 
   const handleNameChange = (value) => {
     dispatch(setAccessTagsInputName(value));
@@ -115,7 +115,7 @@ function AccessTagInput() {
         currentTag.editingFields.includes("name")
       )
     );
-    inputNameRef.current.firstChild.focus();
+    inputNameRef.current.querySelector("input")?.focus();
   }, [inputData.id, tagsStatus, tags, dispatch]);
 
   return (

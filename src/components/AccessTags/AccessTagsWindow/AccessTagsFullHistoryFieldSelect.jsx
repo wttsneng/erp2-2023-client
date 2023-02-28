@@ -11,7 +11,6 @@ import { useSelector, useDispatch } from "react-redux";
 function AccessTagsFullHistoryFieldSelect() {
   const dispatch = useDispatch();
   const historyFilter = useSelector(selectHistoryFilter);
-  console.log("historyFilter", historyFilter.field);
   return (
     <Box
       sx={{

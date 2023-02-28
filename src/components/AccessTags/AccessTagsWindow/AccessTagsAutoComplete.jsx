@@ -1,5 +1,6 @@
 import React from "react";
-import { Autocomplete, TextField, Box, InputAdornment } from "@mui/material";
+import { Autocomplete, TextField, Box } from "@mui/material";
+import Input from "@src/components/Basic/Input/input";
 
 import { useSelector, useDispatch } from "react-redux";
 import { selectData as selectAccessTagsData } from "@src/redux/slices/AccessTags/data";
@@ -21,18 +22,15 @@ function AccessTagsAutoComplete() {
       }}
     >
       <Autocomplete
-        disablePortal
         options={normalizedAccessTags}
         onChange={(event, newValue) => {
           dispatch(setTagHistoryId(newValue.id));
         }}
-        zIndex={1000}
         onInputChange={(event, newInputValue) => {
           dispatch(setTagHistoryId(null));
         }}
-        renderInput={(params) => (
-          <TextField hiddenLabel {...params} size="small" />
-        )}
+        clearOnEscape={true}
+        renderInput={(params) => <Input {...params} label="someS" />}
       />
     </Box>
   );

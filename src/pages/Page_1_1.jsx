@@ -26,6 +26,7 @@ import AccessTagsToolbar from "@src/components/AccessTags/AccessTagsToolbar";
 import AccessTagsHistoryWindow from "@src/components/AccessTags/AccessTagsWindow/AccessTagsHistoryWindow";
 import AccessTagsTableFooter from "@src/components/AccessTags/AccessTagsTableFooter";
 import AccessTagContextMenu from "@src/components/AccessTags/AccessTagContextMenu";
+import Input from "@src/components/Basic/Input/input";
 
 const AccessTagCombinedReducer = combineReducers({
   data: dataReducer,

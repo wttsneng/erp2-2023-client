@@ -5,58 +5,17 @@ export const theme = createTheme({
     fontSize: 16,
   },
   components: {
+    MuiList: {
+      styleOverrides: {
+        root: {
+          padding: 0,
+        },
+      },
+    },
     MuiButton: {
       styleOverrides: {
         root: {
-          height: 27,
-          "& .MuiSvgIcon-root": {
-            fontSize: "1.7em",
-          },
-        },
-      },
-    },
-    MuiFormControl: {
-      styleOverrides: {
-        root: {
           height: 30,
-        },
-      },
-    },
-    MuiFormLabel: {
-      styleOverrides: {
-        root: {
-          top: "-20% !important",
-          marginTop: "-8px !important",
-          "& .MuiInputLabel-animated": {
-            display: "none !important",
-          },
-          "& #My-select": {
-            display: "none !important",
-          },
-        },
-      },
-    },
-    MuiInputLabel: {
-      styleOverrides: {
-        root: {
-          top: "-20% !important",
-        },
-      },
-    },
-    MuiInputBase: {
-      styleOverrides: {
-        root: {
-          height: 30,
-          "& .MuiInputBase-input": {
-            padding: "5px 14px ",
-          },
-          "& .MuiAutocomplete-input": {
-            padding: "0px 5px !important",
-            marginTop: "-5px !important",
-          },
-          "& .MuiInputLabel-root": {
-            marginTop: "-5px !important",
-          },
         },
       },
     },
