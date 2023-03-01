@@ -10,10 +10,11 @@ import {
   AccessTagEdit,
   AccessTagsTable,
   AccessTagsToolbar,
-  AccessTagsHistoryWindow,
+  AccessTagsWindowsFullHistoryWindow,
   AccessTagsTableFooter,
   AccessTagsToolsOpenFiltersButton,
   AccessTagsWindowsFilterWindow,
+  AccessTagsWindowsMiniHistoryWindow,
 } from "@src/components/AccessTags";
 initAccessTagRedux();
 
@@ -67,7 +68,8 @@ export default function AccessTags() {
           </Box>
         </Grid>
       </Grid>
-      <AccessTagsHistoryWindow />
+      <AccessTagsWindowsMiniHistoryWindow />
+      <AccessTagsWindowsFullHistoryWindow />
       <AccessTagsWindowsFilterWindow />
     </div>
   );

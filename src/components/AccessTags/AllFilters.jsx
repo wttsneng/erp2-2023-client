@@ -7,7 +7,6 @@ import {
   AccessTagsFiltersAllInclude,
   AccessTagsFiltersNameSearch,
   AccessTagsFiltersDescriptionSearch,
-  AccessTagsFiltersEventField,
 } from "./index";
 import { Stack, Box, Typography as MuiTypography } from "@mui/material";
 import { styled } from "@mui/material/styles";
@@ -35,10 +34,6 @@ function AccessTagsAllFilters() {
       <Box>
         <Typography>Order By</Typography>
         <AccessTagsFiltersOrderBy />
-      </Box>
-      <Box>
-        <Typography>Event</Typography>
-        <AccessTagsFiltersEventField />
       </Box>
       <Box>
         <Typography>Deleted Include</Typography>

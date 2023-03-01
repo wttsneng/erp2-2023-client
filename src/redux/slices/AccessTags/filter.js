@@ -13,20 +13,13 @@ export const orderVariants = {
   DESC: "Descending",
 };
 
-export const eventVariants = {
-  changed: "Changed",
-  created: "Created",
-  deleted: "Deleted",
-};
-
 const initialState = {
   quickSearchValue: "",
   name: "",
   description: "",
   includeMode: 0, // -1 - deleted, 0 - active, 1 - all
-  order: { value: "ASC", label: "Ascending" }, // asc, desc
-  sortBy: { value: "createdAt", label: "Date" }, // createdAt, name
-  event: { value: "changed", label: "Change" },
+  order: { value: "ASC", label: "Ascending" },
+  sortBy: { value: "createdAt", label: "Date" },
   limit: 100,
   page: 1,
 };
@@ -59,12 +52,6 @@ const accessTagsFiltersSlice = createSlice({
         label: sortByVariants[action.payload],
       };
     },
-    setAccessTagsFiltersEvent: (state, action) => {
-      state.event = {
-        value: action.payload,
-        label: eventVariants[action.payload],
-      };
-    },
     setAccessTagsFiltersLimit: (state, action) => {
       state.limit = action.payload;
     },
@@ -92,7 +79,6 @@ export const {
   setAccessTagsFiltersLimit,
   setAccessTagsFiltersPage,
   clearAccessTagsFilter,
-  setAccessTagsFiltersEvent,
 } = accessTagsFiltersSlice.actions;
 export const accessTagsFilterReducer = accessTagsFiltersSlice.reducer;
 export const selectAccessTagsFilters = (state) => state.accessTags.filter;

@@ -12,6 +12,8 @@ const initialState = {
   selected: [],
   current: [],
   selectionMode: "single", //single, multiOne, multiMany
+  deleteEnabled: false,
+  restoreEnabled: false,
 };
 const accessTagsTableSlice = createSlice({
   name: "accessTagsTable",
@@ -25,7 +27,6 @@ const accessTagsTableSlice = createSlice({
         state.selected = [];
         state.selected.push(action.payload);
       }
-
       if (state.selectionMode === "multiOne") {
         if (state.selected.includes(action.payload)) {
           state.selected = state.selected.filter(
@@ -39,8 +40,8 @@ const accessTagsTableSlice = createSlice({
         if (state.selected.length === 0) {
           state.selected.push(action.payload);
         }
-        const lastSelectedId = state.selected[state.selected.length - 1];
-        const currentSelectedId = action.payload;
+        const lastSelectedId = state.selected[state.selected.length - 1].id;
+        const currentSelectedId = action.payload.id;
         const indexOfLastSelectedId = state.current.findIndex(
           (item) => item.id === lastSelectedId
         );
@@ -56,8 +57,14 @@ const accessTagsTableSlice = createSlice({
           indexOfCurrentSelectedId
         );
         const candidates = state.current.slice(sliceStart, sliceEnd + 1);
-        candidates.forEach((item) => state.selected.push(item.id));
+        candidates.forEach((item) => state.selected.push(item));
       }
+      state.deleteEnabled =
+        state.selected.length > 0 &&
+        state.selected.every((item) => !item.deletedAt);
+      state.restoreEnabled =
+        state.selected.length > 0 &&
+        state.selected.every((item) => item.deletedAt);
     },
   },
   extraReducers: (builder) => {

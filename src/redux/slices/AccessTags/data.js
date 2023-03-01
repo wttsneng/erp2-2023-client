@@ -4,12 +4,26 @@ import qs from "qs";
 
 export const fetchAccessTags = createAsyncThunk(
   "accessTags/fetchAccessTags",
-  async ({ quickSearchValue, order, sortBy, limit, page }) => {
+  async ({
+    quickSearchValue,
+    name,
+    description,
+    includeMode,
+    order,
+    sortBy,
+    limit,
+    field,
+    page,
+  }) => {
     const queryParams = qs.stringify({
-      quickSearchValue: quickSearchValue,
+      quickSearchValue,
+      name,
+      description,
+      includeMode,
       order: order.value,
       sortBy: sortBy.value,
       limit,
+      field,
       page,
     });
     const response = await axios.get(
@@ -27,6 +41,9 @@ export const createAccessTag = ({ name, description }) => {
 };
 export const deleteAccessTag = (id) => {
   socket.emit("deleteAccessTag", id);
+};
+export const restoreAccessTag = (id) => {
+  socket.emit("restoreAccessTag", id);
 };
 
 const initialState = {

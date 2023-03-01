@@ -5,6 +5,7 @@ const useGlobalEventListeners = () => {
   const dispatch = useDispatch();
   React.useEffect(() => {
     const handleKeyDown = (event) => {
+      if (event.repeat) return;
       if (event.key === "Shift") {
         dispatch(setSelectionMode("multiMany"));
       }

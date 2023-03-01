@@ -34,7 +34,7 @@ function AccessTagsTable() {
 
   const handleTagClick = (tag) => {
     dispatch(setAccessTagsInputId(tag.id));
-    dispatch(multiAddRemoveAccessTagsSelectedTag(tag.id));
+    dispatch(multiAddRemoveAccessTagsSelectedTag(tag));
   };
 
   React.useEffect(() => {

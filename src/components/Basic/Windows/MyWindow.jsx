@@ -1,6 +1,6 @@
 import { useState } from "react";
 import {
-  Dialog,
+  Dialog as MuiDialog,
   DialogTitle as MuiDialogTitle,
   DialogContent as MuiDialogContent,
   Paper,
@@ -26,20 +26,28 @@ const DialogContent = styled(MuiDialogContent)(({ theme }) => ({
   padding: `${theme.spacing(2)}}`,
 }));
 
+const Dialog = styled(MuiDialog, {
+  shouldForwardProp: (prop) => prop !== "isModal",
+})(({ theme, isModal }) => ({
+  right: isModal ? "0px" : "unset",
+  bottom: isModal ? "0px" : "unset",
+  top: isModal ? "0px" : "-1000px",
+  left: isModal ? "0px" : "-1000px",
+}));
+
 const PaperComponent = (props) => {
-  console.log(props.defaultPosition);
-  const [width, setWidth] = useState(props.defaultWidth);
-  const [height, setHeight] = useState(props.defaultHeight);
+  const [width, setWidth] = useState(props.defaultwidth);
+  const [height, setHeight] = useState(props.defaultheight);
 
   const handleResize = (event, { size }) => {
     setWidth(size.width);
     setHeight(size.height);
   };
-  const minConstraints = props.minConstraints || [300, 400];
-  const maxConstraints = props.maxConstraints || [Infinity, Infinity];
+  const minConstraints = props.minconstraints || [300, 400];
+  const maxConstraints = props.maxconstraints || [Infinity, Infinity];
 
   return (
-    <Draggable handle=".dialog-header" defaultPosition={props.defaultPosition}>
+    <Draggable handle=".dialog-header" defaultPosition={props.position}>
       <ResizableBox
         width={width}
         height={height}
@@ -47,7 +55,7 @@ const PaperComponent = (props) => {
         maxConstraints={maxConstraints}
         onResize={handleResize}
         className="resizable-box"
-        ResizeHandleAxis="both"
+        resizeHandles={["se"]}
       >
         <Paper
           sx={{
@@ -71,27 +79,51 @@ const ResizableDialog = ({
   onClose,
   title,
   children,
-  defaultWidth,
-  defaultHeight,
-  minConstraints,
-  maxConstraints,
-  defaultPosition,
+  defaultwidth,
+  defaultheight,
+  minconstraints,
+  maxconstraints,
+  defaultposition,
+  isModal,
+  withoutBackdrop,
 }) => {
+  const width =
+    defaultwidth > window.innerWidth ? window.innerWidth - 20 : defaultwidth;
+  const height =
+    defaultheight > window.innerHeight
+      ? window.innerHeight - 20
+      : defaultheight;
+  const positionX =
+    defaultwidth > window.innerWidth
+      ? 1000 + window.innerWidth / 2 - width / 2
+      : defaultposition.x + 1000 + window.innerWidth / 2 - width / 2;
+  const positionY =
+    defaultheight > window.innerHeight
+      ? 1000 + window.innerHeight / 2 - height / 2
+      : defaultposition.y + 1000 + window.innerHeight / 2 - height / 2;
+  const position = isModal
+    ? { x: 0, y: 0 }
+    : {
+        x: positionX,
+        y: positionY,
+      };
+
   return (
     <Dialog
-      hideBackdrop
+      hideBackdrop={!isModal || withoutBackdrop}
       open={open}
       onClose={(e, reason) => {
-        if (reason === "backdropClick") return;
+        if (reason === "backdropClick" && !isModal) return;
         onClose();
       }}
+      isModal={isModal}
       PaperComponent={PaperComponent}
       PaperProps={{
-        defaultWidth: defaultWidth,
-        defaultHeight: defaultHeight,
-        minConstraints: minConstraints,
-        maxConstraints: maxConstraints,
-        defaultPosition: defaultPosition,
+        defaultwidth: width,
+        defaultheight: height,
+        minconstraints,
+        maxconstraints,
+        position,
       }}
     >
       <DialogTitle className="dialog-header">{title}</DialogTitle>

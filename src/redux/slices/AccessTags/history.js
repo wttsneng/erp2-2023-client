@@ -7,14 +7,14 @@ export const fetchAccessTagsHistory = createAsyncThunk(
   async (params, thunkAPI) => {
     const { getState } = thunkAPI;
     const state = getState();
-    const historyFilter = state.accessTags.historyFilter;
-    const { searchValue, order, id, sortBy, limit, page, field } =
+    const historyFilter = state.accessTags.fullHistoryFilter;
+    const { searchValue, orderBy, id, sortBy, limit, page, field } =
       historyFilter;
     const query = qs.stringify({
       searchValue,
-      order,
+      order: orderBy.value,
       id,
-      sortBy,
+      sortBy: sortBy.value,
       limit,
       field,
       page,

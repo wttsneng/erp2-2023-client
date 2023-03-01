@@ -8,11 +8,11 @@ import {
 } from "@src/redux/slices/AccessTags/filter";
 function AccessTagsFiltersDescriptionSearch() {
   const dispatch = useDispatch();
-  const { name } = useSelector(selectAccessTagsFilters);
+  const { description } = useSelector(selectAccessTagsFilters);
   const handleChange = (value) => {
     dispatch(setAccessTagsFiltersDescription(value));
   };
-  return <Search onChange={handleChange} value={name} />;
+  return <Search onChange={handleChange} value={description} />;
 }
 
 export default AccessTagsFiltersDescriptionSearch;

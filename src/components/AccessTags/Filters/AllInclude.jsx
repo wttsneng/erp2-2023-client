@@ -1,8 +1,8 @@
 import React from "react";
 
 import { Checkbox } from "@mui/material";
-import CheckCircleOutlineOutlinedIcon from "@mui/icons-material/CheckCircleOutlineOutlined";
-import CheckCircleIcon from "@mui/icons-material/CheckCircle";
+import AddCircleOutlineOutlinedIcon from "@mui/icons-material/AddCircleOutlineOutlined";
+import AddCircleIcon from "@mui/icons-material/AddCircle";
 
 import { useDispatch, useSelector } from "react-redux";
 import {
@@ -24,8 +24,8 @@ function AccessTagsFiltersAllInclude() {
       }}
       checked={includeMode === 1}
       onChange={handleChange}
-      icon={<CheckCircleOutlineOutlinedIcon />}
-      checkedIcon={<CheckCircleIcon />}
+      icon={<AddCircleOutlineOutlinedIcon />}
+      checkedIcon={<AddCircleIcon />}
     />
   );
 }

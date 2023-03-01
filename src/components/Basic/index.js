@@ -3,7 +3,6 @@ export { default as Sidebar } from "./Sidebar/index";
 export { default as Header } from "./Header/Header";
 export { default as MainLoading } from "./MainLoading/MainLoading";
 export { default as SocketInput } from "./SocketInput/index";
-export { default as DraggableWindow } from "./Windows/DraggableWindow";
 export { default as MobileHeader } from "./Header/MobileHeader";
 export { default as MySelect } from "./Select/MySelect";
 export { default as Search } from "./Search/Search";

@@ -1,30 +1,30 @@
 import React from "react";
 import { Button } from "@mui/material";
-import DeleteOutlineIcon from "@mui/icons-material/DeleteOutline";
+import RestoreFromTrashIcon from "@mui/icons-material/RestoreFromTrash";
 
 import { useDispatch, useSelector } from "react-redux";
 import { clearAccessTagsInput } from "@src/redux/slices/AccessTags/input";
-import { deleteAccessTag } from "@src/redux/slices/AccessTags/data";
+import { restoreAccessTag } from "@src/redux/slices/AccessTags/data";
 import { selectAccessTagsTableSelected } from "@src/redux/slices/AccessTags/table";
 
-function AccessTagsToolsDeleteButton() {
+function AccessTagsToolsRestoreButton() {
   const dispatch = useDispatch();
   const accessTagsTableSelected = useSelector(selectAccessTagsTableSelected);
   const handleClick = () => {
     dispatch(clearAccessTagsInput());
     accessTagsTableSelected.forEach(({ id }) => {
-      deleteAccessTag({ itemId: id });
+      restoreAccessTag({ itemId: id });
     });
   };
   return (
     <Button
       variant="contained"
-      color="error"
+      color="primary"
       sx={{ width: { xs: "50%", md: "initial" } }}
       onClick={handleClick}
     >
-      <DeleteOutlineIcon />
+      <RestoreFromTrashIcon />
     </Button>
   );
 }
-export default AccessTagsToolsDeleteButton;
+export default AccessTagsToolsRestoreButton;

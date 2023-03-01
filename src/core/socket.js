@@ -1,6 +1,6 @@
 import io from "socket.io-client";
 import axios from "./axios";
-const socket = io("http://192.168.76.165:5000/", {
+const socket = io(`${process.env.REACT_APP_API_URL}/`, {
   autoConnect: false,
 });
 socket.auth = { token: window.localStorage.getItem("token") };
