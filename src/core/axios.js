@@ -1,4 +1,11 @@
 import axios from "axios";
+import { store } from "@src/index";
+import {
+  setAlertOpen,
+  setAlertData,
+  setAlertType,
+} from "@src/redux/slices/Basic/alertSlice";
+
 const instance = axios.create({
   withCredentials: true,
   baseURL: process.env.REACT_APP_API_URL,
@@ -14,6 +21,9 @@ instance.interceptors.response.use(
     return config;
   },
   async (error) => {
+    store.dispatch(setAlertOpen(true));
+    store.dispatch(setAlertData(error.response.data.message));
+    store.dispatch(setAlertType("error"));
     const originalRequest = error.config;
     if (
       error.response.status === 401 &&

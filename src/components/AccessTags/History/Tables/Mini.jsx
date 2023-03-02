@@ -11,29 +11,21 @@ import {
   TableCell,
   TableBody,
   TableContainer,
-  TablePagination,
 } from "@src/components/Basic/Table";
 
 import { useSelector, useDispatch } from "react-redux";
-import {
-  selectAccessTagsFullHistoryFilter,
-  setAccessTagsFullHistoryFilterSortBy,
-  setAccessTagsFullHistoryFilterOrder,
-  setAccessTagsTagFullHistoryFilterLimit,
-  setAccessTagsFullHistoryFilterPage,
-} from "@src/redux/slices/AccessTags/fullHistoryFilter";
 import {
   setAccessTagsInputName,
   setAccessTagsInputDescription,
 } from "@src/redux/slices/AccessTags/input";
 import { setAccessTagMiniHistoryWindowIsOpen } from "@src/redux/slices/AccessTags/miniHistoryWindow";
 import {
-  selectAccessTagsHistoryData,
-  selectAccessTagsHistoryStatus,
-} from "@src/redux/slices/AccessTags/history";
+  selectAccessTagsMiniHistoryData,
+  selectAccessTagsMiniHistoryStatus,
+} from "@src/redux/slices/AccessTags/miniHistory";
 import { changeAccessTagValue } from "@src/redux/slices/AccessTags/data";
-import { fetchAccessTagsHistory } from "@src/redux/slices/AccessTags/history";
-
+import { selectAccessTagsInputData } from "@src/redux/slices/AccessTags/input";
+import { fetchAccessTagsMiniHistory } from "@src/redux/slices/AccessTags/miniHistory";
 const headCells = [
   { id: "new_value", numeric: false, label: "Value" },
   { id: "createdAt", numeric: false, label: "Date" },
@@ -41,26 +33,20 @@ const headCells = [
 
 function AccessTagsHistoryTablesMini() {
   const dispatch = useDispatch();
-  const filter = useSelector(selectAccessTagsFullHistoryFilter);
-  const historyCount = useSelector((state) => state.accessTags.history.count);
-  const historyData = useSelector(selectAccessTagsHistoryData);
-  const historyStatus = useSelector(selectAccessTagsHistoryStatus);
+
+  const historyData = useSelector(selectAccessTagsMiniHistoryData);
+  const historyStatus = useSelector(selectAccessTagsMiniHistoryStatus);
+  const { id } = useSelector(selectAccessTagsInputData);
+  const { isNameFocused, isDescriptionFocus } = useSelector(
+    selectAccessTagsInputData
+  );
+  const filter = isNameFocused
+    ? { id, field: "name" }
+    : isDescriptionFocus
+    ? { id, field: "description" }
+    : null;
   const theme = useTheme();
 
-  const handleSort = (property) => {
-    const isAsc = filter.sortBy === property && filter.order === "ASC";
-    dispatch(setAccessTagsFullHistoryFilterSortBy(property));
-    dispatch(setAccessTagsFullHistoryFilterOrder(isAsc ? "DESC" : "ASC"));
-  };
-  const handleChangePage = (event, newPage) => {
-    dispatch(setAccessTagsFullHistoryFilterPage(newPage));
-  };
-  const handleChangeRowsPerPage = (event) => {
-    dispatch(
-      setAccessTagsTagFullHistoryFilterLimit(parseInt(event.target.value, 10))
-    );
-    dispatch(setAccessTagsFullHistoryFilterPage(1));
-  };
   const handleValueClick = (value) => {
     if (filter.field === "name") {
       dispatch(setAccessTagsInputName(value));
@@ -81,8 +67,10 @@ function AccessTagsHistoryTablesMini() {
     dispatch(setAccessTagMiniHistoryWindowIsOpen(false));
   };
   React.useEffect(() => {
-    dispatch(fetchAccessTagsHistory());
-  }, [filter, dispatch]);
+    if (!filter) return;
+    dispatch(fetchAccessTagsMiniHistory(filter));
+  }, []);
+
   return (
     <Paper
       elevation={0}
@@ -96,34 +84,7 @@ function AccessTagsHistoryTablesMini() {
           <TableHead>
             <TableRow>
               {headCells.map((headCell) => (
-                <TableCell
-                  key={headCell.id}
-                  align={headCell.numeric ? "right" : "left"}
-                  sortDirection={
-                    filter.sortBy === headCell.id
-                      ? filter.order.toLowerCase()
-                      : false
-                  }
-                >
-                  <TableSortLabel
-                    active={filter.sortBy === headCell.id}
-                    direction={
-                      filter.sortBy === headCell.id
-                        ? filter.order.toLowerCase()
-                        : "asc"
-                    }
-                    onClick={() => handleSort(headCell.id)}
-                  >
-                    {headCell.label}
-                    {filter.sortBy === headCell.id ? (
-                      <Box component="span" sx={visuallyHidden}>
-                        {filter.order.toLowerCase() === "desc"
-                          ? "sorted descending"
-                          : "sorted ascending"}
-                      </Box>
-                    ) : null}
-                  </TableSortLabel>
-                </TableCell>
+                <TableCell key={headCell.id}>{headCell.label}</TableCell>
               ))}
             </TableRow>
           </TableHead>
@@ -156,14 +117,6 @@ function AccessTagsHistoryTablesMini() {
           </TableBody>
         </Table>
       </TableContainer>
-      <TablePagination
-        rowsPerPageOptions={[20, 50, 100]}
-        count={historyCount}
-        rowsPerPage={filter.limit}
-        page={filter.page - 1}
-        onPageChange={handleChangePage}
-        onRowsPerPageChange={handleChangeRowsPerPage}
-      />
     </Paper>
   );
 }

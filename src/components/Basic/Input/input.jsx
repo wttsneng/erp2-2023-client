@@ -11,13 +11,12 @@ const StyledTextField = styled(TextField)(({ theme }) => ({
   },
   "& .MuiAutocomplete-input": {
     marginTop: "-15px",
+    "&.MuiInputBase-input": {
+      "&::placeholder": {
+        opacity: 0.7,
+      },
+    },
   },
-  // "& .MuiInputAdornment-root": {
-  //   [theme.breakpoints.down("md")]: {
-  //     display: "none",
-  //   },
-  //   marginRight: "4px",
-  // },
   "& .MuiInputBase-input": {
     padding: "0px",
     "&::placeholder": {

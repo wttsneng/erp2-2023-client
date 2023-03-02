@@ -24,7 +24,6 @@ import {
 import {
   selectAccessTagsHistoryData,
   selectAccessTagsHistoryStatus,
-  fetchAccessTagsHistory,
 } from "@src/redux/slices/AccessTags/history";
 
 const headCells = [
@@ -56,9 +55,7 @@ function AccessTagsHistoryTablesFull() {
     );
     dispatch(setAccessTagsFullHistoryFilterPage(1));
   };
-  React.useEffect(() => {
-    dispatch(fetchAccessTagsHistory());
-  }, [filter, dispatch]);
+
   return (
     <Paper
       elevation={0}

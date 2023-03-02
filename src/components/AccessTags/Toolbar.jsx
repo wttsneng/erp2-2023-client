@@ -3,8 +3,8 @@ import { Stack } from "@mui/material";
 
 import {
   AccessTagsToolsAddButton,
-  AccessTagsToolsOpenHistoryButton,
   AccessTagsConditionalsDeleteRestore,
+  AccessTagsHistoryToolsOpenHistoryButton,
 } from "@src/components/AccessTags";
 
 import { useDispatch, useSelector } from "react-redux";
@@ -27,7 +27,7 @@ function AccessTagsAddDelete() {
       <Stack direction="row" spacing={2} sx={{ marginY: 2 }}>
         <AccessTagsToolsAddButton />
         <AccessTagsConditionalsDeleteRestore />
-        <AccessTagsToolsOpenHistoryButton />
+        <AccessTagsHistoryToolsOpenHistoryButton />
       </Stack>
     </div>
   );

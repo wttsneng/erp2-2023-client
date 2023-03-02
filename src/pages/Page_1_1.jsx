@@ -15,6 +15,7 @@ import {
   AccessTagsToolsOpenFiltersButton,
   AccessTagsWindowsFilterWindow,
   AccessTagsWindowsMiniHistoryWindow,
+  AccessTagsWarningsDelete,
 } from "@src/components/AccessTags";
 initAccessTagRedux();
 
@@ -71,6 +72,7 @@ export default function AccessTags() {
       <AccessTagsWindowsMiniHistoryWindow />
       <AccessTagsWindowsFullHistoryWindow />
       <AccessTagsWindowsFilterWindow />
+      <AccessTagsWarningsDelete />
     </div>
   );
 }

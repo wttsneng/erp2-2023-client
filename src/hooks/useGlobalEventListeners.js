@@ -14,7 +14,9 @@ const useGlobalEventListeners = () => {
       }
     };
     const handleKeyUp = (event) => {
-      dispatch(setSelectionMode("single"));
+      if (event.key === "Shift" || event.key === "Control") {
+        dispatch(setSelectionMode("single"));
+      }
     };
     window.addEventListener("keydown", handleKeyDown);
     window.addEventListener("keyup", handleKeyUp);

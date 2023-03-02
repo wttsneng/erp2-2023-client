@@ -5,6 +5,7 @@ import { useNavigate } from "react-router-dom";
 import { selectAuthStatus, fetchAuthMe } from "../redux/slices/Basic/authSlice";
 import { Container, Box } from "@mui/material";
 import { socket, axios } from "../core";
+import { AlertsGlobal } from "@src/components/Basic";
 export default function Login() {
   const dispatch = useDispatch();
   const authStatus = useSelector(selectAuthStatus);
@@ -40,6 +41,7 @@ export default function Login() {
       >
         <AuthForm onSubmit={handleSubmit} />
       </Container>
+      <AlertsGlobal />
     </Box>
   );
 }

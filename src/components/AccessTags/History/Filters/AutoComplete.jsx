@@ -10,9 +10,10 @@ import { setAccessTagsFullHistoryFilterId } from "@src/redux/slices/AccessTags/f
 function AccessTagsHistoryFiltersAutoComplete() {
   const dispatch = useDispatch();
   const [accessTags, setAccessTags] = React.useState([]);
+  const [searchValue, setSearchValue] = React.useState("");
   React.useEffect(() => {
     const query = qs.stringify({
-      quickSearchValue: "",
+      quickSearchValue: searchValue,
       name: "",
       description: "",
       includeMode: 1,
@@ -20,18 +21,20 @@ function AccessTagsHistoryFiltersAutoComplete() {
       sortBy: "name",
       limit: 10,
       page: 1,
-      all: true,
     });
     axios.get(`/api/accounts/access_tags?${query}`).then((response) => {
       setAccessTags(response.data.rows);
     });
-  }, []);
+  }, [searchValue]);
   const normalizedAccessTags = accessTags.map((accessTag) => {
     return {
       label: `${accessTag.id} - ${accessTag.name}`,
       id: accessTag.id,
     };
   });
+  const onInputChange = (event, newInputValue) => {
+    setSearchValue(newInputValue);
+  };
   return (
     <Box
       sx={{
@@ -43,9 +46,7 @@ function AccessTagsHistoryFiltersAutoComplete() {
         onChange={(event, newValue) => {
           dispatch(setAccessTagsFullHistoryFilterId(newValue.id));
         }}
-        onInputChange={(event, newInputValue) => {
-          dispatch(setAccessTagsFullHistoryFilterId(null));
-        }}
+        onInputChange={onInputChange}
         clearOnEscape={true}
         renderInput={(params) => <Input {...params} label="Find Tag" />}
       />

@@ -12,8 +12,6 @@ import {
   changeAccessTagsInputEnded,
   selectAccessTagsInputData,
 } from "@src/redux/slices/AccessTags/input";
-import { fetchAccessTagsHistory } from "@src/redux/slices/AccessTags/history";
-import { setAccessTagsFullHistoryFilterField } from "@src/redux/slices/AccessTags/fullHistoryFilter";
 import { setAccessTagMiniHistoryWindowIsOpen } from "@src/redux/slices/AccessTags/miniHistoryWindow";
 import { changeAccessTagValue } from "@src/redux/slices/AccessTags/data";
 
@@ -37,7 +35,6 @@ function AccessTagsEditingInputsChangeName() {
   };
   const handleNameHistoryClick = () => {
     if (!inputData.id) return;
-    dispatch(setAccessTagsFullHistoryFilterField("name"));
     dispatch(setAccessTagMiniHistoryWindowIsOpen(true));
   };
 

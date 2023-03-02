@@ -59,7 +59,10 @@ const accessTagsFiltersSlice = createSlice({
       state.page = action.payload;
     },
     clearAccessTagsFilter: (state) => {
-      state.searchValue = "";
+      state.quickSearchValue = "";
+      state.name = "";
+      state.description = "";
+      state.includeMode = 0;
       state.order = { value: "ASC", label: "Ascending" };
       state.sortBy = { value: "createdAt", label: "Date" };
       state.limit = 100;

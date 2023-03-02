@@ -19,14 +19,12 @@ function AccessTagsFiltersOrderBy() {
   };
 
   return (
-    <Stack direction="row" spacing={2}>
-      <MySelect
-        value={tagsFilters.order.value}
-        label="Order by"
-        options={orderVariants}
-        onChange={handleOrderByChange}
-      />
-    </Stack>
+    <MySelect
+      value={tagsFilters.order.value}
+      label="Order by"
+      options={orderVariants}
+      onChange={handleOrderByChange}
+    />
   );
 }
 

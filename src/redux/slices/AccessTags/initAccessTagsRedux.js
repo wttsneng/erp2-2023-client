@@ -8,6 +8,8 @@ import { accessTagsTableReducer } from "@src/redux/slices/AccessTags/table";
 import { injectAsyncReducer } from "@src/redux/store";
 import { AccessTagsFilterWindowReducer } from "@src/redux/slices/AccessTags/filterWindow";
 import { accessTagMiniHistoryWindowReducer } from "@src/redux/slices/AccessTags/miniHistoryWindow";
+import { accessTagsWarningsReducer } from "@src/redux/slices/AccessTags/warnings";
+import { accessTagsMiniHistoryReducer } from "@src/redux/slices/AccessTags/miniHistory";
 import { combineReducers } from "redux";
 import { store } from "@src/index";
 
@@ -22,6 +24,8 @@ const initAccessTagRedux = () => {
     table: accessTagsTableReducer,
     filterWindow: AccessTagsFilterWindowReducer,
     miniHistoryWindow: accessTagMiniHistoryWindowReducer,
+    warnings: accessTagsWarningsReducer,
+    miniHistory: accessTagsMiniHistoryReducer,
   });
   injectAsyncReducer(store, "accessTags", AccessTagCombinedReducer);
 };

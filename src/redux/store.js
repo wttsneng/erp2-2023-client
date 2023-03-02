@@ -5,13 +5,16 @@ import {
   sidebarReducer,
   variablesReducer,
   contextMenuReducer,
+  alertReducer,
 } from "./slices/Basic";
+import { errorThunkMiddleware } from "./middlewares/errorThunkMiddleware";
 
 const defaultReducers = {
   auth: authReducer,
   sidebar: sidebarReducer,
   variables: variablesReducer,
   contextMenu: contextMenuReducer,
+  alert: alertReducer,
 };
 function createReducer(asyncReducers) {
   return combineReducers({
@@ -27,7 +30,10 @@ export function injectAsyncReducer(store, name, asyncReducer) {
 export default function configureAppStore() {
   const store = configureStore({
     reducer: createReducer(),
+    middleware: (getDefaultMiddleware) =>
+      getDefaultMiddleware().concat(errorThunkMiddleware),
   });
+
   store.asyncReducers = {};
   return store;
 }

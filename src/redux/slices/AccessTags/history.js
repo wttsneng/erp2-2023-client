@@ -4,25 +4,28 @@ import qs from "qs";
 
 export const fetchAccessTagsHistory = createAsyncThunk(
   "accessTagsHistory/fetchAccessTagsHistory",
-  async (params, thunkAPI) => {
-    const { getState } = thunkAPI;
-    const state = getState();
-    const historyFilter = state.accessTags.fullHistoryFilter;
-    const { searchValue, orderBy, id, sortBy, limit, page, field } =
-      historyFilter;
-    const query = qs.stringify({
-      searchValue,
-      order: orderBy.value,
-      id,
-      sortBy: sortBy.value,
-      limit,
-      field,
-      page,
-    });
-    const { data } = await axios.get(
-      `/api/accounts/access_tags/history?${query}`
-    );
-    return data;
+  async (params, { getState, rejectWithValue }) => {
+    try {
+      const state = getState();
+      const historyFilter = state.accessTags.fullHistoryFilter;
+      const { searchValue, orderBy, id, sortBy, limit, page, field } =
+        historyFilter;
+      const query = qs.stringify({
+        searchValue,
+        order: orderBy.value,
+        id,
+        sortBy: sortBy.value,
+        limit,
+        field,
+        page,
+      });
+      const { data } = await axios.get(
+        `/api/accounts/access_tags/history?${query}`
+      );
+      return data;
+    } catch (error) {
+      return rejectWithValue(error.response.data);
+    }
   }
 );
 const initialState = {

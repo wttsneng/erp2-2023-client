@@ -57,15 +57,16 @@ const accessTagsFullHistoryFilterSlice = createSlice({
     setAccessTagsFullHistoryFilterField: (state, action) => {
       state.field = action.payload;
     },
-    clearAccessTagsFullHistoryFilter: (state) => {
+    clearAccessTagsFullHistoryFilter: (state, action) => {
       state.searchValue = "";
-      state.orderBy = { value: "DESC", label: "Descending" };
+      state.name = "";
+      state.description = "";
+      state.id = null;
       state.sortBy = { value: "createdAt", label: "Created date" };
-      state.field = null;
-      state.page = 1;
+      state.orderBy = { value: "DESC", label: "Descending" };
       state.field = null;
       state.limit = 20;
-      state.id = null;
+      state.page = 1;
     },
   },
   extraReducers: (builder) => {},

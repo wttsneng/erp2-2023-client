@@ -1,7 +1,6 @@
 import React from "react";
 
-import { Button } from "@mui/material";
-import SearchIcon from "@mui/icons-material/Search";
+import { SearchButton } from "@src/components/Basic";
 
 import { useDispatch } from "react-redux";
 import { setAccessTagsFilterWindowIsOpen } from "@src/redux/slices/AccessTags/filterWindow";
@@ -11,11 +10,6 @@ function AccessTagsToolsOpenFiltersButton() {
   const handleClick = () => {
     dispatch(setAccessTagsFilterWindowIsOpen(true));
   };
-  return (
-    <Button variant="contained" color="info" onClick={handleClick}>
-      <SearchIcon />
-    </Button>
-  );
+  return <SearchButton onClick={handleClick} />;
 }
-
 export default AccessTagsToolsOpenFiltersButton;

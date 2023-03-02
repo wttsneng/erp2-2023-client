@@ -4,7 +4,7 @@ import { Routes, Route } from "react-router-dom";
 
 import { socket } from "./core";
 
-import { useGlobalEventListeners } from "./hooks";
+import { useGlobalEventListeners, useSocketError } from "./hooks";
 
 import { MainLayout, AuthProtect, HomeRoute, ProtectedRoutes } from "./layouts";
 
@@ -23,6 +23,7 @@ function App() {
   const authStatus = useSelector(selectAuthStatus);
   const authData = useSelector(selectAuthData);
   useGlobalEventListeners();
+  useSocketError();
   React.useEffect(() => {
     if (authStatus === "idle") {
       dispatch(fetchAuthMe());
@@ -37,6 +38,7 @@ function App() {
 
   React.useEffect(() => {
     socket.onAny((event, ...args) => {
+      console.log(event, args);
       dispatch({ type: event, payload: args[0] });
     });
   }, []);
@@ -46,8 +48,8 @@ function App() {
       <Routes>
         <Route path="/login" element={<Login />} />
 
-        <Route path="/*" element={<MainLayout />}>
-          <Route path="*" element={<AuthProtect authStatus={authStatus} />}>
+        <Route path="*" element={<AuthProtect authStatus={authStatus} />}>
+          <Route path="/*" element={<MainLayout />}>
             <Route index element={<HomeRoute />} />
             {authStatus === "success" && (
               <Route

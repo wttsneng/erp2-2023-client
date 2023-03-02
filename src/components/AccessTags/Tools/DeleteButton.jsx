@@ -1,30 +1,15 @@
 import React from "react";
-import { Button } from "@mui/material";
-import DeleteOutlineIcon from "@mui/icons-material/DeleteOutline";
 
-import { useDispatch, useSelector } from "react-redux";
-import { clearAccessTagsInput } from "@src/redux/slices/AccessTags/input";
-import { deleteAccessTag } from "@src/redux/slices/AccessTags/data";
-import { selectAccessTagsTableSelected } from "@src/redux/slices/AccessTags/table";
+import { DeleteButton } from "@src/components/Basic";
+
+import { useDispatch } from "react-redux";
+import { setAccessTagsWarningsDeleteIsOpen } from "@src/redux/slices/AccessTags/warnings";
 
 function AccessTagsToolsDeleteButton() {
   const dispatch = useDispatch();
-  const accessTagsTableSelected = useSelector(selectAccessTagsTableSelected);
   const handleClick = () => {
-    dispatch(clearAccessTagsInput());
-    accessTagsTableSelected.forEach(({ id }) => {
-      deleteAccessTag({ itemId: id });
-    });
+    dispatch(setAccessTagsWarningsDeleteIsOpen(true));
   };
-  return (
-    <Button
-      variant="contained"
-      color="error"
-      sx={{ width: { xs: "50%", md: "initial" } }}
-      onClick={handleClick}
-    >
-      <DeleteOutlineIcon />
-    </Button>
-  );
+  return <DeleteButton onClick={handleClick} />;
 }
 export default AccessTagsToolsDeleteButton;

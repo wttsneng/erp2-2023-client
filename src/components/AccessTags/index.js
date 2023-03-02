@@ -8,7 +8,6 @@ export { default as AccessTagsAllFilters } from "./AllFilters";
 export {
   AccessTagsToolsAddButton,
   AccessTagsToolsDeleteButton,
-  AccessTagsToolsOpenHistoryButton,
   AccessTagsToolsOpenFiltersButton,
   AccessTagsToolsRestoreButton,
 } from "./Tools";
@@ -29,3 +28,7 @@ export { default as AccessTagsHistoryTablesFull } from "./History/Tables/Full";
 export { default as AccessTagsHistoryFiltersAutoComplete } from "./History/Filters/AutoComplete";
 export { default as AccessTagsHistoryTablesMini } from "./History/Tables/Mini";
 export { default as AccessTagsWindowsMiniHistoryWindow } from "./History/Windows/Mini";
+export { default as AccessTagsWarningsDelete } from "./Warnings/Delete";
+export { default as AccessTagsHostoryTablesMobileFull } from "./History/Tables/MobileFull";
+export { default as AccessTagsHistoryFiltersPagination } from "./History/Filters/Pagination";
+export { default as AccessTagsHistoryToolsOpenHistoryButton } from "./History/Tools/OpenHistoryButton";

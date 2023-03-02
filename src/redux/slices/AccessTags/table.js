@@ -11,7 +11,7 @@ import { setSelectionMode } from "@src/redux/slices/Basic/variableSlice";
 const initialState = {
   selected: [],
   current: [],
-  selectionMode: "single", //single, multiOne, multiMany
+  selectionMode: "single",
   deleteEnabled: false,
   restoreEnabled: false,
 };
@@ -28,9 +28,9 @@ const accessTagsTableSlice = createSlice({
         state.selected.push(action.payload);
       }
       if (state.selectionMode === "multiOne") {
-        if (state.selected.includes(action.payload)) {
+        if (state.selected.some((item) => item.id === action.payload.id)) {
           state.selected = state.selected.filter(
-            (item) => item !== action.payload
+            (item) => item.id !== action.payload.id
           );
         } else {
           state.selected.push(action.payload);

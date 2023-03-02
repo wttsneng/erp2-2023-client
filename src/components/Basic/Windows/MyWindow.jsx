@@ -1,16 +1,11 @@
-import { useState } from "react";
 import {
   Dialog as MuiDialog,
   DialogTitle as MuiDialogTitle,
-  DialogContent as MuiDialogContent,
-  Paper,
-  DialogActions,
-  Button,
 } from "@mui/material";
 import { styled } from "@mui/material/styles";
-import { ResizableBox } from "react-resizable";
-import Draggable from "react-draggable";
 import "react-resizable/css/styles.css";
+
+import PaperComponent from "@src/components/Basic/Windows/PaperComponent";
 
 const DialogTitle = styled(MuiDialogTitle)(({ theme }) => ({
   cursor: "move",
@@ -22,10 +17,6 @@ const DialogTitle = styled(MuiDialogTitle)(({ theme }) => ({
   },
 }));
 
-const DialogContent = styled(MuiDialogContent)(({ theme }) => ({
-  padding: `${theme.spacing(2)}}`,
-}));
-
 const Dialog = styled(MuiDialog, {
   shouldForwardProp: (prop) => prop !== "isModal",
 })(({ theme, isModal }) => ({
@@ -35,50 +26,11 @@ const Dialog = styled(MuiDialog, {
   left: isModal ? "0px" : "-1000px",
 }));
 
-const PaperComponent = (props) => {
-  const [width, setWidth] = useState(props.defaultwidth);
-  const [height, setHeight] = useState(props.defaultheight);
-
-  const handleResize = (event, { size }) => {
-    setWidth(size.width);
-    setHeight(size.height);
-  };
-  const minConstraints = props.minconstraints || [300, 400];
-  const maxConstraints = props.maxconstraints || [Infinity, Infinity];
-
-  return (
-    <Draggable handle=".dialog-header" defaultPosition={props.position}>
-      <ResizableBox
-        width={width}
-        height={height}
-        minConstraints={minConstraints}
-        maxConstraints={maxConstraints}
-        onResize={handleResize}
-        className="resizable-box"
-        resizeHandles={["se"]}
-      >
-        <Paper
-          sx={{
-            width: "100%",
-            height: "100% !important",
-            minWidth: "100%",
-            minHeight: "100%",
-            margin: "0px !important",
-            padding: 0,
-          }}
-          elevation={0}
-          {...props}
-        />
-      </ResizableBox>
-    </Draggable>
-  );
-};
-
-const ResizableDialog = ({
+const MyWindow = ({
   open,
-  onClose,
-  title,
   children,
+  onClose,
+  onResize,
   defaultwidth,
   defaultheight,
   minconstraints,
@@ -86,6 +38,7 @@ const ResizableDialog = ({
   defaultposition,
   isModal,
   withoutBackdrop,
+  title,
 }) => {
   const width =
     defaultwidth > window.innerWidth ? window.innerWidth - 20 : defaultwidth;
@@ -124,17 +77,13 @@ const ResizableDialog = ({
         minconstraints,
         maxconstraints,
         position,
+        onResize,
       }}
     >
       <DialogTitle className="dialog-header">{title}</DialogTitle>
-      <DialogContent>{{ ...children }}</DialogContent>
-      <DialogActions sx={{ paddingY: 1 }}>
-        <Button autoFocus onClick={onClose}>
-          Cancel
-        </Button>
-      </DialogActions>
+      {{ ...children }}
     </Dialog>
   );
 };
 
-export default ResizableDialog;
+export default MyWindow;

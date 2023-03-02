@@ -4,32 +4,39 @@ import qs from "qs";
 
 export const fetchAccessTags = createAsyncThunk(
   "accessTags/fetchAccessTags",
-  async ({
-    quickSearchValue,
-    name,
-    description,
-    includeMode,
-    order,
-    sortBy,
-    limit,
-    field,
-    page,
-  }) => {
-    const queryParams = qs.stringify({
+  async (
+    {
       quickSearchValue,
       name,
       description,
       includeMode,
-      order: order.value,
-      sortBy: sortBy.value,
+      order,
+      sortBy,
       limit,
       field,
       page,
-    });
-    const response = await axios.get(
-      `/api/accounts/access_tags?${queryParams}`
-    );
-    return response.data;
+    },
+    { rejectWithValue }
+  ) => {
+    try {
+      const queryParams = qs.stringify({
+        quickSearchValue,
+        name,
+        description,
+        includeMode,
+        order: order.value,
+        sortBy: sortBy.value,
+        limit,
+        field,
+        page,
+      });
+      const response = await axios.get(
+        `/api/accounts/access_tags?${queryParams}`
+      );
+      return response.data;
+    } catch (error) {
+      return rejectWithValue(error.response.data);
+    }
   }
 );
 export const changeAccessTagValue = ({ itemId, attribute, value }) => {
