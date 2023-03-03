@@ -2,12 +2,12 @@ import React from "react";
 
 import { AddButton } from "@src/components/Basic";
 
-import { createAccessTag } from "@src/redux/slices/AccessTags/data";
+import { socketEmitAccessTagsCreate } from "@src/socket/emits/AccessTags";
 
 function AccessTagsToolsAddButton() {
   const handleClick = () => {
-    createAccessTag({
-      name: "New  tag",
+    socketEmitAccessTagsCreate({
+      name: "New tag",
       description: "New description",
     });
   };

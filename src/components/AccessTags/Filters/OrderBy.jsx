@@ -4,25 +4,25 @@ import { Stack } from "@mui/material";
 import { MySelect } from "@src/components/Basic";
 
 import { useSelector, useDispatch } from "react-redux";
-import { selectAccessTagsFilters } from "@src/redux/slices/AccessTags/filter";
+import { selectAccessTagsFiltersMain } from "@src/redux/slices/AccessTags/filters/main";
 import {
-  setAccessTagsFiltersOrder,
-  orderVariants,
-} from "@src/redux/slices/AccessTags/filter";
+  setAccessTagsFiltersMainOrder,
+  accessTagsFiltersMainOrderByVariants,
+} from "@src/redux/slices/AccessTags/filters/main";
 
 function AccessTagsFiltersOrderBy() {
   const dispatch = useDispatch();
-  const tagsFilters = useSelector(selectAccessTagsFilters);
+  const tagsFilters = useSelector(selectAccessTagsFiltersMain);
 
   const handleOrderByChange = (event) => {
-    dispatch(setAccessTagsFiltersOrder(event.target.value));
+    dispatch(setAccessTagsFiltersMainOrder(event.target.value));
   };
 
   return (
     <MySelect
       value={tagsFilters.order.value}
       label="Order by"
-      options={orderVariants}
+      options={accessTagsFiltersMainOrderByVariants}
       onChange={handleOrderByChange}
     />
   );

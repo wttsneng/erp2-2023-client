@@ -3,11 +3,11 @@ import React from "react";
 import { MyWindow } from "@src/components/Basic";
 import {
   selectAccessTagsFilterWindowIsOpen,
-  setAccessTagsFilterWindowIsOpen,
-} from "@src/redux/slices/AccessTags/filterWindow";
+  setAccessTagsWindowsFilterOpen,
+} from "@src/redux/slices/AccessTags/windows/filter";
 import { DialogActions, DialogContent, Button } from "@mui/material";
 import { AccessTagsAllFilters } from "@src/components/AccessTags";
-import { clearAccessTagsFilter } from "@src/redux/slices/AccessTags/filter";
+import { clearAccessTagsMainFilter } from "@src/redux/slices/AccessTags/filters/main";
 
 import { useSelector, useDispatch } from "react-redux";
 
@@ -21,10 +21,10 @@ function AccessTagsWindowsFilterWindow() {
   const isOpen = useSelector(selectAccessTagsFilterWindowIsOpen);
 
   const handleClose = () => {
-    dispatch(setAccessTagsFilterWindowIsOpen(false));
+    dispatch(setAccessTagsWindowsFilterOpen(false));
   };
   const handleClearFilters = () => {
-    dispatch(clearAccessTagsFilter());
+    dispatch(clearAccessTagsMainFilter());
   };
 
   return (

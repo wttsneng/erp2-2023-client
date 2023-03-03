@@ -1,25 +1,25 @@
 import React from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { selectAccessTagsFilters } from "@src/redux/slices/AccessTags/filter";
+import { selectAccessTagsFiltersMain } from "@src/redux/slices/AccessTags/filters/main";
 import { MySelect } from "@src/components/Basic";
 import {
-  setAccessTagsFiltersSortBy,
-  sortByVariants,
-} from "@src/redux/slices/AccessTags/filter";
+  setAccessTagsFiltersMainSortBy,
+  accessTagsFiltersMainSortByVariants,
+} from "@src/redux/slices/AccessTags/filters/main";
 
 function AccessTagsFiltersSortBy() {
   const dispatch = useDispatch();
-  const tagsFilters = useSelector(selectAccessTagsFilters);
+  const tagsFilters = useSelector(selectAccessTagsFiltersMain);
 
   const handleSortByChange = (event) => {
-    dispatch(setAccessTagsFiltersSortBy(event.target.value));
+    dispatch(setAccessTagsFiltersMainSortBy(event.target.value));
   };
 
   return (
     <MySelect
       value={tagsFilters.sortBy.value}
       label="Order by"
-      options={sortByVariants}
+      options={accessTagsFiltersMainSortByVariants}
       onChange={handleSortByChange}
     />
   );

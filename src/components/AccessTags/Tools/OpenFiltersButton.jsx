@@ -3,12 +3,12 @@ import React from "react";
 import { SearchButton } from "@src/components/Basic";
 
 import { useDispatch } from "react-redux";
-import { setAccessTagsFilterWindowIsOpen } from "@src/redux/slices/AccessTags/filterWindow";
+import { setAccessTagsWindowsFilterOpen } from "@src/redux/slices/AccessTags/windows/filter";
 
 function AccessTagsToolsOpenFiltersButton() {
   const dispatch = useDispatch();
   const handleClick = () => {
-    dispatch(setAccessTagsFilterWindowIsOpen(true));
+    dispatch(setAccessTagsWindowsFilterOpen(true));
   };
   return <SearchButton onClick={handleClick} />;
 }

@@ -1,0 +1,21 @@
+{
+  "access_tags": {
+    "data": {
+      "main": [],
+      "historyFull": [],
+      "historyMini": []
+    },
+    "filters": {
+      "main": {},
+      "historyFull": {},
+      "historyMini": {}
+    },
+    "windows": {
+      "filters": {},
+      "fullHistory": {},
+      "miniHistory": {},
+      "warnings": {}
+    },
+    "selected": [{}, {}]
+  }
+}

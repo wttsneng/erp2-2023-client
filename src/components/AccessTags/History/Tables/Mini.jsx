@@ -1,7 +1,6 @@
 import React from "react";
 
-import { TableSortLabel, Box, Paper } from "@mui/material";
-import { visuallyHidden } from "@mui/utils";
+import { Paper } from "@mui/material";
 import { useTheme } from "@mui/material/styles";
 
 import {
@@ -14,18 +13,14 @@ import {
 } from "@src/components/Basic/Table";
 
 import { useSelector, useDispatch } from "react-redux";
+
+import { setAccessTagsHistoryWindowsFieldOpen } from "@src/redux/slices/AccessTags/history/windows/field";
 import {
-  setAccessTagsInputName,
-  setAccessTagsInputDescription,
-} from "@src/redux/slices/AccessTags/input";
-import { setAccessTagMiniHistoryWindowIsOpen } from "@src/redux/slices/AccessTags/miniHistoryWindow";
-import {
-  selectAccessTagsMiniHistoryData,
-  selectAccessTagsMiniHistoryStatus,
-} from "@src/redux/slices/AccessTags/miniHistory";
-import { changeAccessTagValue } from "@src/redux/slices/AccessTags/data";
-import { selectAccessTagsInputData } from "@src/redux/slices/AccessTags/input";
-import { fetchAccessTagsMiniHistory } from "@src/redux/slices/AccessTags/miniHistory";
+  selectAccessTagsHistoryDataFieldData,
+  selectAccessTagsHistoryDataFieldStatus,
+} from "@src/redux/slices/AccessTags/history/data/field";
+import { socketEmitAccessTagsChangeValue } from "@src/redux/slices/AccessTags/data/main";
+import { fetchAccessTagsHistoryDataField } from "@src/redux/slices/AccessTags/history/data/field";
 const headCells = [
   { id: "new_value", numeric: false, label: "Value" },
   { id: "createdAt", numeric: false, label: "Date" },
@@ -34,42 +29,10 @@ const headCells = [
 function AccessTagsHistoryTablesMini() {
   const dispatch = useDispatch();
 
-  const historyData = useSelector(selectAccessTagsMiniHistoryData);
-  const historyStatus = useSelector(selectAccessTagsMiniHistoryStatus);
-  const { id } = useSelector(selectAccessTagsInputData);
-  const { isNameFocused, isDescriptionFocus } = useSelector(
-    selectAccessTagsInputData
-  );
-  const filter = isNameFocused
-    ? { id, field: "name" }
-    : isDescriptionFocus
-    ? { id, field: "description" }
-    : null;
-  const theme = useTheme();
+  const historyData = useSelector(selectAccessTagsHistoryDataFieldData);
+  const historyStatus = useSelector(selectAccessTagsHistoryDataFieldStatus);
 
-  const handleValueClick = (value) => {
-    if (filter.field === "name") {
-      dispatch(setAccessTagsInputName(value));
-      changeAccessTagValue({
-        itemId: filter.id,
-        attribute: "name",
-        value,
-      });
-    }
-    if (filter.field === "description") {
-      dispatch(setAccessTagsInputDescription(value));
-      changeAccessTagValue({
-        itemId: filter.id,
-        attribute: "description",
-        value,
-      });
-    }
-    dispatch(setAccessTagMiniHistoryWindowIsOpen(false));
-  };
-  React.useEffect(() => {
-    if (!filter) return;
-    dispatch(fetchAccessTagsMiniHistory(filter));
-  }, []);
+  const theme = useTheme();
 
   return (
     <Paper
@@ -98,7 +61,7 @@ function AccessTagsHistoryTablesMini() {
                 >
                   <TableCell
                     onClick={() => {
-                      handleValueClick(row.new_value);
+                      // handleValueClick(row.new_value);
                     }}
                     sx={{
                       cursor: "pointer",

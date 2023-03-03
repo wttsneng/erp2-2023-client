@@ -2,15 +2,15 @@ import React from "react";
 import { Search } from "@src/components/Basic";
 import { useDispatch, useSelector } from "react-redux";
 import {
-  selectAccessTagsFullHistoryFilter,
-  setAccessTagsFullHistoryFillterSearchValue,
-} from "@src/redux/slices/AccessTags/fullHistoryFilter";
+  selectAccessTagsHistoryFiltersMainFilter,
+  setAccessTagsHistoryFiltersMainSearchValue,
+} from "@src/redux/slices/AccessTags/history/filters/main";
 
 function AccessTagsHistoryFiltersSearch() {
   const dispatch = useDispatch();
-  const { searchValue } = useSelector(selectAccessTagsFullHistoryFilter);
+  const { searchValue } = useSelector(selectAccessTagsHistoryFiltersMainFilter);
   const handleSearch = (value) => {
-    dispatch(setAccessTagsFullHistoryFillterSearchValue(value));
+    dispatch(setAccessTagsHistoryFiltersMainSearchValue(value));
   };
   return (
     <Search

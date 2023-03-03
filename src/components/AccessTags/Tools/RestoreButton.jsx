@@ -2,18 +2,15 @@ import React from "react";
 
 import { RestoreButton } from "@src/components/Basic";
 
-import { useDispatch, useSelector } from "react-redux";
-import { clearAccessTagsInput } from "@src/redux/slices/AccessTags/input";
-import { restoreAccessTag } from "@src/redux/slices/AccessTags/data";
-import { selectAccessTagsTableSelected } from "@src/redux/slices/AccessTags/table";
+import { useSelector } from "react-redux";
+import { socketEmitAccessTagsRestore } from "@src/socket/emits/AccessTags";
+import { selectAccessTagsSelected } from "@src/redux/slices/AccessTags/selected";
 
 function AccessTagsToolsRestoreButton() {
-  const dispatch = useDispatch();
-  const accessTagsTableSelected = useSelector(selectAccessTagsTableSelected);
+  const accessTagsSelected = useSelector(selectAccessTagsSelected);
   const handleClick = () => {
-    dispatch(clearAccessTagsInput());
-    accessTagsTableSelected.forEach(({ id }) => {
-      restoreAccessTag({ itemId: id });
+    accessTagsSelected.forEach(({ id }) => {
+      socketEmitAccessTagsRestore({ itemId: id });
     });
   };
   return <RestoreButton onClick={handleClick} />;

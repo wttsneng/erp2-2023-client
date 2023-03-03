@@ -4,25 +4,25 @@ import { Box, Typography, Pagination } from "@mui/material";
 import { MySelect } from "../Basic";
 
 import { useSelector, useDispatch } from "react-redux";
-import { setAccessTagsFiltersPage } from "@src/redux/slices/AccessTags/filter";
+import { setAccessTagsFiltersMainPage } from "@src/redux/slices/AccessTags/filters/main";
 import {
-  selectAccessTagsFilters,
-  setAccessTagsFiltersLimit,
-} from "@src/redux/slices/AccessTags/filter";
+  selectAccessTagsFiltersMain,
+  setAccessTagsFiltersMainLimit,
+} from "@src/redux/slices/AccessTags/filters/main";
 
 function AccessTagsTableFooter() {
   const dispatch = useDispatch();
-  const tagsCount = useSelector((state) => state.accessTags.data.count);
+  const tagsCount = useSelector((state) => state.accessTags.data.main.count);
   const tagsTotalPages = useSelector(
-    (state) => state.accessTags.data.totalPages
+    (state) => state.accessTags.data.main.totalPages
   );
-  const page = useSelector((state) => state.accessTags.filter.page);
-  const tagsFilters = useSelector(selectAccessTagsFilters);
+  const page = useSelector((state) => state.accessTags.filters.main.page);
+  const tagsFilters = useSelector(selectAccessTagsFiltersMain);
   const handlePageChange = (event, value) => {
-    dispatch(setAccessTagsFiltersPage(value));
+    dispatch(setAccessTagsFiltersMainPage(value));
   };
   const handleLimitChange = (event) => {
-    dispatch(setAccessTagsFiltersLimit(event.target.value));
+    dispatch(setAccessTagsFiltersMainLimit(event.target.value));
   };
   return (
     <Box

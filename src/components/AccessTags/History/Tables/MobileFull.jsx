@@ -8,10 +8,10 @@ import { AccessTagsHistoryFiltersPagination } from "@src/components/AccessTags";
 
 import { useDispatch, useSelector } from "react-redux";
 import {
-  selectAccessTagsHistoryData,
-  selectAccessTagsHistoryStatus,
-} from "@src/redux/slices/AccessTags/history";
-import { selectAccessTagsFullHistoryWindowWidth } from "@src/redux/slices/AccessTags/fullHistoryWindow";
+  selectAccessTagsHistoryDataMain,
+  selectAccessTagsHistoryDataMainStatus,
+} from "@src/redux/slices/AccessTags/history/data/main";
+import { selectAccessTagsHistoryWindowsMainWidth } from "@src/redux/slices/AccessTags/history/windows/main";
 
 const Grid = styled(MuiGrid)(({ theme }) => ({
   border: `1px solid ${theme.palette.divider}`,
@@ -21,9 +21,9 @@ const Grid = styled(MuiGrid)(({ theme }) => ({
 
 function AccessTagsHostoryTablesMobileFull() {
   const theme = useTheme();
-  const windowWidth = useSelector(selectAccessTagsFullHistoryWindowWidth);
-  const historyData = useSelector(selectAccessTagsHistoryData);
-  const historyStatus = useSelector(selectAccessTagsHistoryStatus);
+  const windowWidth = useSelector(selectAccessTagsHistoryWindowsMainWidth);
+  const historyData = useSelector(selectAccessTagsHistoryDataMain);
+  const historyStatus = useSelector(selectAccessTagsHistoryDataMainStatus);
   if (historyStatus !== "success" || windowWidth > 900) return <></>;
   const columnsCount = windowWidth < 600 ? 12 : 6;
   return (

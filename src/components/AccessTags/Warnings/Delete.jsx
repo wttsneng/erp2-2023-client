@@ -4,24 +4,24 @@ import { ModalsWarning } from "@src/components/Basic";
 
 import { useSelector, useDispatch } from "react-redux";
 import {
-  setAccessTagsWarningsDeleteIsOpen,
-  selectAccessTagsWarningsDeleteIsOpen,
-} from "@src/redux/slices/AccessTags/warnings";
-import useAccessTagsDelete from "@src/hooks/useAccessTagsDelete";
-import { selectAccessTagsTableSelected } from "@src/redux/slices/AccessTags/table";
+  setAccessTagsWindowsWarningsDeleteOpen,
+  selectAccessTagsWindowsWarningsDeleteOpen,
+} from "@src/redux/slices/AccessTags/windows/warnings";
+import useAccessTagsDelete from "@src/hooks/accessTags/useAccessTagsDelete";
+import { selectAccessTagsSelected } from "@src/redux/slices/AccessTags/selected";
 
 function AccessTagsWarningsDelete() {
   const dispatch = useDispatch();
-  const isOpen = useSelector(selectAccessTagsWarningsDeleteIsOpen);
-  const accessTagsTableSelected = useSelector(selectAccessTagsTableSelected);
-  const deleteAccessTags = useAccessTagsDelete();
+  const isOpen = useSelector(selectAccessTagsWindowsWarningsDeleteOpen);
+  const accessTagsSelected = useSelector(selectAccessTagsSelected);
+  const socketEmitAccessTagsDeletesDataMainItem = useAccessTagsDelete();
 
   const onAgree = () => {
-    dispatch(setAccessTagsWarningsDeleteIsOpen(false));
-    deleteAccessTags();
+    dispatch(setAccessTagsWindowsWarningsDeleteOpen(false));
+    socketEmitAccessTagsDeletesDataMainItem();
   };
   const onDisagree = () => {
-    dispatch(setAccessTagsWarningsDeleteIsOpen(false));
+    dispatch(setAccessTagsWindowsWarningsDeleteOpen(false));
   };
   return (
     <ModalsWarning
@@ -29,7 +29,7 @@ function AccessTagsWarningsDelete() {
       onAgree={onAgree}
       onDisagree={onDisagree}
       title={"Delete Tags?"}
-      description={`Are you sure you want to delete ${accessTagsTableSelected.length} objects? `}
+      description={`Are you sure you want to delete ${accessTagsSelected.length} objects? `}
     />
   );
 }

@@ -6,15 +6,15 @@ import RadioButtonCheckedIcon from "@mui/icons-material/RadioButtonChecked";
 
 import { useDispatch, useSelector } from "react-redux";
 import {
-  setAccessTagsFiltersIncludeMode,
-  selectAccessTagsFilters,
-} from "@src/redux/slices/AccessTags/filter";
+  setAccessTagsFiltersMainIncludeMode,
+  selectAccessTagsFiltersMain,
+} from "@src/redux/slices/AccessTags/filters/main";
 function AccessTagsFiltersActiveInclude() {
   const dispatch = useDispatch();
-  const { includeMode } = useSelector(selectAccessTagsFilters);
+  const { includeMode } = useSelector(selectAccessTagsFiltersMain);
 
   const handleChange = () => {
-    dispatch(setAccessTagsFiltersIncludeMode(0));
+    dispatch(setAccessTagsFiltersMainIncludeMode(0));
   };
   return (
     <Checkbox

@@ -6,16 +6,16 @@ import RemoveCircleOutlinedIcon from "@mui/icons-material/RemoveCircleOutlined";
 
 import { useDispatch, useSelector } from "react-redux";
 import {
-  setAccessTagsFiltersIncludeMode,
-  selectAccessTagsFilters,
-} from "@src/redux/slices/AccessTags/filter";
+  setAccessTagsFiltersMainIncludeMode,
+  selectAccessTagsFiltersMain,
+} from "@src/redux/slices/AccessTags/filters/main";
 
 function AccessTagsFiltersDeletedInclude() {
   const dispatch = useDispatch();
-  const { includeMode } = useSelector(selectAccessTagsFilters);
+  const { includeMode } = useSelector(selectAccessTagsFiltersMain);
 
   const handleChange = () => {
-    dispatch(setAccessTagsFiltersIncludeMode(-1));
+    dispatch(setAccessTagsFiltersMainIncludeMode(-1));
   };
   return (
     <Checkbox

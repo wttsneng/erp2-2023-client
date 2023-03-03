@@ -4,17 +4,16 @@ import { Stack, DialogContent, DialogActions, Button } from "@mui/material";
 
 import { MyWindow } from "@src/components/Basic";
 import {
-  selectAccessTagsFullHistoryWindowIsOpen,
-  setAccessTagsFullHistoryWindowIsOpen,
-  setAccessTagsFullHistoryWindowWidth,
-  setAccessTagsFullHistoryWindowHeight,
-  selectAccessTagsFullHistoryWindowWidth,
-} from "@src/redux/slices/AccessTags/fullHistoryWindow";
-import { fetchAccessTagsHistory } from "@src/redux/slices/AccessTags/history";
+  setAccessTagsHistoryWindowsMainOpen,
+  setAccessTagsHistoryWindowsMainHeight,
+  selectAccessTagsHistoryWindowsMainWidth,
+  selectAccessTagsHistoryWindowsMainOpen,
+} from "@src/redux/slices/AccessTags/history/windows/main";
+import { fetchAccessTagsHistoryDataMain } from "@src/redux/slices/AccessTags/history/data/main";
 import {
-  selectAccessTagsFullHistoryFilter,
-  clearAccessTagsFullHistoryFilter,
-} from "@src/redux/slices/AccessTags/fullHistoryFilter";
+  selectAccessTagsHistoryFiltersMainFilter,
+  clearAccessTagsHistoryFilterMain,
+} from "@src/redux/slices/AccessTags/history/filters/main";
 
 import {
   AccessTagsHistoryFiltersSearch,
@@ -32,24 +31,24 @@ const defaultTopY = 0;
 
 function AccessTagsWindowsFullHistoryWindow() {
   const dispatch = useDispatch();
-  const isOpen = useSelector(selectAccessTagsFullHistoryWindowIsOpen);
-  const filter = useSelector(selectAccessTagsFullHistoryFilter);
-  const currentWidth = useSelector(selectAccessTagsFullHistoryWindowWidth);
+  const isOpen = useSelector(selectAccessTagsHistoryWindowsMainOpen);
+  const filter = useSelector(selectAccessTagsHistoryFiltersMainFilter);
+  const currentWidth = useSelector(selectAccessTagsHistoryWindowsMainWidth);
 
   const handleClose = () => {
-    dispatch(setAccessTagsFullHistoryWindowIsOpen(false));
+    dispatch(setAccessTagsHistoryWindowsMainOpen(false));
   };
   const handleResize = (e, { size }) => {
-    dispatch(setAccessTagsFullHistoryWindowWidth(size.width));
-    dispatch(setAccessTagsFullHistoryWindowHeight(size.height));
+    dispatch(selectAccessTagsHistoryWindowsMainWidth(size.width));
+    dispatch(setAccessTagsHistoryWindowsMainHeight(size.height));
   };
 
   React.useEffect(() => {
-    dispatch(clearAccessTagsFullHistoryFilter());
+    dispatch(clearAccessTagsHistoryFilterMain());
   }, [dispatch]);
 
   React.useEffect(() => {
-    dispatch(fetchAccessTagsHistory());
+    dispatch(fetchAccessTagsHistoryDataMain());
   }, [filter, dispatch]);
   return (
     <MyWindow

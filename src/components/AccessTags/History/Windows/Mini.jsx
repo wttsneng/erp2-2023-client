@@ -7,9 +7,10 @@ import { AccessTagsHistoryTablesMini } from "@src/components/AccessTags";
 
 import { useSelector, useDispatch } from "react-redux";
 import {
-  selectAccessTagMiniHistoryWindowIsOpen,
-  setAccessTagMiniHistoryWindowIsOpen,
-} from "@src/redux/slices/AccessTags/miniHistoryWindow";
+  selectAccessTagsHistoryWindowsFieldOpen,
+  setAccessTagsHistoryWindowsFieldOpen,
+} from "@src/redux/slices/AccessTags/history/windows/field";
+import { setAccessTagsEditingsNameSaveBlocked } from "@src/redux/slices/AccessTags/editings/name";
 
 const width = 500;
 const height = 380;
@@ -19,10 +20,11 @@ const defaultTopY = -window.innerHeight / 2 + height / 2 + 20;
 
 function AccessTagsWindowsMiniHistoryWindow() {
   const dispatch = useDispatch();
-  const isOpen = useSelector(selectAccessTagMiniHistoryWindowIsOpen);
+  const isOpen = useSelector(selectAccessTagsHistoryWindowsFieldOpen);
 
   const handleClose = () => {
-    dispatch(setAccessTagMiniHistoryWindowIsOpen(false));
+    dispatch(setAccessTagsHistoryWindowsFieldOpen(false));
+    dispatch(setAccessTagsEditingsNameSaveBlocked(false));
   };
 
   return (

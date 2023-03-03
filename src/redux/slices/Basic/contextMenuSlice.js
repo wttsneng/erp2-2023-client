@@ -10,6 +10,9 @@ const contextMenuSlice = createSlice({
   name: "contextMenu",
   initialState,
   reducers: {
+    setContextMenu(state, action) {
+      return { ...state, ...action.payload };
+    },
     setContextMenuPosition: (state, action) => {
       state.position = action.payload;
     },
@@ -31,6 +34,7 @@ export const {
   setContextMenuType,
   setContextMenuPosition,
   setContextMenuData,
+  setContextMenu,
 } = contextMenuSlice.actions;
 export const contextMenuReducer = contextMenuSlice.reducer;
 export const selectContextMenuData = (state) => state.contextMenu;

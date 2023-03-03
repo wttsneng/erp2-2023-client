@@ -6,10 +6,10 @@ import {
 import { useSelector } from "react-redux";
 function AccessTagsConditionalsDeleteRestore() {
   const isDeleteEnabled = useSelector(
-    (state) => state.accessTags.table.deleteEnabled
+    (state) => state.accessTags.selected.deleteEnabled
   );
   const isRestoreEnabled = useSelector(
-    (state) => state.accessTags.table.restoreEnabled
+    (state) => state.accessTags.selected.restoreEnabled
   );
   if (isDeleteEnabled) return <AccessTagsToolsDeleteButton />;
 
@@ -20,5 +20,4 @@ function AccessTagsConditionalsDeleteRestore() {
     </>
   );
 }
-
 export default AccessTagsConditionalsDeleteRestore;

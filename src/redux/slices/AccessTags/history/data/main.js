@@ -2,8 +2,8 @@ import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import { axios } from "@src/core";
 import qs from "qs";
 
-export const fetchAccessTagsHistory = createAsyncThunk(
-  "accessTagsHistory/fetchAccessTagsHistory",
+export const fetchAccessTagsHistoryDataMain = createAsyncThunk(
+  "accessTags/history/data/main/fetchAccessTagsHistoryDataMain",
   async (params, { getState, rejectWithValue }) => {
     try {
       const state = getState();
@@ -34,34 +34,36 @@ const initialState = {
   status: "idle", // idle, loading, success, error
 };
 
-const accessTagsHistory = createSlice({
-  name: "accessTagsHistory",
+const accessTagsHistoryDataMainSlice = createSlice({
+  name: "accessTags/history/data/main",
   initialState,
   reducers: {
-    setAccessTagHistory: (state, action) => {
+    setAccessTagHistoryDataMain: (state, action) => {
       state.data = action.payload.rows;
       state.count = action.payload.count;
     },
   },
   extraReducers: (builder) => {
     builder
-      .addCase(fetchAccessTagsHistory.pending, (state, action) => {
+      .addCase(fetchAccessTagsHistoryDataMain.pending, (state, action) => {
         state.status = "loading";
       })
-      .addCase(fetchAccessTagsHistory.fulfilled, (state, action) => {
+      .addCase(fetchAccessTagsHistoryDataMain.fulfilled, (state, action) => {
         state.status = "success";
         state.data = action.payload.rows;
         state.count = action.payload.count;
       })
-      .addCase(fetchAccessTagsHistory.rejected, (state, action) => {
+      .addCase(fetchAccessTagsHistoryDataMain.rejected, (state, action) => {
         state.status = "error";
       });
   },
 });
 
-export const { setAccessTagHistory } = accessTagsHistory.actions;
-export const accessTagsHistoryReducer = accessTagsHistory.reducer;
-export const selectAccessTagsHistoryData = (state) =>
+export const { setAccessTagHistoryDataMain } =
+  accessTagsHistoryDataMainSlice.actions;
+export const accessTagsHistoryDataMainReducer =
+  accessTagsHistoryDataMainSlice.reducer;
+export const selectAccessTagsHistoryDataMain = (state) =>
   state.accessTags.history.data;
-export const selectAccessTagsHistoryStatus = (state) =>
+export const selectAccessTagsHistoryDataMainStatus = (state) =>
   state.accessTags.history.status;

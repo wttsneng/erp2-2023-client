@@ -16,7 +16,9 @@ const PaperComponent = (props) => {
   const handleResize = (event, { size }) => {
     setWidth(size.width);
     setHeight(size.height);
-    updateRedux(size);
+    if (props.onResize) {
+      updateRedux(size);
+    }
   };
 
   React.useEffect(() => {

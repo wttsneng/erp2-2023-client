@@ -19,5 +19,12 @@ export const theme = createTheme({
         },
       },
     },
+    MuiMenuItem: {
+      styleOverrides: {
+        root: {
+          height: 30,
+        },
+      },
+    },
   },
 });

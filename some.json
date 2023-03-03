@@ -1,0 +1,34 @@
+{
+  "accessTags": {
+    "data": {
+      "main": {}
+    },
+    "filters": {
+      "main": {}
+    },
+    "windows": {
+      "filters": {},
+      "warnings": {}
+    },
+    "editings": {
+      "name": { "saveBlock": false },
+      "description": { "saveBlock": false }
+    },
+    "selected": [{}, {}],
+
+    "history": {
+      "data": {
+        "main": [],
+        "mini": []
+      },
+      "filters": {
+        "main": {},
+        "mini": {}
+      },
+      "windows": {
+        "fullHistory": {},
+        "miniHistory": {}
+      }
+    }
+  }
+}

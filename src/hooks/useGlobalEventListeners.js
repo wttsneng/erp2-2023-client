@@ -1,21 +1,22 @@
 import React from "react";
 import { useDispatch } from "react-redux";
-import { setSelectionMode } from "@src/redux/slices/Basic/variableSlice";
+import { setAccessTagsSelectedMode } from "@src/redux/slices/AccessTags/selected";
+
 const useGlobalEventListeners = () => {
   const dispatch = useDispatch();
   React.useEffect(() => {
     const handleKeyDown = (event) => {
       if (event.repeat) return;
       if (event.key === "Shift") {
-        dispatch(setSelectionMode("multiMany"));
+        dispatch(setAccessTagsSelectedMode("multiMany"));
       }
       if (event.key === "Control") {
-        dispatch(setSelectionMode("multiOne"));
+        dispatch(setAccessTagsSelectedMode("multiOne"));
       }
     };
     const handleKeyUp = (event) => {
       if (event.key === "Shift" || event.key === "Control") {
-        dispatch(setSelectionMode("single"));
+        dispatch(setAccessTagsSelectedMode("single"));
       }
     };
     window.addEventListener("keydown", handleKeyDown);

@@ -5,7 +5,7 @@ import { axios } from "@src/core";
 import qs from "qs";
 
 import { useDispatch } from "react-redux";
-import { setAccessTagsFullHistoryFilterId } from "@src/redux/slices/AccessTags/fullHistoryFilter";
+import { setAccessTagsHistoryFiltersMainId } from "@src/redux/slices/AccessTags/history/filters/main";
 
 function AccessTagsHistoryFiltersAutoComplete() {
   const dispatch = useDispatch();
@@ -44,7 +44,7 @@ function AccessTagsHistoryFiltersAutoComplete() {
       <Autocomplete
         options={normalizedAccessTags}
         onChange={(event, newValue) => {
-          dispatch(setAccessTagsFullHistoryFilterId(newValue.id));
+          dispatch(setAccessTagsHistoryFiltersMainId(newValue.id));
         }}
         onInputChange={onInputChange}
         clearOnEscape={true}

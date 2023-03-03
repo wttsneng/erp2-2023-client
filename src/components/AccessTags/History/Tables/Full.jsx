@@ -15,16 +15,16 @@ import {
 
 import { useSelector, useDispatch } from "react-redux";
 import {
-  selectAccessTagsFullHistoryFilter,
-  setAccessTagsFullHistoryFilterSortBy,
-  setAccessTagsFullHistoryFilterOrder,
-  setAccessTagsTagFullHistoryFilterLimit,
-  setAccessTagsFullHistoryFilterPage,
-} from "@src/redux/slices/AccessTags/fullHistoryFilter";
+  selectAccessTagsHistoryFiltersMainFilter,
+  setAccessTagsHistoryFiltersMainSortBy,
+  setAccessTagsHistoryFiltersMainOrder,
+  setAccessTagsHistoryFiltersMainLimit,
+  setAccessTagsHistoryFiltersMainPage,
+} from "@src/redux/slices/AccessTags/history/filters/main";
 import {
-  selectAccessTagsHistoryData,
-  selectAccessTagsHistoryStatus,
-} from "@src/redux/slices/AccessTags/history";
+  selectAccessTagsHistoryDataMain,
+  selectAccessTagsHistoryDataMainStatus,
+} from "@src/redux/slices/AccessTags/history/data/main";
 
 const headCells = [
   { id: "field", numeric: false, label: "Field" },
@@ -36,24 +36,24 @@ const headCells = [
 
 function AccessTagsHistoryTablesFull() {
   const dispatch = useDispatch();
-  const filter = useSelector(selectAccessTagsFullHistoryFilter);
+  const filter = useSelector(selectAccessTagsHistoryFiltersMainFilter);
   const historyCount = useSelector((state) => state.accessTags.history.count);
-  const historyData = useSelector(selectAccessTagsHistoryData);
-  const historyStatus = useSelector(selectAccessTagsHistoryStatus);
+  const historyData = useSelector(selectAccessTagsHistoryDataMain);
+  const historyStatus = useSelector(selectAccessTagsHistoryDataMainStatus);
 
   const handleSort = (property) => {
     const isAsc = filter.sortBy === property && filter.orderBy.value === "ASC";
-    dispatch(setAccessTagsFullHistoryFilterSortBy(property));
-    dispatch(setAccessTagsFullHistoryFilterOrder(isAsc ? "DESC" : "ASC"));
+    dispatch(setAccessTagsHistoryFiltersMainSortBy(property));
+    dispatch(setAccessTagsHistoryFiltersMainOrder(isAsc ? "DESC" : "ASC"));
   };
   const handleChangePage = (event, newPage) => {
-    dispatch(setAccessTagsFullHistoryFilterPage(newPage + 1));
+    dispatch(setAccessTagsHistoryFiltersMainPage(newPage + 1));
   };
   const handleChangeRowsPerPage = (event) => {
     dispatch(
-      setAccessTagsTagFullHistoryFilterLimit(parseInt(event.target.value, 10))
+      setAccessTagsHistoryFiltersMainLimit(parseInt(event.target.value, 10))
     );
-    dispatch(setAccessTagsFullHistoryFilterPage(1));
+    dispatch(setAccessTagsHistoryFiltersMainPage(1));
   };
 
   return (

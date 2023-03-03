@@ -1,53 +1,57 @@
 import React from "react";
 
-import { Menu, MenuItem, ListItemIcon, ListItemText } from "@mui/material";
-import DeleteOutlineIcon from "@mui/icons-material/DeleteOutline";
-import RestoreFromTrashIcon from "@mui/icons-material/RestoreFromTrash";
-import AddCircleOutlineIcon from "@mui/icons-material/AddCircleOutline";
+import { Menu } from "@mui/material";
+
 import { useSelector, useDispatch } from "react-redux";
+
+import {
+  MenuItemDelete,
+  MenuItemsRestore,
+  MenuItemsAdd,
+} from "@src/components/Basic";
+
+import useAccessTagsDelete from "@src/hooks/accessTags/useAccessTagsDelete";
+import useAccessTagsRestore from "@src/hooks/accessTags/useAccessTagsRestore";
+
 import {
   selectContextMenuData,
   setContextMenuOpen,
 } from "@src/redux/slices/Basic/contextMenuSlice";
-import {
-  createAccessTag,
-  deleteAccessTag,
-  restoreAccessTag,
-} from "@src/redux/slices/AccessTags/data";
-import { selectAccessTagsTableSelected } from "@src/redux/slices/AccessTags/table";
-import { clearAccessTagsInput } from "@src/redux/slices/AccessTags/input";
+import { socketEmitAccessTagsCreate } from "@src/socket/emits/AccessTags";
 
 function AccessTagContextMenu() {
   const dispatch = useDispatch();
   const contextMenuData = useSelector(selectContextMenuData);
-  const selectedTags = useSelector(selectAccessTagsTableSelected);
+
+  const accessTagsDelete = useAccessTagsDelete();
+  const accessTagsRestore = useAccessTagsRestore();
+
   const isDeleteEnabled = useSelector(
-    (state) => state.accessTags.table.deleteEnabled
+    (state) => state.accessTags.selected.deleteEnabled
   );
   const isRestoreEnabled = useSelector(
-    (state) => state.accessTags.table.restoreEnabled
+    (state) => state.accessTags.selected.restoreEnabled
   );
+
   const handleClose = () => {
     dispatch(setContextMenuOpen(false));
   };
   const handleDeleteClick = () => {
-    dispatch(clearAccessTagsInput());
-    selectedTags.forEach(({ id }) => {
-      deleteAccessTag({ itemId: id });
-    });
+    accessTagsDelete();
+    handleClose();
   };
   const handleRestoreClick = () => {
-    selectedTags.forEach(({ id }) => {
-      restoreAccessTag({ itemId: id });
-    });
+    accessTagsRestore();
+    handleClose();
   };
   const handleAddClick = () => {
-    dispatch(clearAccessTagsInput());
-    createAccessTag({
+    socketEmitAccessTagsCreate({
       name: "New Access tag",
       description: "New description",
     });
+    handleClose();
   };
+
   if (contextMenuData.type !== "access_tag_table") return null;
   return (
     <div>
@@ -64,44 +68,9 @@ function AccessTagContextMenu() {
             : undefined
         }
       >
-        {isDeleteEnabled && (
-          <MenuItem
-            onClick={() => {
-              handleDeleteClick();
-              handleClose();
-            }}
-          >
-            <ListItemIcon>
-              <DeleteOutlineIcon />
-            </ListItemIcon>
-            <ListItemText>Delete</ListItemText>
-          </MenuItem>
-        )}
-        {isRestoreEnabled && (
-          <MenuItem
-            onClick={() => {
-              handleRestoreClick();
-              handleClose();
-            }}
-          >
-            <ListItemIcon>
-              <RestoreFromTrashIcon />
-            </ListItemIcon>
-            <ListItemText>Restore</ListItemText>
-          </MenuItem>
-        )}
-
-        <MenuItem
-          onClick={() => {
-            handleAddClick();
-            handleClose();
-          }}
-        >
-          <ListItemIcon>
-            <AddCircleOutlineIcon />
-          </ListItemIcon>
-          <ListItemText>Добавить</ListItemText>
-        </MenuItem>
+        {isDeleteEnabled && <MenuItemDelete onClick={handleDeleteClick} />}
+        {isRestoreEnabled && <MenuItemsRestore onClick={handleRestoreClick} />}
+        <MenuItemsAdd onClick={handleAddClick} />
       </Menu>
     </div>
   );

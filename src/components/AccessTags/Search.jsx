@@ -2,21 +2,21 @@ import React from "react";
 import { Search } from "@src/components/Basic";
 import { useDispatch, useSelector } from "react-redux";
 import {
-  setAccessTagsFiltersQuickSearchValue,
-  selectAccessTagsFilters,
-} from "@src/redux/slices/AccessTags/filter";
+  setAccessTagsFiltersMainSearchValue,
+  selectAccessTagsFiltersMain,
+} from "@src/redux/slices/AccessTags/filters/main";
 function AccessTagsSearch() {
   const dispatch = useDispatch();
-  const tagsFilters = useSelector(selectAccessTagsFilters);
+  const mainAccessTagsFilters = useSelector(selectAccessTagsFiltersMain);
 
   const onSearch = (value) => {
-    dispatch(setAccessTagsFiltersQuickSearchValue(value));
+    dispatch(setAccessTagsFiltersMainSearchValue(value));
   };
   return (
     <Search
       onChange={onSearch}
       label="Access tags search"
-      value={tagsFilters.searchValue}
+      value={mainAccessTagsFilters.searchValue}
     />
   );
 }
