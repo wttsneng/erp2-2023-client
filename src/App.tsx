@@ -1,14 +1,15 @@
-import React from "react";
+import React, { FC } from "react";
 
 import { Routes, Route } from "react-router-dom";
 
 import { socket } from "./core";
 
 import { useGlobalEventListeners, useSocketError } from "./hooks";
+import { useAccessTagsSocketEvents } from "./hooks/accessTags/useAccessTagsSocketEvents";
 
 import { MainLayout, AuthProtect, HomeRoute, ProtectedRoutes } from "./layouts";
 
-import { useSelector, useDispatch } from "react-redux";
+import { useAppDispatch, useAppSelector } from "@src/hooks/redux";
 import {
   selectAuthStatus,
   selectAuthData,
@@ -18,12 +19,14 @@ import { setSidebarData } from "./redux/slices/Basic/sidebarSlice";
 
 import { Login, NotFound } from "./pages";
 
-function App() {
-  const dispatch = useDispatch();
-  const authStatus = useSelector(selectAuthStatus);
-  const authData = useSelector(selectAuthData);
+const App: FC = () => {
+  const dispatch = useAppDispatch();
+  const authStatus = useAppSelector(selectAuthStatus);
+  const authData = useAppSelector(selectAuthData);
   useGlobalEventListeners();
   useSocketError();
+  useAccessTagsSocketEvents();
+
   React.useEffect(() => {
     if (authStatus === "idle") {
       dispatch(fetchAuthMe());
@@ -35,13 +38,6 @@ function App() {
       }
     }
   }, [authStatus]);
-
-  React.useEffect(() => {
-    socket.onAny((event, ...args) => {
-      console.log(event, args);
-      dispatch({ type: event, payload: args[0] });
-    });
-  }, []);
 
   return (
     <React.Fragment>
@@ -64,6 +60,6 @@ function App() {
       </Routes>
     </React.Fragment>
   );
-}
+};
 
 export default App;

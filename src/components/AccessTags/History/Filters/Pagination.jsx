@@ -10,7 +10,9 @@ import {
 function AccessTagsHistoryFiltersPagination() {
   const dispatch = useDispatch();
   const filter = useSelector(selectAccessTagsHistoryFiltersMainFilter);
-  const documentCount = useSelector((state) => state.accessTags.history.count);
+  const documentCount = useSelector(
+    (state) => state.accessTags.history.data.main.count
+  );
   const count = Math.ceil(documentCount / filter.limit);
   const handlePageChange = (event, value) => {
     dispatch(setAccessTagsHistoryFiltersMainPage(value));

@@ -11,7 +11,7 @@ function ProtectedPage({ element }) {
     loadPage();
     setIsPageDisplayed(true);
   }, [element]);
-  return <div>{isPageDisplayed && PageComponent && <PageComponent />}</div>;
+  return <>{isPageDisplayed && PageComponent && <PageComponent />}</>;
 }
 
 export default ProtectedPage;

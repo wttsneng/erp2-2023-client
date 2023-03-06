@@ -1,6 +1,28 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { RootState } from "@src/redux/store";
 
-const initialState = {
+interface IAccessTag {
+  id: number;
+  name: string;
+  description: string;
+  deletedAt: null | string;
+  createdAt: string;
+  updatedAt: string;
+}
+
+interface IAccessTagsSelectedState {
+  selected: IAccessTag[];
+  mode: "single" | "multiOne" | "multiMany";
+  deleteEnabled: boolean;
+  restoreEnabled: boolean;
+}
+
+interface IMultiSelectAction {
+  obj: IAccessTag;
+  current: IAccessTag[];
+}
+
+const initialState: IAccessTagsSelectedState = {
   selected: [],
   mode: "single", // single, multiOne, multiMany
   deleteEnabled: false,
@@ -14,7 +36,10 @@ const accessTagsSelectedSlice = createSlice({
     setAccessTagsSelected(state, action) {
       state.selected = action.payload;
     },
-    dinamicallySetAccessTagsSelected(state, action) {
+    dinamicallySetAccessTagsSelected(
+      state,
+      action: PayloadAction<IMultiSelectAction>
+    ) {
       const { obj, current } = action.payload;
       if (state.mode === "single") {
         state.selected = [];
@@ -60,6 +85,18 @@ const accessTagsSelectedSlice = createSlice({
     setAccessTagsSelectedMode(state, action) {
       state.mode = action.payload;
     },
+    updateAccessTagsSelectedItem(state, action) {
+      const index = state.selected.findIndex(
+        (item) => item.id === action.payload.id
+      );
+      state.selected[index] = action.payload;
+    },
+    deleteAccessTagsSelectedItem(state, action) {
+      const index = state.selected.findIndex(
+        (item) => item.id === action.payload.id
+      );
+      state.selected.splice(index, 1);
+    },
   },
   extraReducers: (builder) => {},
 });
@@ -69,5 +106,5 @@ export const {
   setAccessTagsSelectedMode,
 } = accessTagsSelectedSlice.actions;
 export const accessTagsSelectedReducer = accessTagsSelectedSlice.reducer;
-export const selectAccessTagsSelected = (state) =>
+export const selectAccessTagsSelected = (state: RootState) =>
   state.accessTags.selected.selected;

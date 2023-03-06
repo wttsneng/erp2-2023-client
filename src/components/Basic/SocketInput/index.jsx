@@ -18,15 +18,22 @@ const SocketInput = React.forwardRef(
     ref
   ) => {
     const theme = useTheme();
-    const [isInputFocused, setIsInputFocused] = React.useState(false);
+    const [focused, setFocused] = React.useState(false);
+    const [historyClicked, setHistoryClicked] = React.useState(false);
+
     const handleBlur = (value) => {
-      if (isInputFocused) {
-        setIsInputFocused(false);
-        onBlur(value);
+      let reason = "clickAway";
+      setFocused(false);
+      if (historyClicked) {
+        reason = "historyClicked";
+        onBlur(value, reason);
+        return;
       }
+      onBlur(value);
     };
+
     const handleFocus = (value) => {
-      setIsInputFocused(true);
+      setFocused(true);
       onFocus(value);
     };
 
@@ -49,16 +56,18 @@ const SocketInput = React.forwardRef(
           onFocus={(e) => handleFocus(e.target.value)}
           {...props}
         />
-        {historyNeeded && (
+        {historyNeeded && !disabled && (
           <Typography
             className="fa-solid fa-clock-rotate-left"
             role="button"
             aria-label="history"
             onClick={onHistoryClick}
-            onMouseDown={() => setIsInputFocused(false)}
-            onFocus={() => setIsInputFocused(true)}
+            onMouseDown={() => setHistoryClicked(true)}
+            onMouseUp={() => setHistoryClicked(false)}
+            onTouchStart={() => setHistoryClicked(true)}
+            onTouchEnd={() => setHistoryClicked(false)}
             sx={{
-              opacity: isInputFocused ? 1 : 0,
+              opacity: focused ? 1 : 0,
               position: "absolute",
               cursor: "pointer",
               top: "50%",

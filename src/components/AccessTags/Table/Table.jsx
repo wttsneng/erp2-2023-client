@@ -21,8 +21,8 @@ import { selectAccessTagsFiltersMain } from "@src/redux/slices/AccessTags/filter
 
 function AccessTagsTable() {
   const dispatch = useDispatch();
-  const tagsFilters = useSelector(selectAccessTagsFiltersMain);
 
+  const tagsFilters = useSelector(selectAccessTagsFiltersMain);
   const selectedTags = useSelector(selectAccessTagsSelected);
   const tagsStatus = useSelector(selectAccessTagsDataMainStatus);
   const tags = useSelector(selectAccessTagsDataMainData);

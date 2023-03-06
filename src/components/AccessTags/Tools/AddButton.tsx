@@ -1,10 +1,10 @@
-import React from "react";
+import React, { FC } from "react";
 
 import { AddButton } from "@src/components/Basic";
 
 import { socketEmitAccessTagsCreate } from "@src/socket/emits/AccessTags";
 
-function AccessTagsToolsAddButton() {
+const AccessTagsToolsAddButton: FC = () => {
   const handleClick = () => {
     socketEmitAccessTagsCreate({
       name: "New tag",
@@ -12,5 +12,5 @@ function AccessTagsToolsAddButton() {
     });
   };
   return <AddButton onClick={handleClick} />;
-}
+};
 export default AccessTagsToolsAddButton;

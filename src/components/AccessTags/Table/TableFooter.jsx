@@ -1,7 +1,7 @@
 import React from "react";
 import { Box, Typography, Pagination } from "@mui/material";
 
-import { MySelect } from "../Basic";
+import { MySelect } from "../../Basic";
 
 import { useSelector, useDispatch } from "react-redux";
 import { setAccessTagsFiltersMainPage } from "@src/redux/slices/AccessTags/filters/main";

@@ -7,7 +7,7 @@ export const fetchAccessTagsHistoryDataMain = createAsyncThunk(
   async (params, { getState, rejectWithValue }) => {
     try {
       const state = getState();
-      const historyFilter = state.accessTags.fullHistoryFilter;
+      const historyFilter = state.accessTags.history.filters.main;
       const { searchValue, orderBy, id, sortBy, limit, page, field } =
         historyFilter;
       const query = qs.stringify({
@@ -64,6 +64,6 @@ export const { setAccessTagHistoryDataMain } =
 export const accessTagsHistoryDataMainReducer =
   accessTagsHistoryDataMainSlice.reducer;
 export const selectAccessTagsHistoryDataMain = (state) =>
-  state.accessTags.history.data;
+  state.accessTags.history.data.main.data;
 export const selectAccessTagsHistoryDataMainStatus = (state) =>
-  state.accessTags.history.status;
+  state.accessTags.history.data.main.status;

@@ -44,6 +44,10 @@ const initialState = {
   data: [],
   count: 0,
   totalPages: 0,
+  editingItems: {
+    name: [],
+    description: [],
+  },
   status: "idle", // idle, loading, success, error
 };
 const accessTagsDataMainSlice = createSlice({
@@ -69,11 +73,16 @@ const accessTagsDataMainSlice = createSlice({
       state.data[index] = action.payload;
       state.status = "success";
     },
-    socketEmitAccessTagsDelete: (state, action) => {
+    deleteAccessTagsDataMainItem: (state, action) => {
       state.status = "loading";
       const index = state.data.findIndex((tag) => tag.id === action.payload.id);
       state.data.splice(index, 1);
       state.count--;
+      state.status = "success";
+    },
+    updateAccessTagsDataMainEditingItems: (state, action) => {
+      state.status = "loading";
+      state.editingItems = action.payload;
       state.status = "success";
     },
   },

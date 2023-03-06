@@ -2,7 +2,7 @@ import React from "react";
 
 import { ModalsWarning } from "@src/components/Basic";
 
-import { useSelector, useDispatch } from "react-redux";
+import { useAppDispatch, useAppSelector } from "@src/hooks/redux";
 import {
   setAccessTagsWindowsWarningsDeleteOpen,
   selectAccessTagsWindowsWarningsDeleteOpen,
@@ -11,14 +11,14 @@ import useAccessTagsDelete from "@src/hooks/accessTags/useAccessTagsDelete";
 import { selectAccessTagsSelected } from "@src/redux/slices/AccessTags/selected";
 
 function AccessTagsWarningsDelete() {
-  const dispatch = useDispatch();
-  const isOpen = useSelector(selectAccessTagsWindowsWarningsDeleteOpen);
-  const accessTagsSelected = useSelector(selectAccessTagsSelected);
-  const socketEmitAccessTagsDeletesDataMainItem = useAccessTagsDelete();
+  const dispatch = useAppDispatch();
+  const isOpen = useAppSelector(selectAccessTagsWindowsWarningsDeleteOpen);
+  const accessTagsSelected = useAppSelector(selectAccessTagsSelected);
+  const deleteAccessTags = useAccessTagsDelete();
 
   const onAgree = () => {
     dispatch(setAccessTagsWindowsWarningsDeleteOpen(false));
-    socketEmitAccessTagsDeletesDataMainItem();
+    deleteAccessTags();
   };
   const onDisagree = () => {
     dispatch(setAccessTagsWindowsWarningsDeleteOpen(false));

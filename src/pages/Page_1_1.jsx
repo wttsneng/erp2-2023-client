@@ -21,9 +21,11 @@ initAccessTagRedux();
 
 export default function AccessTags() {
   const dispatch = useDispatch();
+
   React.useEffect(() => {
     dispatch(setSidebarActiveByLink("page/1_1"));
   }, [dispatch]);
+
   return (
     <div>
       <Grid container spacing={2}>

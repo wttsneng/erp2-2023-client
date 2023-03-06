@@ -4,7 +4,6 @@ import { accessTagsHistoryFiltersFieldReducer } from "@src/redux/slices/AccessTa
 import { accessTagsDataMainReducer } from "@src/redux/slices/AccessTags/data/main";
 import { accessTagsHistoryDataMainReducer } from "@src/redux/slices/AccessTags/history/data/main";
 import { accessTagsHistoryWindowsMainReducer } from "@src/redux/slices/AccessTags/history/windows/main";
-import { injectAsyncReducer } from "@src/redux/store";
 import { AccessTagsFilterWindowReducer } from "@src/redux/slices/AccessTags/windows/filter";
 import { accessTagsHistoryWindowsFieldReducer } from "@src/redux/slices/AccessTags/history/windows/field";
 import { accessTagsWindowsWarningsReducer } from "@src/redux/slices/AccessTags/windows/warnings";
@@ -14,6 +13,7 @@ import { accessTagsEditingsNameReducer } from "@src/redux/slices/AccessTags/edit
 import { accessTagsEditingsDescriptionReducer } from "@src/redux/slices/AccessTags/editings/description";
 import { combineReducers } from "redux";
 import { store } from "@src/index";
+import { injectAsyncReducer } from "@src/redux/store";
 
 const initAccessTagRedux = () => {
   const AccessTagsDataCombinedReducer = combineReducers({
@@ -57,5 +57,7 @@ const initAccessTagRedux = () => {
     history: AccessTagsHistoryCombinedReducer,
   });
   injectAsyncReducer(store, "accessTags", AccessTagCombinedReducer);
+  return AccessTagCombinedReducer;
 };
+export type AccessTagState = ReturnType<typeof initAccessTagRedux>;
 export default initAccessTagRedux;

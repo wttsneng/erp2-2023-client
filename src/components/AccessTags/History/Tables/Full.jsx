@@ -37,7 +37,9 @@ const headCells = [
 function AccessTagsHistoryTablesFull() {
   const dispatch = useDispatch();
   const filter = useSelector(selectAccessTagsHistoryFiltersMainFilter);
-  const historyCount = useSelector((state) => state.accessTags.history.count);
+  const historyCount = useSelector(
+    (state) => state.accessTags.history.data.main.count
+  );
   const historyData = useSelector(selectAccessTagsHistoryDataMain);
   const historyStatus = useSelector(selectAccessTagsHistoryDataMainStatus);
 
@@ -55,6 +57,7 @@ function AccessTagsHistoryTablesFull() {
     );
     dispatch(setAccessTagsHistoryFiltersMainPage(1));
   };
+  React.useEffect(() => {}, []);
 
   return (
     <Paper

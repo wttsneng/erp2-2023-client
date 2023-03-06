@@ -6,15 +6,16 @@ export const fetchAccessTagsHistoryDataField = createAsyncThunk(
   "accessTags/history/data/field/fetchAccessTagsHistoryDataField",
   async (params, { rejectWithValue, getState }) => {
     try {
+      console.log("fetch");
       const state = getState();
 
-      const { id } = state.accessTags.selected.selected;
+      const { id } = state.accessTags.selected.selected[0];
       const fieldData = state.accessTags.history.filters.field;
       const { field } = fieldData.field;
 
       const query = qs.stringify({
         searchValue: "",
-        order: "ASC",
+        order: "DESC",
         id: id,
         sortBy: "createdAt",
         limit: 10,

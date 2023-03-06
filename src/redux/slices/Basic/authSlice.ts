@@ -1,4 +1,5 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
+import { RootState } from "@src/redux/store";
 import { axios } from "@src/core";
 
 export const fetchAuthMe = createAsyncThunk("auth/fetchAuthMe", async () => {
@@ -20,7 +21,12 @@ export const fetchAuthLogout = createAsyncThunk(
   }
 );
 
-const initialState = {
+interface IAuthState {
+  data: any;
+  status: "idle" | "loading" | "success" | "error";
+}
+
+const initialState: IAuthState = {
   data: null,
   status: "idle", // idle, loading, success, error
 };
@@ -63,7 +69,6 @@ const authSlice = createSlice({
   },
 });
 
-export const { some } = authSlice.actions;
 export const authReducer = authSlice.reducer;
-export const selectAuthData = (state) => state.auth.data;
-export const selectAuthStatus = (state) => state.auth.status;
+export const selectAuthData = (state: RootState) => state.auth.data;
+export const selectAuthStatus = (state: RootState) => state.auth.status;

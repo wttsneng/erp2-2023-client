@@ -96,7 +96,7 @@ function Sidebar(props) {
     ) : null;
 
   return (
-    <Box sx={{ display: "flex" }}>
+    <Box sx={{ display: "flex", height: "100%" }}>
       <CssBaseline />
       <MoblieHeader onClick={handleDrawerToggle} pageName={activeTitle} />
       <Box

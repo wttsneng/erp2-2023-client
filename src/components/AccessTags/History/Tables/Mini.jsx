@@ -19,8 +19,9 @@ import {
   selectAccessTagsHistoryDataFieldData,
   selectAccessTagsHistoryDataFieldStatus,
 } from "@src/redux/slices/AccessTags/history/data/field";
-import { socketEmitAccessTagsChangeValue } from "@src/redux/slices/AccessTags/data/main";
-import { fetchAccessTagsHistoryDataField } from "@src/redux/slices/AccessTags/history/data/field";
+import { socketEmitAccessTagsChangeValue } from "@src/socket/emits/AccessTags";
+import { selectAccessTagsHistoryFiltersField } from "@src/redux/slices/AccessTags/history/filters/field";
+
 const headCells = [
   { id: "new_value", numeric: false, label: "Value" },
   { id: "createdAt", numeric: false, label: "Date" },
@@ -31,8 +32,17 @@ function AccessTagsHistoryTablesMini() {
 
   const historyData = useSelector(selectAccessTagsHistoryDataFieldData);
   const historyStatus = useSelector(selectAccessTagsHistoryDataFieldStatus);
+  const historyField = useSelector(selectAccessTagsHistoryFiltersField);
 
   const theme = useTheme();
+  const handleValueClick = (value) => {
+    socketEmitAccessTagsChangeValue({
+      itemId: historyData[0].access_tag_id,
+      attribute: historyField.field,
+      value,
+    });
+    dispatch(setAccessTagsHistoryWindowsFieldOpen(false));
+  };
 
   return (
     <Paper
@@ -61,7 +71,7 @@ function AccessTagsHistoryTablesMini() {
                 >
                   <TableCell
                     onClick={() => {
-                      // handleValueClick(row.new_value);
+                      handleValueClick(row.new_value);
                     }}
                     sx={{
                       cursor: "pointer",

@@ -1,6 +1,7 @@
 import { useSelector } from "react-redux";
-import { socketEmitAccessTagsDelete } from "@src/redux/slices/AccessTags/data/main";
+import { socketEmitAccessTagsDelete } from "@src/socket/emits/AccessTags";
 import { selectAccessTagsSelected } from "@src/redux/slices/AccessTags/selected";
+
 function useAccessTagsDelete() {
   const accessTagsSelected = useSelector(selectAccessTagsSelected);
   const onDelete = () => {

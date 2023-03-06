@@ -18,5 +18,5 @@ export const { setAccessTagsEditingsDescriptionSaveBlocked } =
   accessTagsEditingsDescriptionSlice.actions;
 export const accessTagsEditingsDescriptionReducer =
   accessTagsEditingsDescriptionSlice.reducer;
-export const seletctAccessTagsEditingsDescriptionSaveBlocked = (state) =>
+export const selectAccessTagsEditingsDescriptionSaveBlocked = (state) =>
   state.accessTags.editings.description.saveBlocked;

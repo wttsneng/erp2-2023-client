@@ -11,6 +11,8 @@ import {
   setAccessTagsHistoryWindowsFieldOpen,
 } from "@src/redux/slices/AccessTags/history/windows/field";
 import { setAccessTagsEditingsNameSaveBlocked } from "@src/redux/slices/AccessTags/editings/name";
+import { fetchAccessTagsHistoryDataField } from "@src/redux/slices/AccessTags/history/data/field";
+import { selectAccessTagsHistoryFiltersField } from "@src/redux/slices/AccessTags/history/filters/field";
 
 const width = 500;
 const height = 380;
@@ -21,11 +23,17 @@ const defaultTopY = -window.innerHeight / 2 + height / 2 + 20;
 function AccessTagsWindowsMiniHistoryWindow() {
   const dispatch = useDispatch();
   const isOpen = useSelector(selectAccessTagsHistoryWindowsFieldOpen);
+  const filter = useSelector(selectAccessTagsHistoryFiltersField);
 
   const handleClose = () => {
     dispatch(setAccessTagsHistoryWindowsFieldOpen(false));
     dispatch(setAccessTagsEditingsNameSaveBlocked(false));
   };
+  React.useEffect(() => {
+    if (isOpen) {
+      dispatch(fetchAccessTagsHistoryDataField());
+    }
+  }, [filter, dispatch, isOpen]);
 
   return (
     <MyWindow

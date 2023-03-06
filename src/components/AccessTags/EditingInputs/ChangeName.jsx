@@ -2,67 +2,75 @@ import React from "react";
 
 import { SocketInput } from "@src/components/Basic";
 
+import { socketInputBlur, socketInputFocus } from "@src/utils/AccessTags";
+
 import { useDispatch, useSelector } from "react-redux";
-
-import {
-  socketEmitAccessTagsInputStarted,
-  socketEmitAccessTagsInputEnded,
-  socketEmitAccessTagsChangeValue,
-} from "@src/socket/emits/AccessTags";
-
 import { setAccessTagsHistoryWindowsFieldOpen } from "@src/redux/slices/AccessTags/history/windows/field";
-
 import { selectAccessTagsSelected } from "@src/redux/slices/AccessTags/selected";
 import {
   selectAccessTagsEditingsNameSaveBlocked,
   setAccessTagsEditingsNameSaveBlocked,
 } from "@src/redux/slices/AccessTags/editings/name";
+import { setAccessTagsHistoryFiltersFieldField } from "@src/redux/slices/AccessTags/history/filters/field";
 
 function AccessTagsEditingInputsChangeName() {
   const dispatch = useDispatch();
+
   const selectedTags = useSelector(selectAccessTagsSelected);
-  const isSaveBlocked = useSelector(selectAccessTagsEditingsNameSaveBlocked);
+  const saveBlocked = useSelector(selectAccessTagsEditingsNameSaveBlocked);
+  const editingItems = useSelector(
+    (state) => state.accessTags.data.main.editingItems
+  );
+  const disabled = editingItems.name.includes(selectedTags[0].id);
+
   const [name, setName] = React.useState("");
+  const [firstRender, setFirstRender] = React.useState(true);
 
   const handleChange = (value) => {
     setName(value);
   };
-  const handleBlur = (value) => {
-    if (!isSaveBlocked) {
-      socketEmitAccessTagsInputEnded({
-        itemId: selectedTags[0].id,
-        attribute: "name",
-      });
-      socketEmitAccessTagsChangeValue({
-        itemId: selectedTags[0].id,
-        attribute: "name",
-        value,
-      });
-      console.log("handleBlur");
-    }
-  };
-  const handleFocus = (value) => {
-    socketEmitAccessTagsInputStarted({
-      itemId: selectedTags[0].id,
+  const handleBlur = (value, reason) => {
+    socketInputBlur({
+      value,
+      reason,
       attribute: "name",
+      saveBlocked,
+      initialValue: selectedTags[0].name,
+      id: selectedTags[0].id,
     });
+  };
+
+  const handleFocus = (value) => {
+    socketInputFocus({ id: selectedTags[0].id, attribute: "name" });
   };
 
   const handleHistoryClick = () => {
     dispatch(setAccessTagsHistoryWindowsFieldOpen(true));
     dispatch(setAccessTagsEditingsNameSaveBlocked(true));
+    dispatch(setAccessTagsHistoryFiltersFieldField("name"));
   };
 
   React.useEffect(() => {
-    if (selectedTags.length === 0) return;
     setName(selectedTags[0].name);
   }, [selectedTags]);
 
-  if (selectedTags.length === 0) return null;
+  React.useEffect(() => {
+    if (firstRender) {
+      setFirstRender(false);
+      return;
+    }
+  }, [firstRender]);
+
+  React.useEffect(() => {
+    if (!saveBlocked && !firstRender) {
+      handleBlur(name);
+    }
+  }, [saveBlocked]);
+
   return (
     <SocketInput
       label="name"
-      disabled={false}
+      disabled={disabled}
       value={name}
       onChange={handleChange}
       onBlur={handleBlur}

@@ -6,6 +6,7 @@ import { MyWindow } from "@src/components/Basic";
 import {
   setAccessTagsHistoryWindowsMainOpen,
   setAccessTagsHistoryWindowsMainHeight,
+  setAccessTagsHistoryWindowsMainWidth,
   selectAccessTagsHistoryWindowsMainWidth,
   selectAccessTagsHistoryWindowsMainOpen,
 } from "@src/redux/slices/AccessTags/history/windows/main";
@@ -39,7 +40,7 @@ function AccessTagsWindowsFullHistoryWindow() {
     dispatch(setAccessTagsHistoryWindowsMainOpen(false));
   };
   const handleResize = (e, { size }) => {
-    dispatch(selectAccessTagsHistoryWindowsMainWidth(size.width));
+    dispatch(setAccessTagsHistoryWindowsMainWidth(size.width));
     dispatch(setAccessTagsHistoryWindowsMainHeight(size.height));
   };
 
@@ -48,8 +49,10 @@ function AccessTagsWindowsFullHistoryWindow() {
   }, [dispatch]);
 
   React.useEffect(() => {
-    dispatch(fetchAccessTagsHistoryDataMain());
-  }, [filter, dispatch]);
+    if (isOpen) {
+      dispatch(fetchAccessTagsHistoryDataMain());
+    }
+  }, [filter, dispatch, isOpen]);
   return (
     <MyWindow
       open={isOpen}
