@@ -12,14 +12,12 @@ function AccessTagInput() {
   const selectedTags = useSelector(selectAccessTagsSelected);
   return (
     <div>
-      <Stack spacing={2}>
-        {selectedTags[0] && !selectedTags[0].deletedAt && (
-          <>
-            <AccessTagsEditingInputsChangeName />
-            <AccessTagsEditingInputsChangeDescription />
-          </>
-        )}
-      </Stack>
+      {selectedTags[0] && !selectedTags[0].deletedAt && (
+        <Stack spacing={2} sx={{ padding: 2 }}>
+          <AccessTagsEditingInputsChangeName />
+          <AccessTagsEditingInputsChangeDescription />
+        </Stack>
+      )}
     </div>
   );
 }

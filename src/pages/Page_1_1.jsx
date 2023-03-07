@@ -3,7 +3,9 @@ import { Box, Grid, Stack } from "@mui/material";
 
 import { useDispatch } from "react-redux";
 import { setSidebarActiveByLink } from "@src/redux/slices/Basic/sidebarSlice";
-import initAccessTagRedux from "@src/redux/slices/AccessTags/initAccessTagsRedux";
+import { injectAccessTagsReducers } from "@src/redux/slices/AccessTags/initAccessTagsRedux";
+
+import { useAccessTagsLocales } from "@src/hooks/accessTags";
 
 import {
   AccessTagsSearch,
@@ -17,10 +19,11 @@ import {
   AccessTagsWindowsMiniHistoryWindow,
   AccessTagsWarningsDelete,
 } from "@src/components/AccessTags";
-initAccessTagRedux();
 
+injectAccessTagsReducers();
 export default function AccessTags() {
   const dispatch = useDispatch();
+  useAccessTagsLocales();
 
   React.useEffect(() => {
     dispatch(setSidebarActiveByLink("page/1_1"));
@@ -37,34 +40,20 @@ export default function AccessTags() {
               padding: 2,
             }}
           >
-            <Grid container spacing={2}>
-              <Grid item xs={12}>
-                <Stack direction={"row"} spacing={2}>
-                  <AccessTagsSearch />
-                  <AccessTagsToolsOpenFiltersButton />
-                </Stack>
-              </Grid>
-            </Grid>
+            <Stack direction={"row"} spacing={2}>
+              <AccessTagsSearch />
+              <AccessTagsToolsOpenFiltersButton />
+            </Stack>
             <AccessTagsToolbar />
             <AccessTagsTable />
             <AccessTagsTableFooter />
           </Box>
         </Grid>
-        <Grid
-          item
-          md={4}
-          xs={12}
-          order={{ xs: 1, md: 2 }}
-          sx={{
-            borderRadius: 1,
-          }}
-        >
+        <Grid item md={4} xs={12} order={{ xs: 1, md: 2 }}>
           <Box
             sx={{
               backgroundColor: "white",
               borderRadius: 1,
-              padding: 2,
-              marginBottom: 2,
             }}
           >
             <AccessTagEdit />

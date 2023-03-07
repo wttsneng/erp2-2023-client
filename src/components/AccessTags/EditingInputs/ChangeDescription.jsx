@@ -3,6 +3,7 @@ import React from "react";
 import { SocketInput } from "@src/components/Basic";
 
 import { socketInputBlur, socketInputFocus } from "@src/utils/AccessTags";
+import { useAccessTagsTranslation } from "@src/hooks/accessTags";
 
 import { useDispatch, useSelector } from "react-redux";
 import { setAccessTagsHistoryWindowsFieldOpen } from "@src/redux/slices/AccessTags/history/windows/field";
@@ -15,6 +16,7 @@ import { setAccessTagsHistoryFiltersFieldField } from "@src/redux/slices/AccessT
 
 function AccessTagsEditingInputsChangeDescription() {
   const dispatch = useDispatch();
+  const { t } = useAccessTagsTranslation();
 
   const selectedTags = useSelector(selectAccessTagsSelected);
   const saveBlocked = useSelector(
@@ -70,7 +72,7 @@ function AccessTagsEditingInputsChangeDescription() {
 
   return (
     <SocketInput
-      label="description"
+      label={t("description")}
       disabled={disabled}
       value={description}
       onChange={handleChange}

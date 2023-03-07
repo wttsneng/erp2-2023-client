@@ -10,6 +10,8 @@ import {
 } from "./index";
 import { Stack, Box, Typography as MuiTypography } from "@mui/material";
 import { styled } from "@mui/material/styles";
+import { useAccessTagsTranslation } from "@src/hooks/accessTags";
+
 const Typography = styled(MuiTypography)({
   fontSize: "0.9rem",
   fontWeight: "bold",
@@ -17,26 +19,27 @@ const Typography = styled(MuiTypography)({
   margin: 0,
 });
 function AccessTagsAllFilters() {
+  const { t } = useAccessTagsTranslation();
   return (
     <Stack direction={"column"} spacing={1}>
       <Box>
-        <Typography>Name</Typography>
+        <Typography>{t("name")}</Typography>
         <AccessTagsFiltersNameSearch />
       </Box>
       <Box>
-        <Typography>Description</Typography>
+        <Typography>{t("description")}</Typography>
         <AccessTagsFiltersDescriptionSearch />
       </Box>
       <Box>
-        <Typography>Sort By</Typography>
+        <Typography>{t("sortBy")}</Typography>
         <AccessTagsFiltersSortBy />
       </Box>
       <Box>
-        <Typography>Order By</Typography>
+        <Typography>{t("orderBy")}</Typography>
         <AccessTagsFiltersOrderBy />
       </Box>
       <Box>
-        <Typography>Deleted Include</Typography>
+        <Typography>{t("deleteInclude")}</Typography>
         <AccessTagsFiltersDeletedInclude />
         <AccessTagsFiltersActiveInclude />
         <AccessTagsFiltersAllInclude />

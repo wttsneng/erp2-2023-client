@@ -4,6 +4,7 @@ import {
   setAlertData,
   setAlertType,
 } from "@src/redux/slices/Basic/alertSlice";
+
 export const errorThunkMiddleware = (store) => (next) => (action) => {
   if (!isRejectedWithValue(action)) {
     return next(action);

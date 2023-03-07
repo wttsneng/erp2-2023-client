@@ -9,9 +9,12 @@ import {
   selectAccessTagsFiltersMain,
   setAccessTagsFiltersMainLimit,
 } from "@src/redux/slices/AccessTags/filters/main";
+import { useAccessTagsTranslation } from "@src/hooks/accessTags";
 
 function AccessTagsTableFooter() {
   const dispatch = useDispatch();
+  const { t } = useAccessTagsTranslation();
+
   const tagsCount = useSelector((state) => state.accessTags.data.main.count);
   const tagsTotalPages = useSelector(
     (state) => state.accessTags.data.main.totalPages
@@ -30,7 +33,9 @@ function AccessTagsTableFooter() {
         marginBlockStart: 1,
       }}
     >
-      <Typography>Total count:{tagsCount}</Typography>
+      <Typography>
+        {t("totalCount")}:{tagsCount}
+      </Typography>
       <Box
         sx={{
           display: "flex",

@@ -14,27 +14,27 @@ const defaultReducers = {
   contextMenu: contextMenuReducer,
   alert: alertReducer,
 };
+
 function createReducer(asyncReducers) {
   return combineReducers({
     ...defaultReducers,
     ...asyncReducers,
   });
 }
-export function injectAsyncReducer(store, name, asyncReducer) {
-  store.asyncReducers[name] = asyncReducer;
-  store.replaceReducer(createReducer(store.asyncReducers));
-}
-
-function configureAppStore() {
+function setupStore() {
   const store = configureStore({
     reducer: createReducer(),
     middleware: (getDefaultMiddleware) =>
       getDefaultMiddleware().concat(errorThunkMiddleware),
   });
   store.asyncReducers = {};
+  store.injectAsyncReducer = (name, asyncReducer) => {
+    store.asyncReducers[name] = asyncReducer;
+    store.replaceReducer(createReducer(store.asyncReducers));
+  };
 
   return store;
 }
 
-const store = configureAppStore();
+const store = setupStore();
 export default store;

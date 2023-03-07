@@ -1,0 +1,15 @@
+{
+  "totalCount": "Total Count",
+  "clearFilters": "Clear Filters",
+  "name": "Name",
+  "description": "Description",
+  "sortBy": "Sort By",
+  "orderBy": "Order By",
+  "deleteInclude": "Delete Include",
+  "close": "Close",
+  "createdAt": "Created date",
+  "updatedAt": "Updated date",
+  "deletedAt": "Deleted date",
+  "asc": "Ascending",
+  "desc": "Descending"
+}

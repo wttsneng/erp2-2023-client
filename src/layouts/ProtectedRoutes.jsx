@@ -1,6 +1,7 @@
 import React from "react";
 import { Routes, Route } from "react-router-dom";
 import ProtectedPage from "../pages/ProtectedPage";
+import { NotFound } from "../pages";
 function ProtectedRoutes({ uiModules }) {
   function findLinks(data) {
     const result = [];
@@ -32,6 +33,7 @@ function ProtectedRoutes({ uiModules }) {
             element={<ProtectedPage element={link.split("/")[1]} />}
           />
         ))}
+      <Route path="*" element={<NotFound />} />
     </Routes>
   );
 }

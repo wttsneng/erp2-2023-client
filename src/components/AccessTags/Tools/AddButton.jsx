@@ -1,10 +1,10 @@
-import React, { FC } from "react";
+import React from "react";
 
 import { AddButton } from "@src/components/Basic";
 
 import { socketEmitAccessTagsCreate } from "@src/socket/emits/AccessTags";
 
-const AccessTagsToolsAddButton: FC = () => {
+const AccessTagsToolsAddButton = () => {
   const handleClick = () => {
     socketEmitAccessTagsCreate({
       name: "New tag",

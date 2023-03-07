@@ -1,8 +1,6 @@
 import React from "react";
 
-import { Checkbox } from "@mui/material";
-import RemoveCircleOutlineOutlinedIcon from "@mui/icons-material/RemoveCircleOutlineOutlined";
-import RemoveCircleOutlinedIcon from "@mui/icons-material/RemoveCircleOutlined";
+import { CheckboxMinus } from "@src/components/Basic/Checkbox";
 
 import { useDispatch, useSelector } from "react-redux";
 import {
@@ -17,18 +15,7 @@ function AccessTagsFiltersDeletedInclude() {
   const handleChange = () => {
     dispatch(setAccessTagsFiltersMainIncludeMode(-1));
   };
-  return (
-    <Checkbox
-      sx={{
-        width: "30px",
-        height: "30px",
-      }}
-      checked={includeMode === -1}
-      onChange={handleChange}
-      icon={<RemoveCircleOutlineOutlinedIcon />}
-      checkedIcon={<RemoveCircleOutlinedIcon />}
-    />
-  );
+  return <CheckboxMinus checked={includeMode === -1} onChange={handleChange} />;
 }
 
 export default AccessTagsFiltersDeletedInclude;

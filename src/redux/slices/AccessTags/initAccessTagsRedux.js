@@ -13,50 +13,54 @@ import { accessTagsEditingsNameReducer } from "@src/redux/slices/AccessTags/edit
 import { accessTagsEditingsDescriptionReducer } from "@src/redux/slices/AccessTags/editings/description";
 import { combineReducers } from "redux";
 import store from "@src/redux/store";
-import { injectAsyncReducer } from "@src/redux/store";
 
-const initAccessTagRedux = () => {
-  const AccessTagsDataCombinedReducer = combineReducers({
-    main: accessTagsDataMainReducer,
-  });
-  const AccessTagsFiltersCombinedReducer = combineReducers({
-    main: accessTagsFiltersMainReducer,
-  });
-  const AccessTagsWindowsCombinedReducer = combineReducers({
-    filter: AccessTagsFilterWindowReducer,
-    warnings: accessTagsWindowsWarningsReducer,
-  });
-  const AccessTagsEditingsCombinedReducer = combineReducers({
-    name: accessTagsEditingsNameReducer,
-    description: accessTagsEditingsDescriptionReducer,
-  });
-  const AccessTagsHistoryDataCombinedReducer = combineReducers({
-    main: accessTagsHistoryDataMainReducer,
-    field: accessTagsHistoryDataFieldReducer,
-  });
-  const AccessTagsHistoryFiltersCombinedReducer = combineReducers({
-    main: accessTagsHistoryFiltersMainReducer,
-    field: accessTagsHistoryFiltersFieldReducer,
-  });
-  const AccessTagsHistoryWindowsCombinedReducer = combineReducers({
-    main: accessTagsHistoryWindowsMainReducer,
-    field: accessTagsHistoryWindowsFieldReducer,
-  });
-  const AccessTagsHistoryCombinedReducer = combineReducers({
-    data: AccessTagsHistoryDataCombinedReducer,
-    filters: AccessTagsHistoryFiltersCombinedReducer,
-    windows: AccessTagsHistoryWindowsCombinedReducer,
-  });
-
-  const AccessTagCombinedReducer = combineReducers({
-    data: AccessTagsDataCombinedReducer,
-    filters: AccessTagsFiltersCombinedReducer,
-    windows: AccessTagsWindowsCombinedReducer,
-    editings: AccessTagsEditingsCombinedReducer,
-    selected: accessTagsSelectedReducer,
-    history: AccessTagsHistoryCombinedReducer,
-  });
-  injectAsyncReducer(store, "accessTags", AccessTagCombinedReducer);
-  return AccessTagCombinedReducer;
+const AccessTagsDataCombinedReducer = combineReducers({
+  main: accessTagsDataMainReducer,
+});
+const AccessTagsFiltersCombinedReducer = combineReducers({
+  main: accessTagsFiltersMainReducer,
+});
+const AccessTagsWindowsCombinedReducer = combineReducers({
+  filter: AccessTagsFilterWindowReducer,
+  warnings: accessTagsWindowsWarningsReducer,
+});
+const AccessTagsEditingsCombinedReducer = combineReducers({
+  name: accessTagsEditingsNameReducer,
+  description: accessTagsEditingsDescriptionReducer,
+});
+const AccessTagsHistoryDataCombinedReducer = combineReducers({
+  main: accessTagsHistoryDataMainReducer,
+  field: accessTagsHistoryDataFieldReducer,
+});
+const AccessTagsHistoryFiltersCombinedReducer = combineReducers({
+  main: accessTagsHistoryFiltersMainReducer,
+  field: accessTagsHistoryFiltersFieldReducer,
+});
+const AccessTagsHistoryWindowsCombinedReducer = combineReducers({
+  main: accessTagsHistoryWindowsMainReducer,
+  field: accessTagsHistoryWindowsFieldReducer,
+});
+const AccessTagsHistoryCombinedReducer = combineReducers({
+  data: AccessTagsHistoryDataCombinedReducer,
+  filters: AccessTagsHistoryFiltersCombinedReducer,
+  windows: AccessTagsHistoryWindowsCombinedReducer,
+});
+const accessTagsReducers = {
+  data: AccessTagsDataCombinedReducer,
+  filters: AccessTagsFiltersCombinedReducer,
+  windows: AccessTagsWindowsCombinedReducer,
+  editings: AccessTagsEditingsCombinedReducer,
+  selected: accessTagsSelectedReducer,
+  history: AccessTagsHistoryCombinedReducer,
 };
-export default initAccessTagRedux;
+const accessTagsCombinesReducers = combineReducers({
+  data: AccessTagsDataCombinedReducer,
+  filters: AccessTagsFiltersCombinedReducer,
+  windows: AccessTagsWindowsCombinedReducer,
+  editings: AccessTagsEditingsCombinedReducer,
+  selected: accessTagsSelectedReducer,
+  history: AccessTagsHistoryCombinedReducer,
+});
+export const injectAccessTagsReducers = () => {
+  store.injectAsyncReducer("accessTags", accessTagsCombinesReducers);
+};

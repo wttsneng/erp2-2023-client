@@ -1,23 +1,23 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 export const accessTagsHistoryFiltersMainSortByVariants = {
-  createdAt: "Created date",
-  updatedAt: "Updated date",
-  deletedAt: "Deleted date",
-  name: "Name",
-  description: "Description",
+  createdAt: "createdAt",
+  updatedAt: "updatedAt",
+  deletedAt: "deletedAt",
+  name: "name",
+  description: "description",
 };
 export const accessTagsHistoryFiltersMainOrderByVariants = {
-  ASC: "Ascending",
-  DESC: "Descending",
+  ASC: "asc",
+  DESC: "desc",
 };
 const initialState = {
   searchValue: "",
   name: "",
   description: "",
   id: null,
-  sortBy: { value: "createdAt", label: "Created date" },
-  orderBy: { value: "DESC", label: "Descending" },
+  sortBy: { value: "createdAt", label: "createdAt" },
+  orderBy: { value: "DESC", label: "desc" },
   field: null,
   limit: 20,
   page: 1,

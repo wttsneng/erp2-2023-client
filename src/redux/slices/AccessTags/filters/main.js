@@ -1,16 +1,16 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 export const accessTagsFiltersMainSortByVariants = {
-  createdAt: "Created date",
-  updatedAt: "Updated date",
-  deletedAt: "Deleted date",
-  name: "Name",
-  description: "Description",
+  createdAt: "createdAt",
+  updatedAt: "updatedAt",
+  deletedAt: "deletedAt",
+  name: "name",
+  description: "description",
 };
 
 export const accessTagsFiltersMainOrderByVariants = {
-  ASC: "Ascending",
-  DESC: "Descending",
+  ASC: "asc",
+  DESC: "desc",
 };
 
 const initialState = {
@@ -18,8 +18,8 @@ const initialState = {
   name: "",
   description: "",
   includeMode: 0, // -1 - deleted, 0 - active, 1 - all
-  order: { value: "ASC", label: "Ascending" },
-  sortBy: { value: "createdAt", label: "Date" },
+  order: { value: "ASC", label: "ascending" },
+  sortBy: { value: "createdAt", label: "createdAt" },
   limit: 100,
   page: 1,
 };
