@@ -1,7 +1,7 @@
 import React from "react";
 
 import { Stack } from "@mui/material";
-import { useAppSelector } from "@src/hooks/redux";
+import { useSelector } from "react-redux";
 import { selectAccessTagsSelected } from "@src/redux/slices/AccessTags/selected";
 import {
   AccessTagsEditingInputsChangeDescription,
@@ -9,7 +9,7 @@ import {
 } from "@src/components/AccessTags";
 
 function AccessTagInput() {
-  const selectedTags = useAppSelector(selectAccessTagsSelected);
+  const selectedTags = useSelector(selectAccessTagsSelected);
   return (
     <div>
       <Stack spacing={2}>

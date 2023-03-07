@@ -2,11 +2,11 @@ import React, { FC } from "react";
 
 import { DeleteButton } from "@src/components/Basic";
 
-import { useAppDispatch } from "@src/hooks/redux";
+import { useDispatch } from "react-redux";
 import { setAccessTagsWindowsWarningsDeleteOpen } from "@src/redux/slices/AccessTags/windows/warnings";
 
 const AccessTagsToolsDeleteButton: FC = () => {
-  const dispatch = useAppDispatch();
+  const dispatch = useDispatch();
   const handleClick = () => {
     dispatch(setAccessTagsWindowsWarningsDeleteOpen(true));
   };

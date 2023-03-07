@@ -9,7 +9,7 @@ import { useAccessTagsSocketEvents } from "./hooks/accessTags/useAccessTagsSocke
 
 import { MainLayout, AuthProtect, HomeRoute, ProtectedRoutes } from "./layouts";
 
-import { useAppDispatch, useAppSelector } from "@src/hooks/redux";
+import { useDispatch, useSelector } from "react-redux";
 import {
   selectAuthStatus,
   selectAuthData,
@@ -19,10 +19,10 @@ import { setSidebarData } from "./redux/slices/Basic/sidebarSlice";
 
 import { Login, NotFound } from "./pages";
 
-const App: FC = () => {
-  const dispatch = useAppDispatch();
-  const authStatus = useAppSelector(selectAuthStatus);
-  const authData = useAppSelector(selectAuthData);
+const App = () => {
+  const dispatch = useDispatch();
+  const authStatus = useSelector(selectAuthStatus);
+  const authData = useSelector(selectAuthData);
   useGlobalEventListeners();
   useSocketError();
   useAccessTagsSocketEvents();

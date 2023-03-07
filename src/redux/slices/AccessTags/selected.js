@@ -1,28 +1,6 @@
-import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { RootState } from "@src/redux/store";
+import { createSlice } from "@reduxjs/toolkit";
 
-interface IAccessTag {
-  id: number;
-  name: string;
-  description: string;
-  deletedAt: null | string;
-  createdAt: string;
-  updatedAt: string;
-}
-
-interface IAccessTagsSelectedState {
-  selected: IAccessTag[];
-  mode: "single" | "multiOne" | "multiMany";
-  deleteEnabled: boolean;
-  restoreEnabled: boolean;
-}
-
-interface IMultiSelectAction {
-  obj: IAccessTag;
-  current: IAccessTag[];
-}
-
-const initialState: IAccessTagsSelectedState = {
+const initialState = {
   selected: [],
   mode: "single", // single, multiOne, multiMany
   deleteEnabled: false,
@@ -36,10 +14,7 @@ const accessTagsSelectedSlice = createSlice({
     setAccessTagsSelected(state, action) {
       state.selected = action.payload;
     },
-    dinamicallySetAccessTagsSelected(
-      state,
-      action: PayloadAction<IMultiSelectAction>
-    ) {
+    dinamicallySetAccessTagsSelected(state, action) {
       const { obj, current } = action.payload;
       if (state.mode === "single") {
         state.selected = [];
@@ -106,5 +81,5 @@ export const {
   setAccessTagsSelectedMode,
 } = accessTagsSelectedSlice.actions;
 export const accessTagsSelectedReducer = accessTagsSelectedSlice.reducer;
-export const selectAccessTagsSelected = (state: RootState) =>
+export const selectAccessTagsSelected = (state) =>
   state.accessTags.selected.selected;

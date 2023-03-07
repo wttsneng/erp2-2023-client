@@ -1,4 +1,4 @@
-import { store } from "@src/index";
+import store from "@src/redux/store";
 export const accessTagsFunctionsOnUpdate = (data) => {
   store.dispatch({
     type: "accessTags/data/main/updateAccessTagsDataMainItem",

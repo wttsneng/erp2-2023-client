@@ -12,7 +12,7 @@ import { accessTagsSelectedReducer } from "@src/redux/slices/AccessTags/selected
 import { accessTagsEditingsNameReducer } from "@src/redux/slices/AccessTags/editings/name";
 import { accessTagsEditingsDescriptionReducer } from "@src/redux/slices/AccessTags/editings/description";
 import { combineReducers } from "redux";
-import { store } from "@src/index";
+import store from "@src/redux/store";
 import { injectAsyncReducer } from "@src/redux/store";
 
 const initAccessTagRedux = () => {
@@ -59,5 +59,4 @@ const initAccessTagRedux = () => {
   injectAsyncReducer(store, "accessTags", AccessTagCombinedReducer);
   return AccessTagCombinedReducer;
 };
-export type AccessTagState = ReturnType<typeof initAccessTagRedux>;
 export default initAccessTagRedux;
