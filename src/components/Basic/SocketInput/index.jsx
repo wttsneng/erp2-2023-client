@@ -45,7 +45,7 @@ const SocketInput = React.forwardRef(
           disabled={disabled}
           sx={{
             "& .MuiOutlinedInput-root": {
-              paddingRight: `${onHistoryClick ? 30 : 0}px`,
+              paddingRight: `${onHistoryClick ? 35 : 0}px`,
             },
           }}
           label={label}
@@ -71,7 +71,7 @@ const SocketInput = React.forwardRef(
               position: "absolute",
               cursor: "pointer",
               top: "50%",
-              right: 20,
+              right: 10,
               transform: "translateY(-50%)",
               color: `${theme.palette.grey[500]}`,
               "&:hover": {

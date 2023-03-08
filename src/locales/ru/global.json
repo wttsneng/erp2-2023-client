@@ -8,6 +8,8 @@
   "filters": {
     "createdAt": "Дате создания",
     "updatedAt": "Дате обновления",
+    "name": "Имя",
+    "description": "Описание",
     "deletedAt": "Дате удаления",
     "asc": "Возрастанию",
     "desc": "Убыванию",

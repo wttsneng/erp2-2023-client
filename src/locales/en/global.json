@@ -15,6 +15,8 @@
     "desc": "Descending",
     "sortBy": "Sort By",
     "orderBy": "Order By",
-    "clearFilters": "Clear Filters"
+    "clearFilters": "Clear Filters",
+    "name": "Name",
+    "description": "Description"
   }
 }

@@ -4,7 +4,9 @@ function ErrorAlert({ open, position, message, onClose }) {
   return (
     <Snackbar
       open={open}
-      onClose={onClose}
+      onClose={(event, reason) => {
+        if (reason !== "clickaway") onClose();
+      }}
       autoHideDuration={2000}
       anchorOrigin={position}
     >
