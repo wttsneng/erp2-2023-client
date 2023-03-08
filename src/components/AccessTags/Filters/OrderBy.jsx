@@ -23,7 +23,7 @@ function AccessTagsFiltersOrderBy() {
 
   for (let key in accessTagsFiltersMainOrderByVariants) {
     translatedAccessTagsFiltersMainOrderByVariants[key] = t(
-      accessTagsFiltersMainOrderByVariants[key]
+      `filters.${accessTagsFiltersMainOrderByVariants[key]}`
     );
   }
 

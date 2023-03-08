@@ -72,7 +72,7 @@ function AccessTagsEditingInputsChangeDescription() {
 
   return (
     <SocketInput
-      label={t("description")}
+      label={t("ui.description")}
       disabled={disabled}
       value={description}
       onChange={handleChange}

@@ -72,7 +72,7 @@ function AccessTagsEditingInputsChangeName() {
 
   return (
     <SocketInput
-      label={t("name")}
+      label={t("ui.name")}
       disabled={disabled}
       value={name}
       onChange={handleChange}

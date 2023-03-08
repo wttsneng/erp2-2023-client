@@ -34,7 +34,7 @@ function AccessTagsTableFooter() {
       }}
     >
       <Typography>
-        {t("totalCount")}:{tagsCount}
+        {t("ui.totalCount")}:{tagsCount}
       </Typography>
       <Box
         sx={{

@@ -45,8 +45,10 @@ function AccessTagsWindowsFilterWindow() {
           <AccessTagsAllFilters />
         </DialogContent>
         <DialogActions>
-          <Button onClick={handleClearFilters}>{t("clearFilters")}</Button>
-          <Button onClick={handleClose}>{t("close")}</Button>
+          <Button onClick={handleClearFilters}>
+            {t("filters.clearFilters")}
+          </Button>
+          <Button onClick={handleClose}>{t("ui.close")}</Button>
         </DialogActions>
       </React.Fragment>
     </MyWindow>

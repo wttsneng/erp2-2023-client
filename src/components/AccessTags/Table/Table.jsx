@@ -3,7 +3,7 @@ import StyledBox from "./StyledBox";
 import { Box } from "@mui/material";
 
 import { TagsList, TagsListLoading } from "../../Basic";
-import AccessTagContextMenu from "../ContextMenu";
+import AccessTagContextMenu from "../ContextMenu/ContextMenu";
 
 import { useSelector, useDispatch } from "react-redux";
 import {

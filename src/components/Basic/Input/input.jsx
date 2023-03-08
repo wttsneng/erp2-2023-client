@@ -20,9 +20,7 @@ const StyledTextField = styled(TextField)(({ theme }) => ({
   "& .MuiInputBase-input": {
     padding: "0px",
     "&::placeholder": {
-      [theme.breakpoints.up("md")]: {
-        opacity: 0,
-      },
+      opacity: 0,
     },
   },
   "& .MuiAutocomplete-endAdornment": {

@@ -1,15 +1,20 @@
 {
-  "totalCount": "Total Count",
-  "clearFilters": "Clear Filters",
-  "name": "Name",
-  "description": "Description",
-  "sortBy": "Sort By",
-  "orderBy": "Order By",
-  "deleteInclude": "Delete Include",
-  "close": "Close",
-  "createdAt": "Created date",
-  "updatedAt": "Updated date",
-  "deletedAt": "Deleted date",
-  "asc": "Ascending",
-  "desc": "Descending"
+  "ui": {
+    "totalCount": "Total Count",
+    "name": "Name",
+    "description": "Description",
+    "close": "Close"
+  },
+
+  "filters": {
+    "createdAt": "Created date",
+    "updatedAt": "Updated date",
+    "deletedAt": "Deleted date",
+    "deleteInclude": "Delete Include",
+    "asc": "Ascending",
+    "desc": "Descending",
+    "sortBy": "Sort By",
+    "orderBy": "Order By",
+    "clearFilters": "Clear Filters"
+  }
 }

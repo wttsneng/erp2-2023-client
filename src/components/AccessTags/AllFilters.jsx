@@ -23,23 +23,23 @@ function AccessTagsAllFilters() {
   return (
     <Stack direction={"column"} spacing={1}>
       <Box>
-        <Typography>{t("name")}</Typography>
+        <Typography>{t("ui.name")}</Typography>
         <AccessTagsFiltersNameSearch />
       </Box>
       <Box>
-        <Typography>{t("description")}</Typography>
+        <Typography>{t("ui.description")}</Typography>
         <AccessTagsFiltersDescriptionSearch />
       </Box>
       <Box>
-        <Typography>{t("sortBy")}</Typography>
+        <Typography>{t("filters.sortBy")}</Typography>
         <AccessTagsFiltersSortBy />
       </Box>
       <Box>
-        <Typography>{t("orderBy")}</Typography>
+        <Typography>{t("filters.orderBy")}</Typography>
         <AccessTagsFiltersOrderBy />
       </Box>
       <Box>
-        <Typography>{t("deleteInclude")}</Typography>
+        <Typography>{t("filters.deleteInclude")}</Typography>
         <AccessTagsFiltersDeletedInclude />
         <AccessTagsFiltersActiveInclude />
         <AccessTagsFiltersAllInclude />
