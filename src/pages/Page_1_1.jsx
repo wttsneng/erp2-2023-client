@@ -1,15 +1,19 @@
 import React from "react";
 import { Box, Grid, Stack } from "@mui/material";
 
-import { useDispatch } from "react-redux";
+import { useAccessTagsDispatch } from "@src/hooks/accessTags/useAccessTagsRedux";
 import { setSidebarActiveByLink } from "@src/redux/slices/Basic/sidebarSlice";
+
 import { injectAccessTagsReducers } from "@src/redux/slices/AccessTags/initAccessTagsRedux";
 
-import { useAccessTagsLocales } from "@src/hooks/accessTags";
+import {
+  useAccessTagsLocales,
+  useAccessTagsClearPage,
+} from "@src/hooks/accessTags";
 
 import {
   AccessTagsSearch,
-  AccessTagEdit,
+  AccessTagsEdit,
   AccessTagsTable,
   AccessTagsToolbar,
   AccessTagsWindowsFullHistoryWindow,
@@ -18,12 +22,14 @@ import {
   AccessTagsWindowsFilterWindow,
   AccessTagsWindowsMiniHistoryWindow,
   AccessTagsWarningsDelete,
+  AccessTagsTableStyledBox,
 } from "@src/components/AccessTags";
 
 injectAccessTagsReducers();
 export default function AccessTags() {
-  const dispatch = useDispatch();
+  const dispatch = useAccessTagsDispatch();
   useAccessTagsLocales();
+  useAccessTagsClearPage();
 
   React.useEffect(() => {
     dispatch(setSidebarActiveByLink("page/1_1"));
@@ -45,7 +51,9 @@ export default function AccessTags() {
               <AccessTagsToolsOpenFiltersButton />
             </Stack>
             <AccessTagsToolbar />
-            <AccessTagsTable />
+            <AccessTagsTableStyledBox>
+              <AccessTagsTable />
+            </AccessTagsTableStyledBox>
             <AccessTagsTableFooter />
           </Box>
         </Grid>
@@ -54,9 +62,12 @@ export default function AccessTags() {
             sx={{
               backgroundColor: "white",
               borderRadius: 1,
+              "& .editContainer": {
+                padding: 2,
+              },
             }}
           >
-            <AccessTagEdit />
+            <AccessTagsEdit />
           </Box>
         </Grid>
       </Grid>

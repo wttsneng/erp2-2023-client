@@ -1,9 +1,9 @@
 export { default as AccessTagContextMenu } from "./ContextMenu/ContextMenu";
-export { default as AccessTagEdit } from "./Edit/Edit";
+export { default as AccessTagsEdit } from "./Edit/Edit";
 export { default as AccessTagsSearch } from "./Search/Search";
 export { default as AccessTagsTable } from "./Table/Table";
 export { default as AccessTagsToolbar } from "./Toolbar";
-export { default as AccessTagsTableFooter } from "./Table/TableFooter";
+export { default as AccessTagsTableFooter } from "./Table/Footer";
 export { default as AccessTagsAllFilters } from "./AllFilters";
 export {
   AccessTagsToolsAddButton,
@@ -32,3 +32,4 @@ export { default as AccessTagsWarningsDelete } from "./Warnings/Delete";
 export { default as AccessTagsHostoryTablesMobileFull } from "./History/Tables/MobileFull";
 export { default as AccessTagsHistoryFiltersPagination } from "./History/Filters/Pagination";
 export { default as AccessTagsHistoryToolsOpenHistoryButton } from "./History/Tools/OpenHistoryButton";
+export { default as AccessTagsTableStyledBox } from "./Table/Style/StyledBox";

@@ -1,6 +1,6 @@
 import React from "react";
 
-import { Stack } from "@mui/material";
+import { Stack, Box } from "@mui/material";
 
 import withCheck from "./HOC/withCheck";
 
@@ -9,15 +9,15 @@ import {
   AccessTagsEditingInputsChangeName,
 } from "@src/components/AccessTags";
 
-function AccessTagInput() {
+function AccessTagsEdit() {
   return (
-    <div>
-      <Stack spacing={2} sx={{ padding: 2 }}>
+    <Box className="editContainer">
+      <Stack spacing={2}>
         <AccessTagsEditingInputsChangeName />
         <AccessTagsEditingInputsChangeDescription />
       </Stack>
-    </div>
+    </Box>
   );
 }
 
-export default withCheck(AccessTagInput);
+export default withCheck(AccessTagsEdit);

@@ -11,6 +11,7 @@ import { accessTagsHistoryDataFieldReducer } from "@src/redux/slices/AccessTags/
 import { accessTagsSelectedReducer } from "@src/redux/slices/AccessTags/selected";
 import { accessTagsEditingsNameReducer } from "@src/redux/slices/AccessTags/editings/name";
 import { accessTagsEditingsDescriptionReducer } from "@src/redux/slices/AccessTags/editings/description";
+import { accessTagsToolsAddButtonReducer } from "@src/redux/slices/AccessTags/tools/addButton";
 import { combineReducers } from "redux";
 import store from "@src/redux/store";
 
@@ -45,21 +46,18 @@ const AccessTagsHistoryCombinedReducer = combineReducers({
   filters: AccessTagsHistoryFiltersCombinedReducer,
   windows: AccessTagsHistoryWindowsCombinedReducer,
 });
-const accessTagsReducers = {
+const AccessTagsToolsCombinedReducer = combineReducers({
+  addButton: accessTagsToolsAddButtonReducer,
+});
+
+export const accessTagsCombinesReducers = combineReducers({
   data: AccessTagsDataCombinedReducer,
   filters: AccessTagsFiltersCombinedReducer,
   windows: AccessTagsWindowsCombinedReducer,
   editings: AccessTagsEditingsCombinedReducer,
   selected: accessTagsSelectedReducer,
   history: AccessTagsHistoryCombinedReducer,
-};
-const accessTagsCombinesReducers = combineReducers({
-  data: AccessTagsDataCombinedReducer,
-  filters: AccessTagsFiltersCombinedReducer,
-  windows: AccessTagsWindowsCombinedReducer,
-  editings: AccessTagsEditingsCombinedReducer,
-  selected: accessTagsSelectedReducer,
-  history: AccessTagsHistoryCombinedReducer,
+  tools: AccessTagsToolsCombinedReducer,
 });
 export const injectAccessTagsReducers = () => {
   store.injectAsyncReducer("accessTags", accessTagsCombinesReducers);

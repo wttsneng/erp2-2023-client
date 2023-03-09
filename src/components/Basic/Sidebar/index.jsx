@@ -57,7 +57,7 @@ function Sidebar(props) {
     window !== undefined ? () => window().document.body : undefined;
 
   const Toolbar = styled(MuiToolbar)(({ theme }) => ({
-    height: "80px",
+    height: "70px",
     [theme.breakpoints.up("md")]: {
       display: "none",
     },
