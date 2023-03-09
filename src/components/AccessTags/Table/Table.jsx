@@ -1,5 +1,5 @@
 import React from "react";
-import StyledBox from "./StyledBox";
+import StyledBox from "./Style/StyledBox";
 import { Box } from "@mui/material";
 
 import { TagsList, TagsListLoading } from "../../Basic";

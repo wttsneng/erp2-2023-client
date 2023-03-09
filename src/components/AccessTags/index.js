@@ -1,5 +1,5 @@
 export { default as AccessTagContextMenu } from "./ContextMenu/ContextMenu";
-export { default as AccessTagEdit } from "./Edit";
+export { default as AccessTagEdit } from "./Edit/Edit";
 export { default as AccessTagsSearch } from "./Search/Search";
 export { default as AccessTagsTable } from "./Table/Table";
 export { default as AccessTagsToolbar } from "./Toolbar";
@@ -19,8 +19,8 @@ export { default as AccessTagsFiltersActiveInclude } from "./Filters/ActiveInclu
 export { default as AccessTagsFiltersAllInclude } from "./Filters/AllInclude";
 export { default as AccessTagsFiltersNameSearch } from "./Filters/NameSearch";
 export { default as AccessTagsFiltersDescriptionSearch } from "./Filters/DescriptionSearch";
-export { default as AccessTagsEditingInputsChangeName } from "./EditingInputs/ChangeName";
-export { default as AccessTagsEditingInputsChangeDescription } from "./EditingInputs/ChangeDescription";
+export { default as AccessTagsEditingInputsChangeName } from "./Edit/EditingInputs/ChangeName";
+export { default as AccessTagsEditingInputsChangeDescription } from "./Edit/EditingInputs/ChangeDescription";
 export { default as AccessTagsConditionalsDeleteRestore } from "./Conditionals/DeleteRestore";
 export { default as AccessTagsWindowsFullHistoryWindow } from "./History/Windows/Full";
 export { default as AccessTagsHistoryFiltersSearch } from "./History/Filters/Search";
