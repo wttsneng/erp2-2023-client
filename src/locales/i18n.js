@@ -4,7 +4,7 @@ import enGlobalDictionary from "./en/global.json";
 import ruGlobalDictionary from "./ru/global.json";
 i18n.use(initReactI18next).init({
   resources: {},
-  lng: "ru",
+  lng: "en",
   interpolation: {
     escapeValue: false,
   },
