@@ -19,5 +19,6 @@ export const socketEmitAccessTagsInputStarted = ({ itemId, attribute }) => {
   socket.emit("changeAccessTagsValueStart", { itemId, attribute });
 };
 export const socketEmitAccessTagsInputEnded = ({ itemId, attribute }) => {
+  console.log("socketEmitAccessTagsInputEnded", { itemId, attribute });
   socket.emit("changeAccessTagsValueEnd", { itemId, attribute });
 };

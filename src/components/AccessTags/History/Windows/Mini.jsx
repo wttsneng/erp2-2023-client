@@ -13,6 +13,7 @@ import {
 import { setAccessTagsEditingsNameSaveBlocked } from "@src/redux/slices/AccessTags/editings/name";
 import { fetchAccessTagsHistoryDataField } from "@src/redux/slices/AccessTags/history/data/field";
 import { selectAccessTagsHistoryFiltersField } from "@src/redux/slices/AccessTags/history/filters/field";
+import { setAccessTagsEditingsDescriptionSaveBlocked } from "@src/redux/slices/AccessTags/editings/description";
 
 const width = 500;
 const height = 380;
@@ -28,6 +29,7 @@ function AccessTagsWindowsMiniHistoryWindow() {
   const handleClose = () => {
     dispatch(setAccessTagsHistoryWindowsFieldOpen(false));
     dispatch(setAccessTagsEditingsNameSaveBlocked(false));
+    dispatch(setAccessTagsEditingsDescriptionSaveBlocked(false));
   };
   React.useEffect(() => {
     if (isOpen) {

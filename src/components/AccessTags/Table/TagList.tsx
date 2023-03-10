@@ -1,24 +1,31 @@
-import React from "react";
-import AccessTagsUiTag from "./Tag";
+import { TagWithTooltip } from "@src/components/Basic";
 import { IAccessTags } from "@src/redux/slices/AccessTags/@types";
+import { getTagState } from "@src/utils/Basic";
 
 interface IProps {
   arr: IAccessTags[];
-  onClick: (tag: IAccessTags) => void;
+  onClick: (tag: any) => void;
   selectedTags: IAccessTags[];
   [key: string]: any;
 }
-function AccessTagsUiTagList({ arr, onClick, selectedTags, ...props }: IProps) {
+function AccessTagsTableTagList({
+  arr,
+  onClick,
+  selectedTags,
+  ...props
+}: IProps) {
   return (
     <>
       {arr.map((item) => {
         return (
-          <AccessTagsUiTag
+          <TagWithTooltip
             key={item.id}
             item={item}
             onClick={onClick}
+            deleted={Boolean(item.deletedAt)}
             selected={selectedTags.some((tag) => tag.id === item.id)}
-            deleted={item.deletedAt}
+            writable={!!getTagState(item)}
+            readOnly={getTagState(item) === false}
             {...props}
           />
         );
@@ -27,4 +34,4 @@ function AccessTagsUiTagList({ arr, onClick, selectedTags, ...props }: IProps) {
   );
 }
 
-export default AccessTagsUiTagList;
+export default AccessTagsTableTagList;

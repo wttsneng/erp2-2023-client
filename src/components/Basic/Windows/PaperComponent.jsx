@@ -9,21 +9,21 @@ const PaperComponent = (props) => {
 
   const updateRedux = React.useCallback(
     debounce((size) => {
-      props.onresize(null, { size });
+      props.onResize(null, { size });
     }, 1000),
     []
   );
   const handleResize = (event, { size }) => {
     setWidth(size.width);
     setHeight(size.height);
-    if (props.onresize) {
+    if (props.onResize) {
       updateRedux(size);
     }
   };
 
   React.useEffect(() => {
     if (props.onResize) {
-      props.onresize(null, { size: { width, height } });
+      props.onResize(null, { size: { width, height } });
     }
   }, []);
   const minConstraints = props.minconstraints || [300, 400];
@@ -50,6 +50,7 @@ const PaperComponent = (props) => {
             padding: 0,
           }}
           elevation={0}
+          {...props}
         />
       </ResizableBox>
     </Draggable>

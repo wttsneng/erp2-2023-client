@@ -1,7 +1,7 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { AccessTagsState } from "@src/redux/slices/AccessTags/@types";
+import { AccessGroupsState } from "@src/redux/slices/AccessGroups/@types";
 
-export const accessTagsFiltersMainSortByVariants = {
+export const accessGroupsFiltersMainSortByVariants = {
   createdAt: "createdAt",
   updatedAt: "updatedAt",
   deletedAt: "deletedAt",
@@ -9,12 +9,12 @@ export const accessTagsFiltersMainSortByVariants = {
   description: "description",
 };
 
-export const accessTagsFiltersMainOrderByVariants = {
+export const accessGroupsFiltersMainOrderByVariants = {
   ASC: "asc",
   DESC: "desc",
 };
 
-export interface AccessTagsFiltersMainState {
+export interface AccessGroupsFiltersMainState {
   searchValue: string;
   name: string;
   description: string;
@@ -25,11 +25,10 @@ export interface AccessTagsFiltersMainState {
     label: "createdAt" | "updatedAt" | "deletedAt" | "name" | "description";
   };
   limit: number;
-  groupId: number | null;
   page: number;
 }
 
-const initialState: AccessTagsFiltersMainState = {
+const initialState: AccessGroupsFiltersMainState = {
   searchValue: "",
   name: "",
   description: "",
@@ -37,56 +36,55 @@ const initialState: AccessTagsFiltersMainState = {
   order: { value: "ASC", label: "asc" },
   sortBy: { value: "createdAt", label: "createdAt" },
   limit: 100,
-  groupId: null,
   page: 1,
 };
 
-const accessTagsFiltersMainSlice = createSlice({
-  name: "accessTagsFilters",
+const accessGroupsFiltersMainSlice = createSlice({
+  name: "accessGroupsFilters",
   initialState,
   reducers: {
-    setAccessTagsFiltersMainSearchValue: (
+    setAccessGroupsFiltersMainSearchValue: (
       state,
       action: PayloadAction<string>
     ) => {
       state.searchValue = action.payload;
     },
-    setAccessTagsFiltersMainIncludeMode: (
+    setAccessGroupsFiltersMainIncludeMode: (
       state,
       action: PayloadAction<typeof initialState.includeMode>
     ) => {
       state.includeMode = action.payload;
     },
-    setAccessTagsFiltersMainName: (
+    setAccessGroupsFiltersMainName: (
       state,
       action: PayloadAction<typeof initialState.name>
     ) => {
       state.name = action.payload;
     },
-    setAccessTagsFiltersMainDescription: (
+    setAccessGroupsFiltersMainDescription: (
       state,
       action: PayloadAction<typeof initialState.description>
     ) => {
       state.description = action.payload;
     },
-    setAccessTagsFiltersMainOrder: (
+    setAccessGroupsFiltersMainOrder: (
       state,
-      action: PayloadAction<keyof typeof accessTagsFiltersMainOrderByVariants>
+      action: PayloadAction<keyof typeof accessGroupsFiltersMainOrderByVariants>
     ) => {
       state.order = {
         value: action.payload,
-        label: accessTagsFiltersMainOrderByVariants[action.payload] as
+        label: accessGroupsFiltersMainOrderByVariants[action.payload] as
           | "asc"
           | "desc",
       };
     },
-    setAccessTagsFiltersMainSortBy: (
+    setAccessGroupsFiltersMainSortBy: (
       state,
-      action: PayloadAction<keyof typeof accessTagsFiltersMainSortByVariants>
+      action: PayloadAction<keyof typeof accessGroupsFiltersMainSortByVariants>
     ) => {
       state.sortBy = {
         value: action.payload,
-        label: accessTagsFiltersMainSortByVariants[action.payload] as
+        label: accessGroupsFiltersMainSortByVariants[action.payload] as
           | "createdAt"
           | "updatedAt"
           | "deletedAt"
@@ -94,19 +92,19 @@ const accessTagsFiltersMainSlice = createSlice({
           | "description",
       };
     },
-    setAccessTagsFiltersMainLimit: (
+    setAccessGroupsFiltersMainLimit: (
       state,
       action: PayloadAction<typeof initialState.limit>
     ) => {
       state.limit = action.payload;
     },
-    setAccessTagsFiltersMainPage: (
+    setAccessGroupsFiltersMainPage: (
       state,
       action: PayloadAction<typeof initialState.page>
     ) => {
       state.page = action.payload;
     },
-    clearAccessTagsMainFilter: (state) => {
+    clearAccessGroupsMainFilter: (state) => {
       state.searchValue = "";
       state.name = "";
       state.description = "";
@@ -121,16 +119,17 @@ const accessTagsFiltersMainSlice = createSlice({
 });
 
 export const {
-  setAccessTagsFiltersMainSearchValue,
-  setAccessTagsFiltersMainName,
-  setAccessTagsFiltersMainDescription,
-  setAccessTagsFiltersMainIncludeMode,
-  setAccessTagsFiltersMainSortBy,
-  setAccessTagsFiltersMainLimit,
-  setAccessTagsFiltersMainPage,
-  clearAccessTagsMainFilter,
-  setAccessTagsFiltersMainOrder,
-} = accessTagsFiltersMainSlice.actions;
-export const accessTagsFiltersMainReducer = accessTagsFiltersMainSlice.reducer;
-export const selectAccessTagsFiltersMain = (state: AccessTagsState) =>
-  state.accessTags.filters.main;
+  setAccessGroupsFiltersMainSearchValue,
+  setAccessGroupsFiltersMainName,
+  setAccessGroupsFiltersMainDescription,
+  setAccessGroupsFiltersMainIncludeMode,
+  setAccessGroupsFiltersMainSortBy,
+  setAccessGroupsFiltersMainLimit,
+  setAccessGroupsFiltersMainPage,
+  clearAccessGroupsMainFilter,
+  setAccessGroupsFiltersMainOrder,
+} = accessGroupsFiltersMainSlice.actions;
+export const accessGroupsFiltersMainReducer =
+  accessGroupsFiltersMainSlice.reducer;
+export const selectAccessGroupsFiltersMain = (state: AccessGroupsState) =>
+  state.accessGroups.filters.main;

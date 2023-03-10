@@ -19,6 +19,12 @@ export interface IAccessTags {
   name: string;
   description: string;
   deletedAt: string;
+  access_group_access_tags?:
+    | Array<{
+        state: boolean;
+        access_group_id: number;
+      }>
+    | [];
 }
 export interface IAccessTagsHistory {
   id: number;

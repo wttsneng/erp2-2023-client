@@ -4,7 +4,7 @@ import { Routes, Route } from "react-router-dom";
 
 import { socket } from "./core";
 
-import { useGlobalEventListeners, useSocketError } from "./hooks";
+import { useGlobalEventListeners, useSocketError } from "./hooks/basic";
 import { useAccessTagsSocketEvents } from "./hooks/accessTags/useAccessTagsSocketEvents";
 
 import { MainLayout, AuthProtect, HomeRoute, ProtectedRoutes } from "./layouts";
@@ -44,8 +44,6 @@ const App = () => {
     }
   }, [authStatus]);
 
-  if (!authData?.uimodules) return <div>Loading...</div>;
-
   return (
     <React.Fragment>
       <Routes>
@@ -54,7 +52,7 @@ const App = () => {
         <Route path="*" element={<AuthProtect authStatus={authStatus} />}>
           <Route path="/*" element={<MainLayout />}>
             <Route index element={<HomeRoute />} />
-            {authStatus === "success" && (
+            {authStatus === "success" && authData && authData.uimodules && (
               <Route
                 path="page/*"
                 element={<ProtectedRoutes uiModules={authData.uimodules} />}

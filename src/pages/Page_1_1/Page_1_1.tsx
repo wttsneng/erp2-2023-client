@@ -1,5 +1,5 @@
 import React from "react";
-import { Box, Grid, Stack } from "@mui/material";
+import { Grid, Stack } from "@mui/material";
 
 import { useAccessTagsDispatch } from "@src/hooks/accessTags/useAccessTagsRedux";
 import { setSidebarActiveByLink } from "@src/redux/slices/Basic/sidebarSlice";
@@ -23,7 +23,9 @@ import {
   AccessTagsWindowsMiniHistoryWindow,
   AccessTagsWarningsDelete,
   AccessTagsTableStyledBox,
+  AccessTagsUiBoxEdit,
 } from "@src/components/AccessTags";
+import { BoxDefault } from "@src/components/Basic";
 
 injectAccessTagsReducers();
 export default function AccessTags() {
@@ -36,16 +38,10 @@ export default function AccessTags() {
   }, [dispatch]);
 
   return (
-    <div>
+    <>
       <Grid container spacing={2}>
         <Grid item md={8} xs={12} order={{ xs: 2, md: 1 }}>
-          <Box
-            sx={{
-              backgroundColor: "white",
-              borderRadius: 1,
-              padding: 2,
-            }}
-          >
+          <BoxDefault>
             <Stack direction={"row"} spacing={2}>
               <AccessTagsSearch />
               <AccessTagsToolsOpenFiltersButton />
@@ -55,26 +51,18 @@ export default function AccessTags() {
               <AccessTagsTable />
             </AccessTagsTableStyledBox>
             <AccessTagsTableFooter />
-          </Box>
+          </BoxDefault>
         </Grid>
         <Grid item md={4} xs={12} order={{ xs: 1, md: 2 }}>
-          <Box
-            sx={{
-              backgroundColor: "white",
-              borderRadius: 1,
-              "& .editContainer": {
-                padding: 2,
-              },
-            }}
-          >
+          <AccessTagsUiBoxEdit>
             <AccessTagsEdit />
-          </Box>
+          </AccessTagsUiBoxEdit>
         </Grid>
       </Grid>
       <AccessTagsWindowsMiniHistoryWindow />
       <AccessTagsWindowsFullHistoryWindow />
       <AccessTagsWindowsFilterWindow />
       <AccessTagsWarningsDelete />
-    </div>
+    </>
   );
 }

@@ -33,3 +33,4 @@ export { default as AccessTagsHostoryTablesMobileFull } from "./History/Tables/M
 export { default as AccessTagsHistoryFiltersPagination } from "./History/Filters/Pagination";
 export { default as AccessTagsHistoryToolsOpenHistoryButton } from "./History/Tools/OpenHistoryButton";
 export { default as AccessTagsTableStyledBox } from "./Table/Style/StyledBox";
+export { default as AccessTagsUiBoxEdit } from "./UI/Box/Edit";

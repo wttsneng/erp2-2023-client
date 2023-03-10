@@ -7,21 +7,6 @@ import "react-resizable/css/styles.css";
 
 import PaperComponent from "@src/components/Basic/Windows/PaperComponent";
 
-interface MyWindowProps {
-  open: boolean;
-  children: any;
-  onClose: () => void;
-  onResize?: (width: number, height: number) => void;
-  defaultwidth?: number;
-  defaultheight?: number;
-  minconstraints?: { width: number; height: number };
-  maxconstraints?: { width: number; height: number };
-  defaultposition?: { x: number; y: number };
-  isModal?: boolean;
-  withoutBackdrop?: boolean;
-  title?: string;
-}
-
 const DialogTitle = styled(MuiDialogTitle)(({ theme }) => ({
   cursor: "move",
   padding: 0,
@@ -32,13 +17,11 @@ const DialogTitle = styled(MuiDialogTitle)(({ theme }) => ({
   },
 }));
 
-const Dialog = styled(MuiDialog, {
-  shouldForwardProp: (props) => props !== "isModal",
-})(({ isModal }: { isModal?: boolean }) => ({
-  right: isModal ? "0px" : "unset",
-  bottom: isModal ? "0px" : "unset",
-  top: isModal ? "0px" : "-1000px",
-  left: isModal ? "0px" : "-1000px",
+const Dialog: any = styled(MuiDialog)(({}) => ({
+  right: "unset",
+  bottom: "unset",
+  top: "-1000px",
+  left: "-1000px",
 }));
 
 const MyWindow = ({
@@ -54,10 +37,7 @@ const MyWindow = ({
   isModal,
   withoutBackdrop,
   title,
-}: MyWindowProps) => {
-  if (!defaultwidth) defaultwidth = 320;
-  if (!defaultheight) defaultheight = 380;
-  if (!defaultposition) defaultposition = { x: 0, y: 0 };
+}: any) => {
   const width =
     defaultwidth > window.innerWidth ? window.innerWidth - 20 : defaultwidth;
   const height =
@@ -83,21 +63,20 @@ const MyWindow = ({
     <Dialog
       hideBackdrop={!isModal || withoutBackdrop}
       open={open}
-      onClose={(_, reason) => {
+      onClose={(_: any, reason: string) => {
         if (reason === "backdropClick" && !isModal) return;
         onClose();
       }}
+      isModal={isModal}
       PaperComponent={PaperComponent}
-      PaperProps={
-        {
-          defaultwidth: width,
-          defaultheight: height,
-          minconstraints,
-          maxconstraints,
-          position,
-          onresize: onResize,
-        } as any
-      }
+      PaperProps={{
+        defaultwidth: width,
+        defaultheight: height,
+        minconstraints,
+        maxconstraints,
+        position,
+        onResize,
+      }}
     >
       <DialogTitle className="dialog-header">{title}</DialogTitle>
       {{ ...children }}

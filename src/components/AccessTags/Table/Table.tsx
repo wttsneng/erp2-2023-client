@@ -2,7 +2,7 @@ import React, { FC } from "react";
 import { Box } from "@mui/material";
 import { IAccessTags } from "@src/redux/slices/AccessTags/@types";
 
-import AccessTagsUiTagList from "../UI/TagList";
+import AccessTagsTableTagList from "./TagList";
 import AccessTagContextMenu from "../ContextMenu/ContextMenu";
 import { useAccessTagsAddListener } from "@src/hooks/accessTags";
 
@@ -64,7 +64,7 @@ const AccessTagsTable: FC = () => {
         }}
       >
         {tagsStatus === "success" && (
-          <AccessTagsUiTagList
+          <AccessTagsTableTagList
             arr={tags}
             selectedTags={selectedTags}
             onClick={handleTagClick}

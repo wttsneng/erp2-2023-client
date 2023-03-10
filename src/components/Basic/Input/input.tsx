@@ -34,23 +34,30 @@ const StyledTextField = styled(TextField)(({ theme }) => ({
   },
 }));
 
-const Input = React.forwardRef(({ ...props }, ref) => {
-  return (
-    <StyledTextField
-      fullWidth
-      ref={ref}
-      placeholder={props.label}
-      InputProps={{
-        startAdornment: (
-          <InputAdornment position="start">{`${
-            props.label ? `${props.label}:` : ""
-          }`}</InputAdornment>
-        ),
-      }}
-      {...props}
-      label={null}
-    />
-  );
-});
+interface InputProps {
+  label?: string;
+  [key: string]: any;
+}
+
+const Input = React.forwardRef(
+  ({ ...props }: InputProps, ref: React.ForwardedRef<any>) => {
+    return (
+      <StyledTextField
+        fullWidth
+        ref={ref}
+        placeholder={props.label || ""}
+        InputProps={{
+          startAdornment: (
+            <InputAdornment position="start">{`${
+              props.label ? `${props.label}:` : ""
+            }`}</InputAdornment>
+          ),
+        }}
+        {...props}
+        label={null}
+      />
+    );
+  }
+);
 
 export default Input;

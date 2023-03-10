@@ -21,6 +21,7 @@ const Typography = styled(MuiTypography)({
 
 const AccessTagsAllFilters: FC = () => {
   const { t } = useAccessTagsTranslation();
+  console.log("AccessTagsAllFilters");
   return (
     <Stack direction={"column"} spacing={1}>
       <Box>

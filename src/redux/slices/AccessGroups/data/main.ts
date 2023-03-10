@@ -2,13 +2,13 @@ import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import { axios } from "@src/core";
 import qs from "qs";
 import {
-  IAccessTags,
-  AccessTagsState,
-} from "@src/redux/slices/AccessTags/@types";
-import { AccessTagsFiltersMainState } from "../filters/main";
+  IAccessGroups,
+  AccessGroupsState,
+} from "@src/redux/slices/AccessGroups/@types";
+import { AccessGroupsFiltersMainState } from "../filters/main";
 
-export const fetchAccessTagsDataMain = createAsyncThunk(
-  "accessTags/data/main/fetchAccessTagsDataMain",
+export const fetchAccessGroupsDataMain = createAsyncThunk(
+  "accessGroups/data/main/fetchAccessGroupsDataMain",
   async (
     {
       searchValue,
@@ -18,9 +18,8 @@ export const fetchAccessTagsDataMain = createAsyncThunk(
       order,
       sortBy,
       limit,
-      groupId,
       page,
-    }: AccessTagsFiltersMainState,
+    }: AccessGroupsFiltersMainState,
     { rejectWithValue }
   ) => {
     try {
@@ -32,11 +31,10 @@ export const fetchAccessTagsDataMain = createAsyncThunk(
         order: order.value,
         sortBy: sortBy.value,
         limit,
-        groupId,
         page,
       });
       const response = await axios.get(
-        `/api/accounts/access_tags?${queryParams}`
+        `/api/accounts/access_Groups?${queryParams}`
       );
       return response.data;
     } catch (error) {
@@ -46,7 +44,7 @@ export const fetchAccessTagsDataMain = createAsyncThunk(
 );
 
 interface IInitialState {
-  data: IAccessTags[];
+  data: IAccessGroups[];
   count: number;
   totalPages: number;
   editingItems: {
@@ -66,42 +64,42 @@ const initialState: IInitialState = {
   },
   status: "idle", // idle, loading, success, error
 };
-const accessTagsDataMainSlice = createSlice({
-  name: "accessTags/data/main",
+const accessGroupsDataMainSlice = createSlice({
+  name: "accessGroups/data/main",
   initialState,
   reducers: {
-    setAccessTagsDataMain: (state, action) => {
+    setAccessGroupsDataMain: (state, action) => {
       state.status = "loading";
       state.data = action.payload.rows;
       state.count = action.payload.count;
       state.totalPages = action.payload.totalPages;
       state.status = "success";
     },
-    addAccessTagsDataMainItem: (state, action) => {
+    addAccessGroupsDataMainItem: (state, action) => {
       state.status = "loading";
       state.data.push(action.payload);
       state.count++;
       state.status = "success";
     },
-    updateAccessTagsDataMainItem: (state, action) => {
+    updateAccessGroupsDataMainItem: (state, action) => {
       state.status = "loading";
       const index = state.data.findIndex((tag) => tag.id === action.payload.id);
       state.data[index] = action.payload;
       state.status = "success";
     },
-    deleteAccessTagsDataMainItem: (state, action) => {
+    deleteAccessGroupsDataMainItem: (state, action) => {
       state.status = "loading";
       const index = state.data.findIndex((tag) => tag.id === action.payload.id);
       state.data.splice(index, 1);
       state.count--;
       state.status = "success";
     },
-    updateAccessTagsDataMainEditingItems: (state, action) => {
+    updateAccessGroupsDataMainEditingItems: (state, action) => {
       state.status = "loading";
       state.editingItems = action.payload;
       state.status = "success";
     },
-    clearAccessTagsDataMain: (state) => {
+    clearAccessGroupsDataMain: (state) => {
       state.status = "loading";
       state.editingItems = initialState.editingItems;
       state.status = "success";
@@ -109,29 +107,29 @@ const accessTagsDataMainSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder
-      .addCase(fetchAccessTagsDataMain.pending, (state) => {
+      .addCase(fetchAccessGroupsDataMain.pending, (state) => {
         state.status = "loading";
       })
-      .addCase(fetchAccessTagsDataMain.fulfilled, (state, action) => {
+      .addCase(fetchAccessGroupsDataMain.fulfilled, (state, action) => {
         state.status = "success";
         state.data = action.payload.rows;
         state.count = action.payload.count;
         state.totalPages = action.payload.totalPages;
       })
-      .addCase(fetchAccessTagsDataMain.rejected, (state) => {
+      .addCase(fetchAccessGroupsDataMain.rejected, (state) => {
         state.status = "error";
       });
   },
 });
 
 export const {
-  setAccessTagsDataMain,
-  addAccessTagsDataMainItem,
-  updateAccessTagsDataMainItem,
-  clearAccessTagsDataMain,
-} = accessTagsDataMainSlice.actions;
-export const accessTagsDataMainReducer = accessTagsDataMainSlice.reducer;
-export const selectAccessTagsDataMainData = (state: AccessTagsState) =>
-  state.accessTags.data.main.data;
-export const selectAccessTagsDataMainStatus = (state: AccessTagsState) =>
-  state.accessTags.data.main.status;
+  setAccessGroupsDataMain,
+  addAccessGroupsDataMainItem,
+  updateAccessGroupsDataMainItem,
+  clearAccessGroupsDataMain,
+} = accessGroupsDataMainSlice.actions;
+export const accessGroupsDataMainReducer = accessGroupsDataMainSlice.reducer;
+export const selectAccessGroupsDataMainData = (state: AccessGroupsState) =>
+  state.accessGroups.data.main.data;
+export const selectAccessGroupsDataMainStatus = (state: AccessGroupsState) =>
+  state.accessGroups.data.main.status;
