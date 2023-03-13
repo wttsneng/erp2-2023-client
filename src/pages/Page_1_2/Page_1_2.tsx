@@ -21,7 +21,10 @@ import {
   AccessTagsWindowsMiniHistoryWindow,
   AccessTagsWarningsDelete,
 } from "@src/components/AccessTags";
-import { AccessGroupsFltersSearch } from "@src/components/AccessGroup";
+import {
+  AccessGroupsFltersSearch,
+  AccessGroupsTable,
+} from "@src/components/AccessGroup";
 import { BoxDefault } from "@src/components/Basic";
 injectAccessTagsReducers();
 injectAccessGroupsReducers();
@@ -41,6 +44,7 @@ function Page_1_2() {
         <Grid item md={6} xs={12}>
           <BoxDefault>
             <AccessGroupsFltersSearch />
+            <AccessGroupsTable />
           </BoxDefault>
         </Grid>
 

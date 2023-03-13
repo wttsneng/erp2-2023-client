@@ -5,25 +5,24 @@ import {
   IAccessGroups,
   AccessGroupsState,
 } from "@src/redux/slices/AccessGroups/@types";
-import { AccessGroupsFiltersMainState } from "../filters/main";
 
 export const fetchAccessGroupsDataMain = createAsyncThunk(
   "accessGroups/data/main/fetchAccessGroupsDataMain",
-  async (
-    {
-      searchValue,
-      name,
-      description,
-      includeMode,
-      order,
-      sortBy,
-      limit,
-      page,
-    }: AccessGroupsFiltersMainState,
-    { rejectWithValue }
-  ) => {
+  async (_, { rejectWithValue, getState }) => {
     try {
-      const queryParams = qs.stringify({
+      const state = getState() as AccessGroupsState;
+      const filters = state.accessGroups.filters.main;
+      const {
+        searchValue,
+        name,
+        description,
+        includeMode,
+        order,
+        sortBy,
+        limit,
+        page,
+      } = filters;
+      const query = qs.stringify({
         searchValue,
         name,
         description,
@@ -33,9 +32,11 @@ export const fetchAccessGroupsDataMain = createAsyncThunk(
         limit,
         page,
       });
-      const response = await axios.get(
-        `/api/accounts/access_Groups?${queryParams}`
-      );
+      const response = await axios.get<{
+        rows: IAccessGroups[];
+        count: number;
+        totalPages: number;
+      }>(`/api/accounts/access_groups?${query}`);
       return response.data;
     } catch (error) {
       return rejectWithValue(error.response.data);

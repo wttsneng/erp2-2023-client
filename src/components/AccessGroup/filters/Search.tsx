@@ -10,19 +10,16 @@ import {
   setAccessGroupsFiltersMainSearchValue,
   selectAccessGroupsFiltersMain,
 } from "@src/redux/slices/AccessGroups/filters/main";
-import { fetchAccessGroupsDataMain } from "@src/redux/slices/AccessGroups/data/main";
 
 const AccessGroupsFltersSearch = () => {
   const dispatch = useAccessGroupsDispatch();
   const { t } = useAccessGroupsTranslation();
-  const filters = useAccessGroupsSelector(selectAccessGroupsFiltersMain);
   const { searchValue } = useAccessGroupsSelector(
     selectAccessGroupsFiltersMain
   );
 
   const onSearch = (value: string) => {
     dispatch(setAccessGroupsFiltersMainSearchValue(value));
-    dispatch(fetchAccessGroupsDataMain(filters));
   };
   return (
     <Search

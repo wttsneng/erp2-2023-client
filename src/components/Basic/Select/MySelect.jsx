@@ -13,7 +13,7 @@ const Select = styled(MuiSelect)(({ theme }) => ({
     padding: "0px 0px",
   },
 }));
-function MySelect({ value, onChange, options, label }) {
+function MySelect({ value, onChange, options, label, ...props }) {
   return (
     <FormControl fullWidth hiddenLabel={true}>
       {!value && (
@@ -29,7 +29,7 @@ function MySelect({ value, onChange, options, label }) {
           {label}
         </InputLabel>
       )}
-      <Select value={value} onChange={onChange} labelId="my-select">
+      <Select value={value} onChange={onChange} labelId="my-select" {...props}>
         {Array.isArray(options)
           ? options.map((option, index) => (
               <MenuItem key={index} value={option}>

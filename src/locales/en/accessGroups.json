@@ -1,3 +1,5 @@
 {
-  "Search": "Access groups search"
+  "search": "Access groups search",
+  "nameInfo": "Name of the Access Group",
+  "descriptionInfo": "Description of the Access Group"
 }

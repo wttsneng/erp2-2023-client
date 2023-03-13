@@ -78,3 +78,11 @@
     top:auto; */
     /* z-index: 10000; */
   /* }  */
+.MuiDataGrid-main:nth-last-child(1){
+  background-color: red !important;
+  color: aqua !important;
+  display: none !important;
+}
+.b{
+  background-color: red !important;
+}
